@@ -7,6 +7,7 @@ iris = datasets.load_iris()
 X = iris.data[:, [2, 3]]
 y = iris.target
 print('클래스 레이블: ', np.unique(y))
+# result : 클래스 레이블: [0 1 2]
 
 # 3. 훈련 셋과 테스트 셋으로 분할
 from sklearn.model_selection import train_test_split
@@ -16,6 +17,9 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, rando
 print('y의 레이블 카운트: ', np.bincount(y))
 print('y_train의 레이블 카운트: ', np.bincount(y_train))
 print('y_test의 레이블 카운트: ', np.bincount(y_test))
+# result : y의 레이블 카운트: [50 50 50]
+#          y_train의 레이블 카운트: [35 35 35]
+#          y_test의 레이블 카운트: [15 15 15]
 
 # 5. 특성 스케일 조정: preprocessing모듈의 StandardScaler - 특성 표준화
 from sklearn.preprocessing import StandardScaler
@@ -34,11 +38,14 @@ ppn.fit(X_train_std, y_train)
 # 오차 계산
 y_pred = ppn.predict(X_test_std)
 print('잘못 분류된 샘플 개수: %d' % (y_test != y_pred).sum())
+# result : 잘못 분류된 샘플 개수: 1
 
 # 분류 정확도 계산(1 - 오차)
 from sklearn.metrics import accuracy_score
 print('정확도: %.2f' % accuracy_score(y_test, y_pred))
 print('정확도: %.2f' % ppn.score(X_test_std, y_test))
+# result : 정확도 : 0.98
+#          정확도 : 0.98
 
 # 8. 붓꽃 샘플 시각화
 from matplotlib.colors import ListedColormap
@@ -90,3 +97,6 @@ plt.ylabel('petal width [standardized]')
 plt.legend(loc = 'upper left')
 plt.tight_layout()
 plt.show()
+
+# result image
+![iris_perceptron.png](/Users/seonwoo/Desktop/vscode image/iris_perceptron.png)
