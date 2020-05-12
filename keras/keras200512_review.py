@@ -16,18 +16,19 @@ x = np.array([2, 4, 6, 8, 10])
 y = np.array([4, 8, 12, 16, 20])
 
 # 3. 딥러닝 모델링
+# node 갯수 조절
 model = Sequential()
-model.add(Dense(9, input_dim = 1, activation = 'relu'))
-model.add(Dense(31))
-model.add(Dense(82))
-model.add(Dense(124))
-model.add(Dense(148))
+model.add(Dense(91, input_dim = 1, activation = 'relu'))
+model.add(Dense(111))
+model.add(Dense(131))
 model.add(Dense(181))
-model.add(Dense(174))
-model.add(Dense(157))
-model.add(Dense(134))
-model.add(Dense(94))
-model.add(Dense(52))
+model.add(Dense(201))
+model.add(Dense(264))
+model.add(Dense(246))
+model.add(Dense(187))
+model.add(Dense(154))
+model.add(Dense(132))
+model.add(Dense(81))
 model.add(Dense(23))
 model.add(Dense(1, activation = 'relu'))
 
@@ -35,7 +36,8 @@ model.add(Dense(1, activation = 'relu'))
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['accuracy'])
 
 # 5. 평가 및 예측
-model.fit(x, y, epochs = 1000, batch_size = 1, validation_data = (x, y))
+# epochs 조절 ; 1000 -> 100
+model.fit(x, y, epochs = 100, batch_size = 1, validation_data = (x, y))
 
 loss, acc = model.evaluate(x, y, batch_size = 1)
 
@@ -45,4 +47,8 @@ print("acc : ", acc)
 
 # 결과(1)
 # loss : 1.9213075574953107e-12
+# acc  : 1.0
+
+# 결과(2)
+# loss : 1.2038549220960703e-05
 # acc  : 1.0
