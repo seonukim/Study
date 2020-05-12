@@ -12,7 +12,7 @@ from keras.layers import Dense
 
 # 2_1. 레이어 및 노드 구성
 # input_dim = 1 : 최초 레이어의 노드는 1
-# 최초 레이어의 노드 1개를 받아서 첫번째 hydden layer에서 1을 출력
+# 최초 레이어의 노드 1개를 받아서 첫번째 hidden layer에서 1을 출력
 # 활성화 방법은 'relu' ; rectified linear unit
 model = Sequential()
 model.add(Dense(1, input_dim = 1, activation = 'relu'))
