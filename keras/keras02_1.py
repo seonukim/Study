@@ -16,7 +16,10 @@ model.add(Dense(20))
 model.add(Dense(15))
 model.add(Dense(13))
 model.add(Dense(10))
-model.add(Dense(8))
+model.add(Dense(7))    # 레이어 깊이 조절
+model.add(Dense(6))    # 레이어 깊이 조절
+model.add(Dense(4))    # 레이어 깊이 조절
+model.add(Dense(3))
 model.add(Dense(1, activation = 'relu'))
 
 model.summary()
