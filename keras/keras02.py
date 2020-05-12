@@ -34,3 +34,7 @@ loss, acc = model.evaluate(x_test, y_test, batch_size = 1)
 # 6. 결과 출력
 print("loss : ", loss)
 print("acc : ", acc)
+
+# 7. 결과물 확인
+output = model.predict(x_test)
+print("결과물 : \n", output)
