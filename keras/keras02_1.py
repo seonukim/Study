@@ -32,7 +32,7 @@ model.compile(loss = 'mse',
 # 5. 모델 적합 및 예측
 model.fit(x_train, y_train,
           epochs = 500,
-          batch_size = 1,
+          batch_size = 100,
           validation_data = (x_train, y_train))
 loss, acc = model.evaluate(x_test, y_test, batch_size = 1)
 
