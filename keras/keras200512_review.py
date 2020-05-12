@@ -18,6 +18,7 @@ y = np.array([4, 8, 12, 16, 20])
 # 3. 딥러닝 모델링
 # node 갯수 조절
 # layer의 depth 조절 - 줄이기
+# layer의 depth 조절 - 늘리기
 model = Sequential()
 model.add(Dense(91, input_dim = 1, activation = 'relu'))
 model.add(Dense(111))
@@ -28,6 +29,12 @@ model.add(Dense(264))
 model.add(Dense(246))
 model.add(Dense(187))
 model.add(Dense(154))
+model.add(Dense(151))
+model.add(Dense(148))
+model.add(Dense(134))
+model.add(Dense(110))
+model.add(Dense(86))
+model.add(Dense(43))
 model.add(Dense(1, activation = 'relu'))
 
 # 4. 컴파일링
@@ -54,3 +61,7 @@ print("acc : ", acc)
 # 결과(3)
 # loss : 2.276204486406641e-06
 # acc  : 1.0
+
+# 결과(4)
+# loss : 0.353423085808754
+# acc  : 0.4000000059604645
