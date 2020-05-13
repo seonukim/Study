@@ -14,23 +14,28 @@ x_pred = np.array([1000, 2000, 3000, 4000, 5000])
 # 3. 모델 구성 - DNN(Deep Neural Network)
 model = Sequential()
 model.add(Dense(10, input_dim = 1, activation = 'relu'))
-model.add(Dense(187))
-model.add(Dense(148))
-model.add(Dense(139))
-model.add(Dense(193))
-model.add(Dense(148))
-model.add(Dense(153))
-model.add(Dense(142))
-model.add(Dense(126))
-model.add(Dense(198))
+model.add(Dense(18))
+model.add(Dense(14))
+model.add(Dense(13))
+model.add(Dense(19))
+model.add(Dense(14))
+model.add(Dense(15))
+model.add(Dense(15))
+model.add(Dense(15))
+model.add(Dense(15))
+model.add(Dense(15))
+model.add(Dense(15))
+model.add(Dense(14))
+model.add(Dense(12))
+model.add(Dense(19))
 model.add(Dense(1, activation = 'relu'))
 
 # 4. 컴파일 및 훈련
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
-model.fit(x_train, y_train, batch_size = 1, epochs = 100)
+model.fit(x_train, y_train, epochs = 50)
 
 # 5. 평가 및 예측
-loss, mse = model.evaluate(x_test, y_test, batch_size = 1)
+loss, mse = model.evaluate(x_test, y_test)
 print("loss : ", loss)
 print("mse : ", mse)
 
@@ -111,5 +116,30 @@ y의 예측값은?  [[ 999.121 ]
                [3993.6243]
                [4991.794 ]]
 -> loss는 감소했지만 출력된 예측값이 애매하다.
+
+
+! Result 7 - hidden layer 증가 ; 10 -> 15
+             epochs 증가 ; 100 -> 1000
+             batch_size ; default값
+loss :  465850.0
+ mse :  465850.0
+y의 예측값은?  [[0.]
+               [0.]
+               [0.]
+               [0.]
+               [0.]]
+-> 모델 같지도 않은 모델
+
+
+! Result 8 - 각 layer 당 nodes 수 대폭 감소
+             epochs 대폭 감소 ; 1000 -> 50
+loss :  283.43450927734375
+ mse :  283.43450927734375
+y의 예측값은?  [[1024.5265]
+               [2048.5923]
+               [3072.6582]
+               [4096.723 ]
+               [5120.7896]]
+-> Result 7의 모델보다는 낫지만 이것도 모델 같지도 않음
 
 """
