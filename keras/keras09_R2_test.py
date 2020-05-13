@@ -20,13 +20,13 @@ from keras.models import Sequential
 from keras.layers import Dense
 model = Sequential()
 
-model.add(Dense(5, input_dim = 1, activation='hard_sigmoid'))
+model.add(Dense(5, input_dim = 1))
 model.add(Dense(5))
 model.add(Dense(5))
 model.add(Dense(1))
 
 # 3. 훈련
-model.compile(loss = 'mse', metrics = ['mse'], optimizer = 'adam')
+model.compile(loss = 'binary_crossentropy', metrics = ['mse'], optimizer = 'adam')
 model.fit(x_train, y_train, epochs = 100, batch_size = 1, validation_data = (x_test, y_test))
 
 # 4. 평가 및 예측
