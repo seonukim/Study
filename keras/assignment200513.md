@@ -65,3 +65,7 @@ print("R2 : ", r2)
 위의 생각과 같은 이유로 결정 계수의 값이 낮아지는게 아닐까 싶다.
 
 분류 계열 손실함수의 예 : **binary_crossentropy**
+
+
+[활성화 함수 사용의 예; Sigmoid 대신 ReLU? 상황에 맞는 활성화 함수 사용하기](https://medium.com/@kmkgabia/ml-sigmoid-%EB%8C%80%EC%8B%A0-relu-%EC%83%81%ED%99%A9%EC%97%90-%EB%A7%9E%EB%8A%94-%ED%99%9C%EC%84%B1%ED%99%94-%ED%95%A8%EC%88%98-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-c65f620ad6fd)
+
