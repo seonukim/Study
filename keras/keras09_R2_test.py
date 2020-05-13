@@ -20,13 +20,19 @@ from keras.models import Sequential
 from keras.layers import Dense
 model = Sequential()
 
-model.add(Dense(5, input_dim = 1))
-model.add(Dense(5))
-model.add(Dense(5))
-model.add(Dense(1))
+model.add(Dense(10, input_dim = 1, activation = 'sigmoid'))
+model.add(Dense(10))
+model.add(Dense(10))
+model.add(Dense(10))
+model.add(Dense(10))
+model.add(Dense(10))
+model.add(Dense(10))
+model.add(Dense(10))
+model.add(Dense(10))
+model.add(Dense(1, activation = 'relu'))
 
 # 3. 훈련
-model.compile(loss = 'binary_crossentropy', metrics = ['mse'], optimizer = 'adam')
+model.compile(loss = 'mse', metrics = ['mse'], optimizer = 'adam')
 model.fit(x_train, y_train, epochs = 100, batch_size = 1, validation_data = (x_test, y_test))
 
 # 4. 평가 및 예측
@@ -54,4 +60,13 @@ print("R2 : ", r2)
 compile의 parameter 중 loss를 'binary_crossentropy'로 했을 때 : 0.07 -> binary는 1, 0의 이진분류법인데
 회귀 모델에 적용하니 설명력이 낮게 나오는 것 같다.
 activation의 인자값을 sigmoid 계열로 입력 시 -> sigmoid계열 역시 분류함수인데 회귀 모델에 적용..
+"""
+
+"""
+레이어의 수를 늘리고 노드를 일괄적으로 10으로 세팅
+인풋 레이어의 활성화 함수 'sigmoid' - 분류 유형
+아웃풋 레이어의 활성화 함수 'relu'  - 선형 유형
+손실함수 'mse'
+
+>>> R2 :  0.09246565130943052
 """
