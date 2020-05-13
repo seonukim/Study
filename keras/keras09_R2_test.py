@@ -34,7 +34,7 @@ model.add(Dense(1))
 
 # 3. 훈련
 model.compile(loss = 'mse', metrics = ['mse'], optimizer = 'adam')
-model.fit(x_train, y_train, epochs = 100, batch_size = 1, validation_data = (x_test, y_test))
+model.fit(x_train, y_train, epochs = 500, batch_size = 1, validation_data = (x_test, y_test))
 
 # 4. 평가 및 예측
 loss, mse = model.evaluate(x_test, y_test, batch_size = 1)
@@ -78,4 +78,11 @@ activation의 인자값을 sigmoid 계열로 입력 시 -> sigmoid계열 역시 
 손실함수 'mse'
 
 >>> R2 :  0.1157790464274513
+"""
+
+"""
+바로 위와 같은 조건
+epochs만 500회로 조정
+
+>>> R2 :  0.2753925863813492
 """
