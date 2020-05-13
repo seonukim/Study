@@ -14,28 +14,28 @@ x_pred = np.array([1600, 1700, 1800, 1900, 2000])
 # 3. 모델 구성 - DNN(Deep Neural Network)
 model = Sequential()
 model.add(Dense(10, input_dim = 1, activation = 'relu'))
-model.add(Dense(18))
-model.add(Dense(14))
-model.add(Dense(13))
-model.add(Dense(19))
-model.add(Dense(14))
-model.add(Dense(15))
-model.add(Dense(15))
-model.add(Dense(15))
-model.add(Dense(15))
-model.add(Dense(15))
-model.add(Dense(15))
-model.add(Dense(14))
-model.add(Dense(12))
-model.add(Dense(19))
+model.add(Dense(38))
+model.add(Dense(44))
+model.add(Dense(53))
+model.add(Dense(69))
+model.add(Dense(74))
+model.add(Dense(85))
+model.add(Dense(95))
+model.add(Dense(85))
+model.add(Dense(75))
+model.add(Dense(65))
+model.add(Dense(55))
+model.add(Dense(44))
+model.add(Dense(32))
+model.add(Dense(29))
 model.add(Dense(1, activation = 'relu'))
 
 # 4. 컴파일 및 훈련
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
-model.fit(x_train, y_train, epochs = 50)
+model.fit(x_train, y_train, epochs = 100, batch_size = 1)
 
 # 5. 평가 및 예측
-loss, mse = model.evaluate(x_test, y_test)
+loss, mse = model.evaluate(x_test, y_test, batch_size = 1)
 print("loss : ", loss)
 print("mse : ", mse)
 
@@ -164,4 +164,16 @@ y의 예측값은?  [[1615.7253]
                [2019.6072]]
 -> 재구성한 데이터로 Result 11부터는 하이퍼 파라미터를 튜닝해본다.
 
+
+! Result 11 - epochs 조절 ; 50 -> 100
+              batch_size 조절 ; 32 -> 1
+              nodes 갯수 조절
+loss :  0.033890324831008914
+ mse :  0.03389032557606697
+y의 예측값은?  [[1600.0994]
+               [1700.0721]
+               [1800.045 ]
+               [1900.018 ]
+               [1999.9911]]
+-> loss와 예측값 모두 좋아졌다.
 """
