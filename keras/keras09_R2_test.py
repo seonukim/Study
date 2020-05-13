@@ -20,21 +20,14 @@ from keras.models import Sequential
 from keras.layers import Dense
 model = Sequential()
 
-model.add(Dense(10, input_dim = 1, activation = 'sigmoid'))
-model.add(Dense(20))
-model.add(Dense(30))
-model.add(Dense(40))
-model.add(Dense(50))
-model.add(Dense(50))
-model.add(Dense(40))
-model.add(Dense(30))
-model.add(Dense(20))
-model.add(Dense(10))
+model.add(Dense(5, input_dim = 1, activation = 'sigmoid'))
+model.add(Dense(5))
+model.add(Dense(5))
 model.add(Dense(1))
 
 # 3. 훈련
 model.compile(loss = 'mse', metrics = ['mse'], optimizer = 'adam')
-model.fit(x_train, y_train, epochs = 1000, batch_size = 1, validation_data = (x_test, y_test))
+model.fit(x_train, y_train, epochs = 500, batch_size = 1, validation_data = (x_test, y_test))
 
 # 4. 평가 및 예측
 loss, mse = model.evaluate(x_test, y_test, batch_size = 1)
@@ -92,4 +85,11 @@ epochs만 500회로 조정
 epochs를 1000회로 조정
 
 >>> R2 :  0.4917325451944634
+"""
+
+"""
+레이어 및 노드를 5개씩으로 세팅
+epochs를 500회로 조정
+
+>>> R2 : 0.20131958691945329
 """
