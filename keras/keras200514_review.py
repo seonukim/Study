@@ -16,7 +16,8 @@ y = np.array(range(2, 501, 2))
 # 2-1. 데이터 분할
 x_train, x_test, y_train, y_test = train_test_split(x, y,
                                                     test_size = 0.25,
-                                                    shuffle = False)
+                                                    random_state = 1234,
+                                                    shuffle = True)
 
 # print(x_test)
 # print(y_test)
