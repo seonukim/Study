@@ -7,8 +7,8 @@ from sklearn.model_selection import train_test_split
 x_train, x_test, y_train, y_test = train_test_split(
     x, y, train_size = 0.6, shuffle = False)
 
-x_val, x_test, y_val, y_test = train_test_split(
-    x_test, y_test, test_size = 0.5, shuffle = False)
+# x_val, x_test, y_val, y_test = train_test_split(
+#     x_test, y_test, test_size = 0.5, shuffle = False)
 
 # 아래는 가내수공업 방식
 # x_train = x[:60]
@@ -19,13 +19,13 @@ x_val, x_test, y_val, y_test = train_test_split(
 # y_val = y[60:80]
 # y_test = y[80:]
 
-print("x_train : ", x_train)
-print("x_val : ", x_val)
-print("x_test : ", x_test)
+# print("x_train : ", x_train)
+# print("x_val : ", x_val)
+# print("x_test : ", x_test)
 
-print("y_train : ", y_train)
-print("y_val : ", y_val)
-print("y_test : ", y_test)
+# print("y_train : ", y_train)
+# print("y_val : ", y_val)
+# print("y_test : ", y_test)
 
 
 # 2. 모델 구성
@@ -41,7 +41,10 @@ model.add(Dense(1))
 
 # 3. 훈련
 model.compile(loss = 'mse', metrics = ['mse'], optimizer = 'adam')
-model.fit(x_train, y_train, epochs = 100, batch_size = 1, validation_data = (x_val, y_val))
+model.fit(x_train, y_train, epochs = 100, batch_size = 1,
+          validation_split = 0.2
+          #validation_data = (x_val, y_val)
+)
 
 
 # 4. 평가 및 예측
