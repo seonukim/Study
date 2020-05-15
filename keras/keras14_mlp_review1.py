@@ -13,7 +13,7 @@ def RMSE(y_test, y_predict):
 
 # 2. 데이터 구성
 x = np.array([range(1, 101), range(311, 411), range(100)])
-y = np.array([range(1, 101), range(311, 411), range(100)])
+y = np.array(range(711, 811))
 
 # 2-1. 구성된 데이터 확인하기
 # print("x : ", x)
@@ -21,11 +21,17 @@ y = np.array([range(1, 101), range(311, 411), range(100)])
 # print(x.shape)
 # -> 확인 결과, (3, 100)의 2차원 데이터로 확인
 
+
 # 2-2. 데이터의 행과 열 전치시키기
 x = x.transpose()
-y = y.transpose()
+# y = y.transpose()
 # -> (100, 3)의 2차원 데이터로 전치시킴
+print(x)
+print(y)
+print(x.shape)
+print(y.shape)
 
+'''
 # 2-3. 데이터 분할
 x_train, x_test, y_train, y_test = train_test_split(x, y,
                                                     test_size = 0.2,
@@ -53,7 +59,7 @@ model.add(Dense(2320))
 model.add(Dense(2011))
 model.add(Dense(81))
 model.add(Dense(9))
-model.add(Dense(3))
+model.add(Dense(1))
 
 # 4. 컴파일링 및 훈련
 model.compile(loss = 'mse',
@@ -116,4 +122,16 @@ print("R2 : ", r2_score(y_test, y_predict))
               mse  : 0.4042428135871887
               RMSE : 0.6358282842825868
               R2   : 0.9993992814052307
+
+    
+    Result 3
+- 조건
+    1) train_size : 80%
+    2) shuffle = True
+    3) batch_size = 1
+    4) epochs = 50
+    5) validation data : 20%(train_size * 0.25)
+    6) first hidden layer = 200
+    7) label is modified.(n : 1)
 """
+'''
