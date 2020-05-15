@@ -27,13 +27,16 @@ y = y.transpose()
 # -> (100, 3)의 2차원 데이터로 전치시킴
 
 # 2-3. 데이터 분할
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.25, shuffle = False)
+x_train, x_test, y_train, y_test = train_test_split(x, y,
+                                                    test_size = 0.2,
+                                                    shuffle = True,
+                                                    random_state = 1234)
 
 # print(x_train)
 
 # 3. DNN 신경망 모델 구성
 model = Sequential()
-model.add(Dense(100, input_dim = 3))
+model.add(Dense(200, input_dim = 3))
 model.add(Dense(124))
 model.add(Dense(1240))
 model.add(Dense(1165))
@@ -59,11 +62,11 @@ model.compile(loss = 'mse',
 model.fit(x_train, y_train,
           batch_size = 5,
           epochs = 50,
-          validation_split = 0.19)
+          validation_split = 0.25)
 
 # 5. 평가 및 예측
 loss, mse = model.evaluate(x_test, y_test,
-                           batch_size = 5)
+                           batch_size = 1)
 
 y_predict = model.predict(x_test)
 
@@ -75,7 +78,7 @@ print("mse : ", mse)
 print("-" * 40)
 
 # 2) 예측값 출력
-print("y의 예측값 : ", y_predict)
+print("y의 예측값 : \n", y_predict)
 print("-" * 40)
 
 # 3) RMSE, R2 값 출력
@@ -94,5 +97,23 @@ print("R2 : ", r2_score(y_test, y_predict))
     3) batch_size = 5
     4) epochs = 50
     5) validation data : 14% (train_size * 0.19)
-    6) input_layer = 100
+    6) first hidden layer = 100
+    -> 결과 : loss :  0.09911314249038697
+              mse  :  0.09911315143108368
+              RMSE :  0.31482189539075667
+              R2   :  0.9980939841188956
+
+
+    Result 2
+- 조건
+    1) train_size : 80%
+    2) shuffle = True
+    3) batch_size = 1
+    4) epochs = 50
+    5) validation data : 20%(train_size * 0.25)
+    6) first hidden layer = 200
+    -> 결과 : loss : 0.4042428195476532
+              mse  : 0.4042428135871887
+              RMSE : 0.6358282842825868
+              R2   : 0.9993992814052307
 """
