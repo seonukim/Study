@@ -30,27 +30,45 @@ x = x.transpose()
 y = y.transpose()
 
 # 2-3. 데이터 분할하기
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2, shuffle = False)
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2, shuffle = True, random_state = 1234)
 
 
 # 3. 모델 구성
 model = Sequential()
-model.add(Dense(10, input_dim = 3))
-model.add(Dense(10))
-model.add(Dense(10))
+model.add(Dense(10000, input_dim = 3))
+model.add(Dense(100))
+model.add(Dense(100))
+model.add(Dense(1000))
+model.add(Dense(10000))
+model.add(Dense(1000))
+model.add(Dense(100))
+model.add(Dense(100))
+model.add(Dense(1000))
+model.add(Dense(1000))
+model.add(Dense(1000))
+model.add(Dense(100))
+model.add(Dense(1000))
+model.add(Dense(100))
+model.add(Dense(1000))
+model.add(Dense(100))
+model.add(Dense(1000))
+model.add(Dense(100))
+model.add(Dense(1000))
+model.add(Dense(10000))
 model.add(Dense(1))
 
 
 # 4. 컴파일 및 훈련
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
-model.fit(x_train, y_train, batch_size = 8, epochs = 30, validation_split = 0.25)
+model.fit(x_train, y_train, batch_size = 25, epochs = 50, validation_split = 0.25, verbose = 2)
 
 
 # 5. 평가 및 예측
-loss, mse = model.evaluate(x_test, y_test, batch_size = 8)
+loss, mse = model.evaluate(x_test, y_test, batch_size = 20)
 y_predict = model.predict(x_test)
 
 # 6. 결괏값 출력
+print("-" * 40)
 print("loss : ", loss)
 print("-" * 40)
 print("mse : ", mse)
