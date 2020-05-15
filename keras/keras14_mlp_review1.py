@@ -24,14 +24,14 @@ y = np.array(range(711, 811))
 
 # 2-2. 데이터의 행과 열 전치시키기
 x = x.transpose()
-# y = y.transpose()
+y = y.transpose()
 # -> (100, 3)의 2차원 데이터로 전치시킴
-print(x)
-print(y)
-print(x.shape)
-print(y.shape)
+# print(x)
+# print(y)
+# print(x.shape)
+# print(y.shape)
 
-'''
+
 # 2-3. 데이터 분할
 x_train, x_test, y_train, y_test = train_test_split(x, y,
                                                     test_size = 0.2,
@@ -134,4 +134,3 @@ print("R2 : ", r2_score(y_test, y_predict))
     6) first hidden layer = 200
     7) label is modified.(n : 1)
 """
-'''
