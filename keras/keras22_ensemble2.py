@@ -116,7 +116,7 @@ model.summary()  # 모델 요약표
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
 model.fit([x1_train, x2_train],
           [y1_train, y2_train, y3_train],
-          epochs = 50)
+          epochs = 100)
         #   validation_split = 0.25, verbose = 1)
 
 
