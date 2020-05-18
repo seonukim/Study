@@ -51,48 +51,45 @@ from keras.layers import Dense, Input          # Input = 함수형 모델 인풋
 # 2-1. 함수형 모델의 첫번째 모델
 """  summary() 시 출력되는 레이어의 이름 변경 ; name = '변경할 이름' """
 input1 = Input(shape = (3, ))    # 첫번째 인풋 레이어 구성 후 input1 변수에 할당
-dense1_1 = Dense(188, activation = 'relu')(input1)  # 첫번째 모델의 첫번째 히든레이어 구성
-dense1_2 = Dense(377, activation = 'relu')(dense1_1)  # 첫번째 모델의 두번째 히든레이어 구성
-dense1_3 = Dense(130, activation = 'relu')(dense1_2)
-dense1_4 = Dense(178, activation = 'relu')(dense1_3)
-dense1_5 = Dense(178, activation = 'relu')(dense1_4)
-dense1_6 = Dense(188)(dense1_2)
+dense1_1 = Dense(18, activation = 'relu')(input1)  # 첫번째 모델의 첫번째 히든레이어 구성
+dense1_2 = Dense(17, activation = 'relu')(dense1_1)  # 첫번째 모델의 두번째 히든레이어 구성
+dense1_3 = Dense(18, activation = 'relu')(dense1_2)
+dense1_4 = Dense(21)(dense1_3)
 
 # 2-2. 함수형 모델의 두번째 모델
 input2 = Input(shape = (3, ))
-dense2_1 = Dense(710, activation = 'relu')(input2)
-dense2_2 = Dense(413, activation = 'relu')(dense2_1)
-dense2_3 = Dense(244, activation = 'relu')(dense2_2)
-dense2_4 = Dense(244, activation = 'relu')(dense2_2)
-dense2_5 = Dense(244, activation = 'relu')(dense2_3)
-dense2_6 = Dense(228)(dense2_2)
+dense2_1 = Dense(13, activation = 'relu')(input2)
+dense2_2 = Dense(26, activation = 'relu')(dense2_1)
+dense2_3 = Dense(24, activation = 'relu')(dense2_2)
+dense2_4 = Dense(18)(dense2_3)
 
 # 2-3. 모델 병합
 from keras.layers.merge import concatenate       # 모델 병합 모듈 임포트 - concatenate ; '잇다, 일치시키다'
-merge1 = concatenate([dense1_6, dense2_6])    # 각 모델의 마지막 레이어 입력
-middle1 = Dense(216)(merge1)
-middle2 = Dense(283)(middle1)
-middle3 = Dense(317)(middle2)
-middle4 = Dense(987)(middle3)
-middle5 = Dense(87)(middle4)
+merge1 = concatenate([dense1_4, dense2_4])    # 각 모델의 마지막 레이어 입력
+middle1 = Dense(29)(merge1)
+middle2 = Dense(33)(middle1)
+middle3 = Dense(14)(middle2)
 
 # 2-4. 각 모델의 output레이어 구성
-output1 = Dense(211)(middle5)
-output2 = Dense(312)(output1)
-output3 = Dense(312)(output2)
-output4 = Dense(3)(output3)
+output1 = Dense(31)(middle3)
+output2 = Dense(37)(output1)
+output3 = Dense(3)(output2)
 
 model = Model(inputs = [input1, input2],
-              outputs = output4)   # 함수형 병합 모델 구성(인풋, 아웃풋 명시)
+              outputs = output3)   # 함수형 병합 모델 구성(인풋, 아웃풋 명시)
 
 model.summary()  # 모델 요약표
 
 
 
 # 3. 훈련
+# 과적합 방지 - 조기종료(EarlyStopping) 기법 사용
+from keras.callbacks import EarlyStopping
+es = EarlyStopping(monitor = 'loss', mode = 'min', patience = 10)
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
 model.fit([x1_train, x2_train], y_train,
-          epochs = 50, batch_size = 1, validation_split = 0.25, verbose = 3)
+          epochs = 200, batch_size = 1, validation_split = 0.25, verbose = 1,
+          callbacks = [es])
 
 
 # 4. 평가 및 예측
