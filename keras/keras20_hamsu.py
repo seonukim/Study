@@ -20,8 +20,14 @@ from keras.layers import Dense, Input
 # model.add(Dense(4))
 # model.add(Dense(1))
 
-Input(shape = 3)
+input1 = Input(shape = (3, ))    # 첫번째 인풋 레이어 구성 후 input1 변수에 할당
+dense1 = Dense(5, activation = 'relu')(input1)  # 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
+dense2 = Dense(4, activation = 'relu')(dense1)  # 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
+output1 = Dense(1)(dense2)      # 아웃풋 레이어
 
+model = Model(inputs = input1, outputs = output1)
+
+model.summary()
 
 
 # 3. 훈련
