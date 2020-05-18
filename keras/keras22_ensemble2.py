@@ -90,17 +90,18 @@ merge1 = concatenate([dense1_6, dense2_4])    # 각 모델의 마지막 레이�
 middle1 = Dense(14)(merge1)
 middle2 = Dense(23)(middle1)
 middle3 = Dense(31)(middle2)
+middle4 = Dense(31)(middle2)
 
 # 2-4. 각 모델의 output레이어 구성
-output1 = Dense(18)(middle3)
+output1 = Dense(18)(middle4)
 output1_2 = Dense(31)(output1)
 output1_3 = Dense(2)(output1_2)
 
-output2 = Dense(11)(middle3)
+output2 = Dense(11)(middle4)
 output2_2 = Dense(67)(output2)
 output2_3 = Dense(2)(output2_2)
 
-output3 = Dense(58)(middle3)
+output3 = Dense(58)(middle4)
 output3_2 = Dense(26)(output3)
 output3_3 = Dense(2)(output3_2)
 
