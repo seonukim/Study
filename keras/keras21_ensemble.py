@@ -33,29 +33,36 @@ from keras.layers import Dense, Input
 # model.add(Dense(1))
 
 # 2-1. 함수형 모델의 첫번째 모델
+# summary() 시 출력되는 레이어의 이름 변경 ; name = '변경할 이름'
 input1 = Input(shape = (3, ))    # 첫번째 인풋 레이어 구성 후 input1 변수에 할당
-dense1_1 = Dense(3, activation = 'relu')(input1)  # 첫번째 모델의 첫번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
-dense1_2 = Dense(5, activation = 'relu')(dense1_1)  # 첫번째 모델의 두번째 히든레이어 구성
-dense1_3 = Dense(4)(dense1_2)
+dense1_1 = Dense(30, activation = 'relu')(input1)  # 첫번째 모델의 첫번째 히든레이어 구성
+dense1_2 = Dense(50, activation = 'relu')(dense1_1)  # 첫번째 모델의 두번째 히든레이어 구성
+dense1_3 = Dense(43, activation = 'relu')(dense1_2)
+dense1_4 = Dense(12, activation = 'relu')(dense1_3)
+dense1_5 = Dense(4)(dense1_4)
 
 # 2-2. 함수형 모델의 두번째 모델
 input2 = Input(shape = (3, ))
-dense2_1 = Dense(5, activation = 'relu')(input2)
-dense2_2 = Dense(4, activation = 'relu')(dense2_1)
-dense2_3 = Dense(2)(dense2_2)
+dense2_1 = Dense(51, activation = 'relu')(input2)
+dense2_2 = Dense(43, activation = 'relu')(dense2_1)
+dense2_3 = Dense(44, activation = 'relu')(dense2_2)
+dense2_4 = Dense(23, activation = 'relu')(dense2_3)
+dense2_5 = Dense(2)(dense2_4)
 
 # 2-3. 모델 병합
 from keras.layers.merge import concatenate       # 모델 병합 모듈 임포트 - concatenate ; '잇다, 일치시키다'
-merge1 = concatenate([dense1_3, dense2_3])    # 각 모델의 마지막 레이어 입력
+merge1 = concatenate([dense1_5, dense2_5])    # 각 모델의 마지막 레이어 입력
 middle1 = Dense(10)(merge1)
-middle2 = Dense(5)(middle1)
+middle2 = Dense(21)(middle1)
+middle3 = Dense(34)(middle2)
+middle4 = Dense(5)(middle3)
 
 # 2-4. 각 모델의 output레이어 구성
-output1 = Dense(10)(middle2)
+output1 = Dense(10)(middle4)
 output1_2 = Dense(30)(output1)
 output1_3 = Dense(3)(output1_2)
 
-output2 = Dense(10)(middle2)
+output2 = Dense(10)(middle4)
 output2_2 = Dense(30)(output2)
 output2_3 = Dense(3)(output2_2)
 
