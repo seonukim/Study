@@ -76,7 +76,7 @@ model.summary()  # 모델 요약표
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
 model.fit([x1_train, x2_train],
           [y1_train, y2_train],
-          epochs = 50, batch_size = 1)
+          epochs = 5, batch_size = 1)
         #   validation_split = 0.25, verbose = 1)
 
 
@@ -88,19 +88,36 @@ print("loss2 : ", loss2)   # 모델1에 대한 loss
 print("loss3 : ", loss3)   # 모델2에 대한 loss
 print("mse1 : ", mse1)     # 모델1에 대한 mse
 print("mse2 : ", mse2)     # 모델2에 대한 mse
+print("-" * 40)
 
-# y_predict = model.predict([x1_test, x2_test])
-# print(y_predict)
-
-
-# # 5. RMSE 구하기
-# from sklearn.metrics import mean_squared_error
-# def RMSE(y_test, y_predict):
-#     return np.sqrt(mean_squared_error([y1_test, y2_test], y_predict))
-# print("RMSE : ", RMSE([y1_test, y2_test], y_predict))
+y1_predict, y2_predict = model.predict([x1_test, x2_test])
+print(y1_predict)
+print("-" * 40)
+print(y2_predict)
+print("-" * 40)
 
 
-# # 6. R2 구하기
-# from sklearn.metrics import r2_score
-# r2 = r2_score(y_test, y_predict)
-# print("R2 : ", r2)
+
+# 5. RMSE 구하기
+from sklearn.metrics import mean_squared_error
+def RMSE(y_test, y_predict):
+    return np.sqrt(mean_squared_error(y_test, y_predict))
+rmse1 = RMSE(y1_test, y1_predict)
+print("RMSE_1 : ", rmse1)
+print("-" * 40)
+rmse2 = RMSE(y2_test, y2_predict)
+print("RMSE_2 : ", rmse2)
+print("-" * 40)
+
+
+# 6. R2 구하기
+from sklearn.metrics import r2_score
+r2_1 = r2_score(y1_test, y1_predict)
+r2_2 = r2_score(y2_test, y2_predict)
+print("R2_1 : ", r2_1)
+print("-" * 40)
+print("R2_2 : ", r2_2)
+print("-" * 40)
+print("RMSE : ", (rmse1 + rmse2) / 2)
+print("-" * 40)
+print("R2 : ", (r2_1 + r2_2) / 2)
