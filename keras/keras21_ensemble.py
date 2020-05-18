@@ -76,18 +76,18 @@ model.summary()  # 모델 요약표
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
 model.fit([x1_train, x2_train],
           [y1_train, y2_train],
-          epochs = 5, batch_size = 1,
-          validation_split = 0.25, verbose = 1)
+          epochs = 50, batch_size = 1)
+        #   validation_split = 0.25, verbose = 1)
 
 
 # 4. 평가 및 예측
 loss1, loss2, loss3, mse1, mse2 = model.evaluate([x1_test, x2_test],
                                                  [y1_test, y2_test], batch_size = 1)
-print("loss1 : ", loss1)   # 병합된 전체 모델의 
-print("loss2 : ", loss2)
-print("loss3 : ", loss3)
-print("mse1 : ", mse1)
-print("mse2 : ", mse2)
+print("loss1 : ", loss1)   # 병합된 전체 모델의 loss
+print("loss2 : ", loss2)   # 모델1에 대한 loss
+print("loss3 : ", loss3)   # 모델2에 대한 loss
+print("mse1 : ", mse1)     # 모델1에 대한 mse
+print("mse2 : ", mse2)     # 모델2에 대한 mse
 
 # y_predict = model.predict([x1_test, x2_test])
 # print(y_predict)
