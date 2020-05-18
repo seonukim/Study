@@ -33,7 +33,7 @@ from keras.layers import Dense, Input
 # model.add(Dense(1))
 
 # 2-1. 함수형 모델의 첫번째 모델
-# summary() 시 출력되는 레이어의 이름 변경 ; name = '변경할 이름'
+""" summary() 시 출력되는 레이어의 이름 변경 ; name = '변경할 이름'"""
 input1 = Input(shape = (3, ))    # 첫번째 인풋 레이어 구성 후 input1 변수에 할당
 dense1_1 = Dense(30, activation = 'relu')(input1)  # 첫번째 모델의 첫번째 히든레이어 구성
 dense1_2 = Dense(50, activation = 'relu')(dense1_1)  # 첫번째 모델의 두번째 히든레이어 구성
@@ -71,31 +71,36 @@ model = Model(inputs = [input1, input2],
 
 model.summary()  # 모델 요약표
 
-"""
+
 # 3. 훈련
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
-model.fit(x_train, y_train, epochs = 100, batch_size = 1,
+model.fit([x1_train, x2_train],
+          [y1_train, y2_train],
+          epochs = 5, batch_size = 1,
           validation_split = 0.25, verbose = 1)
 
 
 # 4. 평가 및 예측
-loss, mse = model.evaluate(x_test, y_test, batch_size = 1)
-print("loss : ", loss)
-print("mse : ", mse)
+loss1, loss2, loss3, mse1, mse2 = model.evaluate([x1_test, x2_test],
+                                                 [y1_test, y2_test], batch_size = 1)
+print("loss1 : ", loss1)   # 병합된 전체 모델의 
+print("loss2 : ", loss2)
+print("loss3 : ", loss3)
+print("mse1 : ", mse1)
+print("mse2 : ", mse2)
 
-y_predict = model.predict(x_test)
-print(y_predict)
-
-
-# 5. RMSE 구하기
-from sklearn.metrics import mean_squared_error
-def RMSE(y_test, y_predict):
-    return np.sqrt(mean_squared_error(y_test, y_predict))
-print("RMSE : ", RMSE(y_test, y_predict))
+# y_predict = model.predict([x1_test, x2_test])
+# print(y_predict)
 
 
-# 6. R2 구하기
-from sklearn.metrics import r2_score
-r2 = r2_score(y_test, y_predict)
-print("R2 : ", r2)
-"""
+# # 5. RMSE 구하기
+# from sklearn.metrics import mean_squared_error
+# def RMSE(y_test, y_predict):
+#     return np.sqrt(mean_squared_error([y1_test, y2_test], y_predict))
+# print("RMSE : ", RMSE([y1_test, y2_test], y_predict))
+
+
+# # 6. R2 구하기
+# from sklearn.metrics import r2_score
+# r2 = r2_score(y_test, y_predict)
+# print("R2 : ", r2)
