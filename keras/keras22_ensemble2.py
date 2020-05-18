@@ -70,36 +70,38 @@ from keras.layers import Dense, Input          # Input = 함수형 모델 인풋
 # 2-1. 함수형 모델의 첫번째 모델
 """  summary() 시 출력되는 레이어의 이름 변경 ; name = '변경할 이름' """
 input1 = Input(shape = (2, ))    # 첫번째 인풋 레이어 구성 후 input1 변수에 할당
-dense1_1 = Dense(30, activation = 'relu')(input1)  # 첫번째 모델의 첫번째 히든레이어 구성
-dense1_2 = Dense(50, activation = 'relu')(dense1_1)  # 첫번째 모델의 두번째 히든레이어 구성
-dense1_3 = Dense(43, activation = 'relu')(dense1_2)
-dense1_4 = Dense(4)(dense1_3)
+dense1_1 = Dense(78, activation = 'relu')(input1)  # 첫번째 모델의 첫번째 히든레이어 구성
+dense1_2 = Dense(57, activation = 'relu')(dense1_1)  # 첫번째 모델의 두번째 히든레이어 구성
+dense1_3 = Dense(41, activation = 'relu')(dense1_2)
+dense1_4 = Dense(92)(dense1_3)
+dense1_5 = Dense(42)(dense1_4)
+dense1_6 = Dense(12)(dense1_5)
 
 # 2-2. 함수형 모델의 두번째 모델
 input2 = Input(shape = (2, ))
-dense2_1 = Dense(51, activation = 'relu')(input2)
+dense2_1 = Dense(72, activation = 'relu')(input2)
 dense2_2 = Dense(43, activation = 'relu')(dense2_1)
 dense2_3 = Dense(44, activation = 'relu')(dense2_2)
-dense2_4 = Dense(2)(dense2_3)
+dense2_4 = Dense(91)(dense2_3)
 
 # 2-3. 모델 병합
 from keras.layers.merge import concatenate       # 모델 병합 모듈 임포트 - concatenate ; '잇다, 일치시키다'
-merge1 = concatenate([dense1_4, dense2_4])    # 각 모델의 마지막 레이어 입력
-middle1 = Dense(10)(merge1)
-middle2 = Dense(21)(middle1)
-middle3 = Dense(34)(middle2)
+merge1 = concatenate([dense1_6, dense2_4])    # 각 모델의 마지막 레이어 입력
+middle1 = Dense(14)(merge1)
+middle2 = Dense(23)(middle1)
+middle3 = Dense(31)(middle2)
 
 # 2-4. 각 모델의 output레이어 구성
-output1 = Dense(10)(middle3)
-output1_2 = Dense(30)(output1)
+output1 = Dense(18)(middle3)
+output1_2 = Dense(31)(output1)
 output1_3 = Dense(2)(output1_2)
 
-output2 = Dense(10)(middle3)
-output2_2 = Dense(30)(output2)
+output2 = Dense(11)(middle3)
+output2_2 = Dense(67)(output2)
 output2_3 = Dense(2)(output2_2)
 
-output3 = Dense(10)(middle3)
-output3_2 = Dense(25)(output3)
+output3 = Dense(58)(middle3)
+output3_2 = Dense(26)(output3)
 output3_3 = Dense(2)(output3_2)
 
 model = Model(inputs = [input1, input2],
@@ -113,7 +115,7 @@ model.summary()  # 모델 요약표
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
 model.fit([x1_train, x2_train],
           [y1_train, y2_train, y3_train],
-          epochs = 20, batch_size = 4, validation_split = 0.25)
+          epochs = 50, batch_size = 1, validation_split = 0.25, verbose = 3)
 
 
 # 4. 평가 및 예측
