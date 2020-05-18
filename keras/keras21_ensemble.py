@@ -5,7 +5,7 @@ import numpy as np
 x1 = np.array([range(1, 101), range(311, 411), range(100)])
 y1 = np.array([range(711, 811), range(711, 811), range(100)])
 
-x2 = np.array([range(101, 101), range(411, 511), range(100, 200)])
+x2 = np.array([range(101, 201), range(411, 511), range(100, 200)])
 y2 = np.array([range(501, 601), range(711, 811), range(100)])
 
 # 1-1. 행과 열을 바꾸기 - 전치행렬 구하기
@@ -21,7 +21,7 @@ x1_train, x1_test, y1_train, y1_test = train_test_split(
 
 from sklearn.model_selection import train_test_split
 x2_train, x2_test, y2_train, y2_test = train_test_split(
-    x2, y2, test_size = 0.1, shuffle = False)
+    x2, y2, test_size = 0.2, shuffle = False)
 
 
 # 2. 모델 구성 - 함수형 모델
@@ -32,24 +32,39 @@ from keras.layers import Dense, Input
 # model.add(Dense(4))
 # model.add(Dense(1))
 
+# 2-1. 함수형 모델의 첫번째 모델
 input1 = Input(shape = (3, ))    # 첫번째 인풋 레이어 구성 후 input1 변수에 할당
-x = Dense(3, activation = 'relu')(input1)  # 첫번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
-x = Dense(4, activation = 'relu')(x)  # 두번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
-x = Dense(2, activation = 'relu')(x)  # 세번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
-x = Dense(5, activation = 'relu')(x)  # 네번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
-x = Dense(6, activation = 'relu')(x)  # 다섯번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
-x = Dense(4, activation = 'relu')(x)  # 여섯번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
-x = Dense(8, activation = 'relu')(x)  # 일곱번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
-x = Dense(4, activation = 'relu')(x)  # 여덟번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
-x = Dense(3, activation = 'relu')(x)  # 아홉번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
-x = Dense(1, activation = 'relu')(x) # 열번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
-output1 = Dense(1)(x)      # 아웃풋 레이어
+dense1_1 = Dense(3, activation = 'relu')(input1)  # 첫번째 모델의 첫번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
+dense1_2 = Dense(5, activation = 'relu')(dense1_1)  # 첫번째 모델의 두번째 히든레이어 구성
+dense1_3 = Dense(4)(dense1_2)
 
-model = Model(inputs = input1, outputs = output1)   # 함수형 모델 구성(인풋, 아웃풋 명시)
+# 2-2. 함수형 모델의 두번째 모델
+input2 = Input(shape = (3, ))
+dense2_1 = Dense(5, activation = 'relu')(input2)
+dense2_2 = Dense(4, activation = 'relu')(dense2_1)
+dense2_3 = Dense(2)(dense2_2)
+
+# 2-3. 모델 병합
+from keras.layers.merge import concatenate       # 모델 병합 모듈 임포트 - concatenate ; '잇다, 일치시키다'
+merge1 = concatenate([dense1_3, dense2_3])    # 각 모델의 마지막 레이어 입력
+middle1 = Dense(10)(merge1)
+middle2 = Dense(5)(middle1)
+
+# 2-4. 각 모델의 output레이어 구성
+output1 = Dense(10)(middle2)
+output1_2 = Dense(30)(output1)
+output1_3 = Dense(3)(output1_2)
+
+output2 = Dense(10)(middle2)
+output2_2 = Dense(30)(output2)
+output2_3 = Dense(3)(output2_2)
+
+model = Model(inputs = [input1, input2],
+              outputs = [output1_3, output2_3])   # 함수형 병합 모델 구성(인풋, 아웃풋 명시)
 
 model.summary()  # 모델 요약표
 
-
+"""
 # 3. 훈련
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
 model.fit(x_train, y_train, epochs = 100, batch_size = 1,
@@ -76,3 +91,4 @@ print("RMSE : ", RMSE(y_test, y_predict))
 from sklearn.metrics import r2_score
 r2 = r2_score(y_test, y_predict)
 print("R2 : ", r2)
+"""
