@@ -21,17 +21,17 @@ from keras.layers import Dense, Input
 # model.add(Dense(1))
 
 input1 = Input(shape = (3, ))    # 첫번째 인풋 레이어 구성 후 input1 변수에 할당
-dense1 = Dense(10, activation = 'relu')(input1)  # 첫번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
-dense2 = Dense(30, activation = 'relu')(dense1)  # 두번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
-dense3 = Dense(54, activation = 'relu')(dense2)  # 세번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
-dense4 = Dense(21, activation = 'relu')(dense3)  # 네번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
-dense5 = Dense(24, activation = 'relu')(dense4)  # 다섯번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
-dense6 = Dense(31, activation = 'relu')(dense5)  # 여섯번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
-dense7 = Dense(56, activation = 'relu')(dense6)  # 일곱번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
-dense8 = Dense(47, activation = 'relu')(dense7)  # 여덟번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
-dense9 = Dense(54, activation = 'relu')(dense8)  # 아홉번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
-dense10 = Dense(5, activation = 'relu')(dense9) # 열번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
-output1 = Dense(1)(dense10)      # 아웃풋 레이어
+x = Dense(3, activation = 'relu')(input1)  # 첫번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
+x = Dense(4, activation = 'relu')(x)  # 두번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
+x = Dense(2, activation = 'relu')(x)  # 세번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
+x = Dense(5, activation = 'relu')(x)  # 네번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
+x = Dense(6, activation = 'relu')(x)  # 다섯번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
+x = Dense(4, activation = 'relu')(x)  # 여섯번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
+x = Dense(8, activation = 'relu')(x)  # 일곱번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
+x = Dense(4, activation = 'relu')(x)  # 여덟번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
+x = Dense(3, activation = 'relu')(x)  # 아홉번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
+x = Dense(1, activation = 'relu')(x) # 열번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
+output1 = Dense(1)(x)      # 아웃풋 레이어
 
 model = Model(inputs = input1, outputs = output1)   # 함수형 모델 구성(인풋, 아웃풋 명시)
 
@@ -40,7 +40,7 @@ model.summary()  # 모델 요약표
 
 # 3. 훈련
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
-model.fit(x_train, y_train, epochs = 20, batch_size = 1,
+model.fit(x_train, y_train, epochs = 100, batch_size = 1,
           validation_split = 0.25, verbose = 1)
 
 
