@@ -23,17 +23,25 @@ from keras.layers import Dense, Input
 input1 = Input(shape = (3, ))    # 첫번째 인풋 레이어 구성 후 input1 변수에 할당
 dense1 = Dense(5, activation = 'relu')(input1)  # 첫번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
 dense2 = Dense(4, activation = 'relu')(dense1)  # 두번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
-output1 = Dense(1)(dense2)      # 아웃풋 레이어
+dense3 = Dense(9, activation = 'relu')(dense2)  # 세번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
+dense4 = Dense(4, activation = 'relu')(dense3)  # 네번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
+dense5 = Dense(5, activation = 'relu')(dense4)  # 다섯번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
+dense6 = Dense(7, activation = 'relu')(dense5)  # 여섯번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
+dense7 = Dense(6, activation = 'relu')(dense6)  # 일곱번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
+dense8 = Dense(7, activation = 'relu')(dense7)  # 여덟번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
+dense9 = Dense(7, activation = 'relu')(dense8)  # 아홉번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
+dense10 = Dense(9, activation = 'relu')(dense9) # 열번째 히든레이어 구성, 이전 레이어를 뒤에 명시해줌
+output1 = Dense(1)(dense10)      # 아웃풋 레이어
 
 model = Model(inputs = input1, outputs = output1)   # 함수형 모델 구성(인풋, 아웃풋 명시)
 
-model.summary()
+model.summary()  # 모델 요약표
 
 
 # 3. 훈련
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
 model.fit(x_train, y_train, epochs = 100, batch_size = 1,
-          validation_split = 0.25, verbose = 2)
+          validation_split = 0.25, verbose = 1)
 
 
 # 4. 평가 및 예측
