@@ -49,6 +49,7 @@ dense1_4 = Dense(21)(dense1_3)
 
 
 # 2-2. 모델 병합
+# 1 : 다 모델은 concatenate 사용하지 않음
 # from keras.layers.merge import concatenate       # 모델 병합 모듈 임포트 - concatenate ; '잇다, 일치시키다'
 # merge1 = concatenate(dense1_4)    # 각 모델의 마지막 레이어 입력
 # middle1 = Dense(29)(merge1)
