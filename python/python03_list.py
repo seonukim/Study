@@ -70,3 +70,13 @@ print(a.index(1))   # == a[1]
 # 1-5. insert()
 a.insert(0, 7.1)    # insert(삽입할 자리, 삽입할 숫자)
 print(a)    # [7.1, 4, 3, 2, 1]
+
+a.insert(3, 3)
+print(a)    # [7.1, 4, 3, 3, 2, 1]
+
+# 1-6. remove()     # remove() 지정한 원소를 삭제함
+a.remove(7.1)
+print(a)    # [4, 3, 3, 2, 1]
+
+a.remove(3)         # 지정한 원소가 하나 이상일 경우 앞에 위치한 원소부터 삭제
+print(a)    # [4, 3, 2, 1]
