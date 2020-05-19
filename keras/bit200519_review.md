@@ -1,7 +1,7 @@
 ## 2020.05.19 BIT Review
 
 ---
-- **MLP** - Multy Layer Perceptron; 다층 퍼셉트론
+- **MLP** - Multi Layer Perceptron; 다층 퍼셉트론
 함수형 모델로 구현
 print()의 모든 결과는 해당 코드 오른쪽에 res로 표기함.
 
