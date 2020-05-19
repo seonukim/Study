@@ -14,3 +14,4 @@ print(type(b))
 # print(a)
 
 print(a + b)
+print(a * 3)
