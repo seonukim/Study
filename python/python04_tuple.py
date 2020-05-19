@@ -16,4 +16,4 @@ print(type(b))
 print(a + b)
 print(a * 3)
 
-print(a - 3)
+# print(a - 3)    # TypeError: unsupported operand type(s) for -: 'tuple' and 'int'
