@@ -25,10 +25,12 @@ print(y1)
 # 1-2. 데이터 분할
 from sklearn.model_selection import train_test_split
 x1_train, x1_test, x2_train, x2_test = train_test_split(
-    x1, x2, test_size = 0.2, shuffle = False)
+    x1, x2, test_size = 0.2, shuffle = True,
+    random_state = 1234)
 
 y_train, y_test = train_test_split(
-    y1, test_size = 0.2, shuffle = False)
+    y1, test_size = 0.2, shuffle = True,
+    random_state = 1234)
 
 # print(x1_train.shape)
 # print("-" * 40)
@@ -51,28 +53,28 @@ from keras.layers import Dense, Input          # Input = 함수형 모델 인풋
 # 2-1. 함수형 모델의 첫번째 모델
 """  summary() 시 출력되는 레이어의 이름 변경 ; name = '변경할 이름' """
 input1 = Input(shape = (3, ))    # 첫번째 인풋 레이어 구성 후 input1 변수에 할당
-dense1_1 = Dense(18, activation = 'relu')(input1)  # 첫번째 모델의 첫번째 히든레이어 구성
-dense1_2 = Dense(17, activation = 'relu')(dense1_1)  # 첫번째 모델의 두번째 히든레이어 구성
-dense1_3 = Dense(18, activation = 'relu')(dense1_2)
-dense1_4 = Dense(21)(dense1_3)
+dense1_1 = Dense(181, activation = 'relu')(input1)  # 첫번째 모델의 첫번째 히든레이어 구성
+dense1_2 = Dense(175, activation = 'relu')(dense1_1)  # 첫번째 모델의 두번째 히든레이어 구성
+dense1_3 = Dense(189, activation = 'relu')(dense1_2)
+dense1_4 = Dense(211)(dense1_3)
 
 # 2-2. 함수형 모델의 두번째 모델
 input2 = Input(shape = (3, ))
-dense2_1 = Dense(13, activation = 'relu')(input2)
-dense2_2 = Dense(26, activation = 'relu')(dense2_1)
-dense2_3 = Dense(24, activation = 'relu')(dense2_2)
-dense2_4 = Dense(18)(dense2_3)
+dense2_1 = Dense(138, activation = 'relu')(input2)
+dense2_2 = Dense(262, activation = 'relu')(dense2_1)
+dense2_3 = Dense(243, activation = 'relu')(dense2_2)
+dense2_4 = Dense(187)(dense2_3)
 
 # 2-3. 모델 병합
 from keras.layers.merge import concatenate       # 모델 병합 모듈 임포트 - concatenate ; '잇다, 일치시키다'
 merge1 = concatenate([dense1_4, dense2_4])    # 각 모델의 마지막 레이어 입력
-middle1 = Dense(29)(merge1)
-middle2 = Dense(33)(middle1)
-middle3 = Dense(14)(middle2)
+middle1 = Dense(290)(merge1)
+middle2 = Dense(332)(middle1)
+middle3 = Dense(114)(middle2)
 
 # 2-4. 각 모델의 output레이어 구성
-output1 = Dense(31)(middle3)
-output2 = Dense(37)(output1)
+output1 = Dense(381)(middle3)
+output2 = Dense(317)(output1)
 output3 = Dense(3)(output2)
 
 model = Model(inputs = [input1, input2],
@@ -88,7 +90,7 @@ from keras.callbacks import EarlyStopping
 es = EarlyStopping(monitor = 'loss', mode = 'min', patience = 10)
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
 model.fit([x1_train, x2_train], y_train,
-          epochs = 10000, batch_size = 1, validation_split = 0.25, verbose = 1,
+          epochs = 10000, batch_size = 32, validation_split = 0.25, verbose = 1,
           callbacks = [es])
 
 
