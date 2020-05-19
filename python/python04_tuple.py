@@ -10,3 +10,7 @@ b = 1, 2, 3
 print(type(a))
 print(type(b))
 
+# a.remove(2)
+# print(a)
+
+print(a + b)
