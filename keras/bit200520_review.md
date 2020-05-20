@@ -86,6 +86,7 @@ model.add(Dense(1))
 즉, **input_shape = (3, 1) == [input_dim = 1, input_length = 3]**
 
 - 결과
+
 ![model.add(LSTM(10, activation = 'relu', input_shape = (3, 1)))의 결과](https://github.com/seonukim/Study/blob/master/keras/input_shape_res.png)
 
   ![model.add(LSTM(10, activation = 'relu', input_dim = 1, input_length = 3))](https://github.com/seonukim/Study/blob/master/keras/input_dim_length_res.png)
