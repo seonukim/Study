@@ -33,7 +33,7 @@ model.add(Dense(1))
 
 model.summary()
 
-'''
+
 # 3. 실행
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
 model.fit(x, y, epochs = 100, batch_size = 1)
@@ -45,4 +45,3 @@ print(x_input)
 
 y_hat = model.predict(x_input)
 print(y_hat)
-'''
