@@ -21,7 +21,8 @@ print(x.shape)
 
 # 3. 모델 구성
 model = Sequential()
-model.add(LSTM(10, activation = 'relu', input_shape = (3, 1)))
+#  model.add(LSTM(10, activation = 'relu', input_shape = (3, 1)))
+model.add(LSTM(10, activation = 'relu', input_dim = 1, input_length = 3))
 model.add(Dense(5))
 model.add(Dense(3))
 model.add(Dense(1))
@@ -29,6 +30,7 @@ model.add(Dense(1))
 model.summary()
 
 
+'''
 # 4. 모델 학습
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
 model.fit(x, y, epochs = 100, batch_size = 1)
@@ -42,3 +44,4 @@ print(x_input)
 
 y_hat = model.predict(x_input)
 print(y_hat)
+'''
