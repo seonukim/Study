@@ -2,7 +2,7 @@
 파이썬 - 함수
 '''
 # 함수를 정의하는 방법
-# def 함수명(자유롭게, 이해하기 쉽게)(인자):
+# def 함수명(자유롭게, 이해하기 쉽게)(매개변수):
 #     return 반환 값
 def sum1(a, b):
     return a + b
@@ -36,3 +36,12 @@ def sayYeh():
 
 aaa = sayYeh()
 print(aaa)
+
+def sum1(a, b, c):
+    return a + b + c
+
+a = 1
+b = 2
+c = 34
+d = sum1(a, b, c)
+print(d)
