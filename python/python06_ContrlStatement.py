@@ -89,4 +89,28 @@ card = 1
 if money >= 30000 or card == 1:
     print('한우 먹자')
 else:
-    print('라면 먹자') 
+    print('라면 먹자')
+
+##############################################
+# break, continue
+print("=" * 20 , "break", "=" * 20)
+jumsu = [90, 25, 67, 45, 80]
+number = 0
+for i in jumsu:
+    if i < 30:
+        break
+    if i >= 60:
+        print("경] 합격 [축")
+        number = number + 1
+print("합격인원 :", number, "명")
+
+print("=" * 20 , "continue", "=" * 20)
+jumsu = [90, 25, 67, 45, 80]
+number = 0
+for i in jumsu:
+    if i < 60:
+        continue
+    if i >= 60:
+        print("경] 합격 [축")
+        number = number + 1
+print("합격인원 :", number, "명")
