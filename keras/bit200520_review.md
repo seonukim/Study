@@ -114,6 +114,7 @@ parameter를 구하는 공식은 아래와 같다.
 ![그림](https://github.com/seonukim/Study/blob/master/keras/LSTM_structure.png)
 
 ##### 출처 : [RNN과 LSTM을 이해해보자!](https://ratsgo.github.io/natural%20language%20processing/2017/03/09/rnnlstm/)
+##### 출처 : [StackoverFlow](https://stackoverflow.com/questions/38080035/how-to-calculate-the-number-of-parameters-of-an-lstm-network)
 
 
 
