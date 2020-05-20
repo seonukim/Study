@@ -20,7 +20,8 @@ print(x.shape)
 
 # 2. 모델 구성
 model = Sequential()
-model.add(LSTM(10, activation = 'relu', input_shape = (3, 1)))      # column의 갯수와 몇개씩 잘라서 학습할 것인지
+# model.add(LSTM(10, activation = 'relu', input_shape = (3, 1)))      # column의 갯수와 몇개씩 자를 것인지
+model.add(LSTM(10, activation = 'relu', input_dim = 1, input_length = 3))
 model.add(Dense(5))
 model.add(Dense(6))
 model.add(Dense(7))
@@ -32,7 +33,7 @@ model.add(Dense(1))
 
 model.summary()
 
-
+'''
 # 3. 실행
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
 model.fit(x, y, epochs = 100, batch_size = 1)
@@ -44,3 +45,4 @@ print(x_input)
 
 y_hat = model.predict(x_input)
 print(y_hat)
+'''
