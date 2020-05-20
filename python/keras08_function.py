@@ -37,11 +37,11 @@ def sayYeh():
 aaa = sayYeh()
 print(aaa)
 
-def sum1(a, b, c):
+def sum2(a, b, c):
     return a + b + c
 
 a = 1
 b = 2
 c = 34
-d = sum1(a, b, c)
+d = sum2(a, b, c)
 print(d)
