@@ -86,7 +86,6 @@ model.add(Dense(1))
 즉, **input_shape = (3, 1) == [input_dim = 1, input_length = 3]**
 
 - 결과
-
 ![model.add(LSTM(10, activation = 'relu', input_shape = (3, 1)))의 결과](https://github.com/seonukim/Study/blob/master/keras/input_shape_res.png)
 
   ![model.add(LSTM(10, activation = 'relu', input_dim = 1, input_length = 3))](https://github.com/seonukim/Study/blob/master/keras/input_dim_length_res.png)
@@ -95,7 +94,25 @@ model.add(Dense(1))
 위에서 보다시피, model.summary()의 결과가 같다고 볼 수 있다.
 
 
+parameter를 구하는 공식은 아래와 같다.
+- ####[(output_nodes + input_dim + 1) * output_nodes] x 4
 
+위의 수식에서,
+
+###### 1. output_nodes = 10
+###### 2. input_dim    = 1
+###### 3. " + 1 "      = bias 를 나타내며,
+###### 4. " x 4 " 를 하는 이유는 아래와 같이 4개의 레이어로 이루어져 있기 때문이다.
+####### {1: 'Input Gate', 2: 'Forget Gate', 3: 'Output Gate', 4: 'Gate gate'}
+---
+여기에서,
+- forget gate는 '과거의 정보를 잊기 위한 게이트'
+- input gate는 '현재의 정보를 기억하기 위한 게이트'
+라고 이해할 수 있다.
+
+![그림](https://github.com/seonukim/Study/blob/master/keras/LSTM_structure.png)
+
+##### 출처 : [RNN과 LSTM을 이해해보자!](https://ratsgo.github.io/natural%20language%20processing/2017/03/09/rnnlstm/)
 
 
 
