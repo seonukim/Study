@@ -1,6 +1,8 @@
+# 앙상블 모델로 리뉴얼하시오.
+
 from numpy import array
 from keras.models import Sequential
-from keras.layers import Dense, LSTM, SimpleRNN
+from keras.layers import Dense, LSTM
 from keras.callbacks import EarlyStopping
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
@@ -10,13 +12,18 @@ sc = MinMaxScaler()
 scaler = StandardScaler()
 
 # 1. 데이터 구성
-x = array([[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6],
-           [5, 6, 7], [6, 7, 8], [7, 8, 9], [8, 9, 10],
-           [9, 10, 11], [10, 11, 12],
-           [20, 30, 40], [30, 40, 50], [40, 50, 60]])
-y = array([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 50, 60, 70])
+x1 = np.array([[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6],
+               [5, 6, 7], [6, 7, 8], [7, 8, 9], [8, 9, 10],
+               [9, 10, 11], [10, 11, 12],
+               [20, 30, 40], [30, 40, 50], [40, 50, 60]])
+x2 = np.array([[10, 20, 30], [20, 30, 40], [30, 40, 50], [40, 50, 60],
+               [50, 60, 70], [60, 70, 80], [70, 80, 90], [80, 90, 100],
+               [90, 100, 110], [100, 110, 120],
+               [2, 3, 4], [3, 4, 5], [4, 5, 6]])
 
-x_predict = array([50, 60, 70])
+y = np.array([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 50, 60, 70])
+
+x_predict = np.array([55, 65, 75])
 
 print("x.shape : ", x.shape)        # res : (13, 3)
 print("y.shape : ", y.shape)        # res : (13, )
@@ -58,7 +65,7 @@ input_length = timesteps, input_dim = feature
 
 # 2. 모델 구성
 model = Sequential()
-model.add(SimpleRNN(101, activation = 'tanh', input_length = 3, input_dim = 1))
+model.add(LSTM(101, activation = 'tanh', input_length = 3, input_dim = 1, use_bas = False))
 model.add(Dense(800))
 model.add(Dense(300))
 model.add(Dense(456))
