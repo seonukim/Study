@@ -21,6 +21,7 @@ print(x)
 model = Sequential()
 
 model.add(SimpleRNN(10, activation = 'relu', input_shape = (3, 1)))
+# model.add(SimpleRNN(10, activation = 'relu', input_length = 3, input_dim = 1))
 model.add(Dense(5))
 model.add(Dense(1))
 
