@@ -25,8 +25,10 @@ print("x1.shape : ", x1.shape)        # res : (13, 3)
 print("x2.shape : ", x2.shape)        # res : (13, 3)
 print("y.shape : ", y.shape)        # res : (13, )
 
+
 x1 = x1.reshape(x1.shape[0], x1.shape[1], 1)
 #                    13           3       1
+
 x2 = x2.reshape(x2.shape[0], x2.shape[1], 1)
 #                    13           3       1
 # print(x1.shape)
@@ -77,14 +79,11 @@ model.summary()
 # 3. 실행
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
 model.fit([x1, x2], y,
-          epochs = 10000, batch_size = 1,
-          callbacks = [early])
+          epochs = 1000, batch_size = 32)
+        #   callbacks = [early])
 
 x1_predict = x1_predict.reshape(1, 3, 1)
 x2_predict = x2_predict.reshape(1, 3, 1)
-
-# print(x1_predict.shape)
-# print(x2_predict.shape)
 
 
 # 4. 평가 및 예측
@@ -94,3 +93,21 @@ print(x2_predict)
 y_predict = model.predict([x1_predict, x2_predict])
 
 print(y_predict)
+
+'''
+[[[55]
+  [65]
+  [75]]]
+[[[65]
+  [75]
+  [85]]]
+[[84.22178]]
+
+[[84.29394]]
+
+[[82.02529]]
+
+[[83.22624]]
+
+[[79.748474]]
+'''
