@@ -75,7 +75,7 @@ model.add(Dense(1))
 
 model.summary()
 
-'''
+
 # 3. 실행
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
 model.fit(x, y,
@@ -93,4 +93,3 @@ print(x_predict)
 
 y_predict = model.predict(x_predict)
 print(y_predict)
-'''

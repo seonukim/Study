@@ -1,15 +1,10 @@
 # 앙상블 모델로 리뉴얼하시오.
-
-from numpy import array
-from keras.models import Sequential
-from keras.layers import Dense, LSTM
+import numpy as np
+from keras.models import Sequential, Model
+from keras.layers import Dense, LSTM, Input
 from keras.callbacks import EarlyStopping
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.preprocessing import StandardScaler
+from keras.layers import concatenate
 early = EarlyStopping(monitor = 'loss', mode = 'min', patience = 10)
-sc = MinMaxScaler()
-scaler = StandardScaler()
 
 # 1. 데이터 구성
 x1 = np.array([[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6],
@@ -23,81 +18,79 @@ x2 = np.array([[10, 20, 30], [20, 30, 40], [30, 40, 50], [40, 50, 60],
 
 y = np.array([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 50, 60, 70])
 
-x_predict = np.array([55, 65, 75])
+x1_predict = np.array([55, 65, 75])
+x2_predict = np.array([65, 75, 85])
 
-print("x.shape : ", x.shape)        # res : (13, 3)
+print("x1.shape : ", x1.shape)        # res : (13, 3)
+print("x2.shape : ", x2.shape)        # res : (13, 3)
 print("y.shape : ", y.shape)        # res : (13, )
 
-x = x.reshape(x.shape[0], x.shape[1], 1)
-#                13           3       1
-
-# x = sc.fit_transform(x)
-# y = sc.fit_transform(y)
-
-# print(x)
-# print(y)
-
-'''
-                행          열          몇개씩 자르는지
-x의 shape = (batch_size, timesteps, feature)
-batch_size = 행을 기준으로 자름
-feature = 원소 하나하나 자름
-
-input_shape = (timesteps, feature)
-input_length = timesteps, input_dim = feature
-'''
-
-# print(x.shape)
-'''reshape 후 검산을 해야함 -> 모두 곱해서 reshape 전후가 같은 값이 나오면 문제 없음'''
-
-# 1-2.  데이터 분할
-# x_train, x_test, y_train, y_test = train_test_split(
-#     x, y, test_size = 0.2, shuffle = True,
-#     random_state = 1234)
-
-# print(x_train.shape)
-# print(y_train.shape)
-# print(x_test.shape)
-# print(y_test.shape)
-
-
+x1 = x1.reshape(x1.shape[0], x1.shape[1], 1)
+#                    13           3       1
+x2 = x2.reshape(x2.shape[0], x2.shape[1], 1)
+#                    13           3       1
+# print(x1.shape)
+# print(x2.shape)
 
 
 # 2. 모델 구성
-model = Sequential()
-model.add(LSTM(101, activation = 'tanh', input_length = 3, input_dim = 1, use_bas = False))
-model.add(Dense(800))
-model.add(Dense(300))
-model.add(Dense(456))
-model.add(Dense(504))
-# model.add(Dense(80))
-# model.add(Dense(60))
-# model.add(Dense(40))
-# model.add(Dense(80))
-# model.add(Dense(30))
-# model.add(Dense(50))
-# model.add(Dense(80))
-# model.add(Dense(30))
-model.add(Dense(1))
+# 2-1. 인풋 레이어
+input1 = Input(shape = (3, 1))
+dense1 = LSTM(150)(input1)
+dense1_1 = Dense(81)(dense1)
+dense1_2 = Dense(88)(dense1_1)
+dense1_3 = Dense(98)(dense1_2)
+dense1_4 = Dense(48)(dense1_3)
+dense1_5 = Dense(86)(dense1_4)
+
+# 2-2 인풋 레이어
+input2 = Input(shape = (3, 1))
+dense2 = LSTM(194)(input2)
+dense2_1 = Dense(488)(dense2)
+dense2_2 = Dense(815)(dense2_1)
+dense2_3 = Dense(128)(dense2_2)
+dense2_4 = Dense(83)(dense2_3)
+dense2_5 = Dense(88)(dense2_4)
+
+# 2-3. 레이어 병합
+merge1 = concatenate([dense1_5, dense2_5])
+middle1 = Dense(51)(merge1)
+middle2 = Dense(95)(middle1)
+middle3 = Dense(58)(middle2)
+middle4 = Dense(54)(middle3)
+
+# 2-4. 아웃풋 레이어
+output1 = Dense(50)(middle4)
+output2 = Dense(148)(output1)
+output3 = Dense(16)(output2)
+output4 = Dense(168)(output3)
+output5 = Dense(1)(output4)
+
+# 2-5. 모델링
+model = Model(inputs = [input1, input2],
+              outputs = output5)
 
 model.summary()
 
-'''
+
+
 # 3. 실행
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
-model.fit(x, y,
-          epochs = 10000, batch_size = 2,
+model.fit([x1, x2], y,
+          epochs = 10000, batch_size = 1,
           callbacks = [early])
 
-x_predict = x_predict.reshape(1, 3, 1)
+x1_predict = x1_predict.reshape(1, 3, 1)
+x2_predict = x2_predict.reshape(1, 3, 1)
+
+# print(x1_predict.shape)
+# print(x2_predict.shape)
 
 
 # 4. 평가 및 예측
-# res = model.evaluate(x_test, y_test, batch_size = 1)
-# print(res)
+print(x1_predict)
+print(x2_predict)
 
-print(x_predict)
+y_predict = model.predict([x1_predict, x2_predict])
 
-y_predict = model.predict(x_predict)
 print(y_predict)
-'''
