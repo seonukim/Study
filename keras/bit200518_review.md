@@ -6,7 +6,7 @@
 - **[keras.layers.merge.concatenate]** 모듈로 2개의 데이터셋을 merge 할 수 있음
 
 <예제 코드 - 1. 1 대 1 모델>
-```
+```python
 # 1. 모듈 임포트
 from keras.models import Sequential, Model
 from keras.layers import Dense, Input
@@ -123,7 +123,7 @@ print("R2 : ", (r2_1 + r2_2) / 2)
 ```
 
 <예제 코드 - 2. 다 : 다 모델>
-```
+```python
 """ 2020.05.18 수업 내용 복습하기 """
 """ 다 : 다 모델 """
 

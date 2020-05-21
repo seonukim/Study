@@ -7,7 +7,7 @@ print()의 모든 결과는 해당 코드 오른쪽에 res로 표기함.
 
 #### 첫번째 : 각 데이터의 입력 차원이 같은 경우
 
-```
+```python
 # 1. 사전 준비
 # 1-1. 모듈 임포트
 from keras.models import Sequential, Model
@@ -124,7 +124,7 @@ print("R2 : ", r2_score(y_test, y_predict))     # res = 0.9995895059223002
 ```
 
 #### 두번째 : 각 데이터의 입력 차원이 다른 경우, input = 3, output = 1
-```
+```python
 # 1. 사전 준비
 # 1-1. 모듈 임포트
 from keras.models import Sequential, Model
@@ -225,7 +225,7 @@ print("R2 : ", r2_score(y_test, y_predict))     # res : 0.9997902745495719
 ```
 
 #### 세번째 : 각 데이터의 입력 차원이 다른 경우, input = 1, output = 3
-```
+```python
 # 1. 사전 준비
 # 1-1. 모듈 임포트
 from keras.models import Sequential, Model

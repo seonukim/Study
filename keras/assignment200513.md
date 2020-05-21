@@ -7,7 +7,7 @@ R2를 0 < R2 <= 0.5로 줄이자.
 레이어는 인풋과 아웃풋을 포함하여 5개 이상, 노드는 레이어 당 5개 이상.
 batch_size = 1로 고정
 epochs = 100 이상
-```
+```python
 # 1. 데이터
 import numpy as np
 x_train = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
