@@ -5,8 +5,6 @@ from keras.layers import Dense, LSTM
 # 1. 데이터 구성
 x = array([[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6]])
 y = array([4, 5, 6, 7])
-# y2 = array([[4, 5, 6, 7]])            # res : (1, 4)
-# y3 = array([[4], [5], [6], [7]])      # res : (4, 1)
 
 print("x.shape : ", x.shape)        # res : (4, 3)
 print("y.shape : ", y.shape)        # res : (4, )
@@ -42,10 +40,12 @@ model.summary()
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
 model.fit(x, y, epochs = 100, batch_size = 1)
 
-x_input = array([5, 6, 7])
-x_input = x_input.reshape(1, 3, 1)
+x_predict = array([5, 6, 7])
+x_predict = x_predict.reshape(1, 3, 1)
 
-print(x_input)
 
-y_hat = model.predict(x_input)
-print(y_hat)
+# 4. 예측
+print(x_predict)
+
+y_predict = model.predict(x_predict)
+print(y_predict)
