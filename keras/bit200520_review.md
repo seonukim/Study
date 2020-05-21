@@ -104,7 +104,7 @@ parameter를 구하는 공식은 아래와 같다.
 ###### 2. input_dim    = 1
 ###### 3. " + 1 "      = bias 를 나타내며,
 ###### 4. " x 4 " 를 하는 이유는 아래와 같이 4개의 레이어로 이루어져 있기 때문이다.
-####### {1: 'Input Gate', 2: 'Forget Gate', 3: 'Output Gate', 4: 'Gate gate'}
+###### {1: 'Input Gate', 2: 'Forget Gate', 3: 'Output Gate', 4: 'Gate gate'}
 ---
 여기에서,
 - forget gate는 '과거의 정보를 잊기 위한 게이트'
