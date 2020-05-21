@@ -28,7 +28,9 @@ model.add(Dense(500))
 model.add(Dense(500))
 model.add(Dense(3))
 
+model.summary()
 
+'''
 # 3. 훈련
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
 model.fit(x_train, y_train, epochs = 100, batch_size = 1,
@@ -57,3 +59,4 @@ r2 = r2_score(y_test, y_predict)
 print("R2 : ", r2)
 
 print(x_train)
+'''

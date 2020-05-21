@@ -14,6 +14,16 @@ print("y.shape : ", y.shape)        # res : (4, )
 # x = x.reshape(4, 3, 1)
 x = x.reshape(x.shape[0], x.shape[1], 1)
 #                 4           3       1
+'''
+                행          열          몇개씩 자르는지
+x의 shape = (batch_size, timesteps, feature)
+batch_size = 행을 기준으로 자름
+feature = 원소 하나하나 자름
+
+input_shape = (timesteps, feature)
+input_length = timesteps, input_dim = feature
+'''
+
 print(x.shape)
 '''reshape 후 검산을 해야함 -> 모두 곱해서 reshape 전후가 같은 값이 나오면 문제 없음'''
 
@@ -27,7 +37,7 @@ model.add(Dense(1))
 
 model.summary()
 
-'''
+
 # 3. 실행
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
 model.fit(x, y, epochs = 100, batch_size = 1)
@@ -39,4 +49,3 @@ print(x_input)
 
 y_hat = model.predict(x_input)
 print(y_hat)
-'''
