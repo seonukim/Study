@@ -21,8 +21,8 @@ print(x.shape)
 # 2. 모델 구성
 model = Sequential()
 # model.add(LSTM(10, activation = 'relu', input_shape = (3, 1)))      # column의 갯수와 몇개씩 자를 것인지
-model.add(LSTM(10, input_length = 3, input_dim = 1))
-model.add(Dense(5))
+model.add(LSTM(5, input_length = 3, input_dim = 1))
+model.add(Dense(3))
 model.add(Dense(1))
 
 model.summary()

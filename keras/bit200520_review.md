@@ -18,7 +18,7 @@ ex) [[1, 2, 3], [4, 5, 6]]  ->   (2, 3)의 차원을 갖는 배열
 
 
 #### <LSTM 기초 예제 코드 -1>
-```
+```python
 '''LSTM(장단기 메모리; Long Short-Term Memory)'''
 
 # 1. 모듈 임포트
@@ -69,7 +69,7 @@ print(y_hat)
 ## LSTM의 Parameter 갯수에 대하여.
 ---
 
-```
+```python
 # (1)
 model = Sequential()
 model.add(LSTM(10, activation = 'relu', input_shape = (3, 1)))
