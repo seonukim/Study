@@ -96,7 +96,7 @@ model.add(Dense(1))
 
 
 parameter를 구하는 공식은 아래와 같다.
-- ####[(output_nodes + input_dim + 1) * output_nodes] x 4
+- #### [(output_nodes + input_dim + 1) * output_nodes] x 4
 
 위의 수식에서,
 
