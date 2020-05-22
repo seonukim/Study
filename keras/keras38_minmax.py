@@ -5,14 +5,15 @@
 from keras.models import Sequential, Model
 from keras.layers import Dense, LSTM, Input, Flatten
 from keras.callbacks import EarlyStopping
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler
 import numpy as np
 
 # 1-1. 객체 생성
 early = EarlyStopping(monitor = 'loss', mode = 'min', patience = 10)
-scaler = MinMaxScaler()
-standard = StandardScaler
+# scaler = MinMaxScaler()       # 최소/최대값이 0, 1이 되도록 스케일링
+scaler = StandardScaler()     # 평균이 0이고 표준편차가 1인 정규분포가 되도록 스케일링
+# scaler = MaxAbsScaler()       # 최대절대값과 0이 각각 1, 0이 되도록 스케일링
+# scaler = RobustScaler()         # 중위수와 4분위수 사용하여 이상치의 영향을 최소화함
 
 
 # 2. 데이터 준비
@@ -24,27 +25,34 @@ x = np.array([[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6],
               [100, 200, 300]])
 y = np.array([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 5000, 6000, 7000, 400])
 
-x_predict = np.array([55, 65, 75])
+x_predict = np.array([[55, 65, 75]])
 
 scaler.fit(x)   # 실행하다
 x = scaler.transform(x)
+x_predict = scaler.transform(x_predict)
 print(x)
+print(x_predict)
+
+x = x.reshape(14, 3, 1)
+x_predict = x_predict.reshape(1, 3, 1)
 
 
-print("x의 차원 : ", x.shape)                   # (14, 3)
-print("y의 차원 : ", y.shape)                   # (14, )
-print("x_predict 차원 : ", x_predict.shape)    # (3, )
+# print("x의 차원 : ", x.shape)                   # (14, 3)
+# print("y의 차원 : ", y.shape)                   # (14, )
+# print("x_predict 차원 : ", x_predict.shape)     # (3, )
+
 
 
 # 2-1. 입력 데이터 reshape
-x = x.reshape(14, 3, 1)
-x_predict = x_predict.reshape(1, 3, 1)
+# x = x.reshape(14, 3, 1)
+# x_predict = x_predict.reshape(1, 3, 1)
 
 # print("x_reshape : ", x.shape)
 # print("x_predict_reshape : ", x_predict.shape)
 
-'''
+
 # 3. 모델 구성
+'''
 # LSTM(return_sequences) _ Sequential 모델
 model = Sequential()
 model.add(LSTM(10, activation = 'relu', input_length = 3, input_dim = 1,
@@ -64,7 +72,7 @@ model.add(Dense(5))
 model.add(Dense(1))
 
 model.summary()
-
+'''
 
 # LSTM(return_sequences) _ 함수형 모델
 input1 = Input(shape = (3, 1))
@@ -98,4 +106,3 @@ y_predict = model.predict(x_predict)
 
 print(x_predict)
 print(y_predict)
-'''
