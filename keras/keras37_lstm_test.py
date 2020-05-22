@@ -40,16 +40,16 @@ x_predict = x_predict.reshape(1, 3, 1)
 # LSTM(return_sequences) _ Sequential 모델
 '''
 model = Sequential()
-model.add(LSTM(30, activation = 'relu',
+model.add(LSTM(300, activation = 'relu',
                input_length = 3, input_dim = 1,
                return_sequences = True))
 model.add(LSTM(10, return_sequences = True))
 model.add(LSTM(30, return_sequences = True))
 model.add(LSTM(40, return_sequences = True))
 model.add(LSTM(20))
-model.add(Dense(23))
-model.add(Dense(21))
-model.add(Dense(18))
+model.add(Dense(230))
+model.add(Dense(20))
+model.add(Dense(180))
 model.add(Dense(14))
 model.add(Dense(1))
 
@@ -59,27 +59,27 @@ model.summary()
 
 # LSTM(return_sequences) _ 함수형 모델
 input1 = Input(shape = (3, 1))
-dense1 = LSTM(50, return_sequences = True)(input1)
+dense1 = LSTM(60, return_sequences = True)(input1)
 dense2 = LSTM(40, return_sequences = True)(dense1)
-dense3 = LSTM(49, return_sequences = True)(dense2)
-dense4 = LSTM(68, return_sequences = True)(dense3)
-dense5 = LSTM(32)(dense4)
-dense6 = Dense(18)(dense5)
-dense7 = Dense(15)(dense6)
-dense8 = Dense(58)(dense7)
-dense9 = Dense(32)(dense8)
-dense10 = Dense(15)(dense9)
+dense3 = LSTM(40, return_sequences = True)(dense2)
+dense4 = LSTM(60, return_sequences = True)(dense3)
+dense5 = LSTM(30)(dense4)
+# dense6 = Dense(10)(dense5)
+# dense7 = Dense(50)(dense6)
+# dense8 = Dense(80)(dense7)
+# dense9 = Dense(20)(dense8)
+dense10 = Dense(10)(dense5)
 
-output1 = Dense(3)(dense10)
-output2 = Dense(16)(output1)
+output1 = Dense(30)(dense10)
+output2 = Dense(60)(output1)
 output3 = Dense(10)(output2)
-output4 = Dense(14)(output3)
-output5 = Dense(8)(output4)
-output6 = Dense(91)(output5)
-output7 = Dense(11)(output6)
-output8 = Dense(15)(output7)
-output9 = Dense(7)(output8)
-output10 = Dense(1)(output9)
+output4 = Dense(40)(output3)
+# output5 = Dense(80)(output4)
+# output6 = Dense(90)(output5)
+# output7 = Dense(10)(output6)
+# output8 = Dense(50)(output7)
+# output9 = Dense(90)(output8)
+output10 = Dense(1)(output4)
 
 
 model = Model(inputs = input1,
@@ -91,7 +91,7 @@ model.summary()
 # 4. 실행
 model.compile(loss = 'mse', metrics = ['mse'], optimizer = 'adam')
 model.fit(x, y,
-          epochs = 10000, batch_size = 10,
+          epochs = 10000, batch_size = 8,
           callbacks = [early])
 
 # 5. 예측

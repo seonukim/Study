@@ -38,6 +38,10 @@ model = Sequential()
 
 model.add(Dense(30, activation = 'relu', input_shape = (3, )))
 model.add(Dense(15))
+model.add(Dense(15))
+model.add(Dense(15))
+model.add(Dense(15))
+model.add(Dense(15))
 model.add(Dense(1))
 
 model.summary()
