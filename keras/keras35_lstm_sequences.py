@@ -1,3 +1,4 @@
+# keras35_lstm_sequences.py
 # EarlyStopping을 적용하여 함수형 모델을 리모델링하시오
 
 # 1. 모듈 임포트
@@ -30,20 +31,46 @@ print("x_reshape : ", x.shape)
 print("x_predict_reshape : ", x_predict.shape)
 
 # 3. 모델 구성
-input1 = Input(shape = (3, 1))
-dense2 = LSTM(10)(input1)
-dense3 = Dense(8)(dense2)
-dense4 = Dense(8)(dense3)
-dense5 = Dense(8)(dense4)
-
-output1 = Dense(7)(dense5)
-output2 = Dense(5)(output1)
-output3 = Dense(1)(output2)
-
-model = Model(inputs = input1,
-              outputs = output3)
+# LSTM(return_sequences) _ Sequential 모델
+'''
+model = Sequential()
+model.add(LSTM(30, activation = 'relu', input_length = 3, input_dim = 1,
+               return_sequences = True))
+model.add(LSTM(27, return_sequences = True))
+model.add(LSTM(24, return_sequences = True))
+model.add(LSTM(24))
+model.add(Dense(25))
+model.add(Dense(23))
+model.add(Dense(21))
+model.add(Dense(18))
+model.add(Dense(14))
+model.add(Dense(11))
+model.add(Dense(18))
+model.add(Dense(1))
 
 model.summary()
+'''
+
+# LSTM(return_sequences) _ 함수형 모델
+input1 = Input(shape = (3, 1))
+dense1 = LSTM(51, return_sequences = True)(input1)
+dense2 = LSTM(48, return_sequences = True)(dense1)
+dense3 = LSTM(49)(dense2)
+dense4 = Dense(45)(dense3)
+dense5 = Dense(45)(dense4)
+dense6 = Dense(45)(dense5)
+dense7 = Dense(45)(dense6)
+
+output1 = Dense(31)(dense7)
+output2 = Dense(16)(output1)
+output3 = Dense(1)(output2)
+output4 = Dense(1)(output3)
+output5 = Dense(1)(output4)
+output6 = Dense(1)(output5)
+
+model = Model(inputs = input1,
+              outputs = output6)
+
 
 # 4. 실행
 model.compile(loss = 'mse', metrics = ['mse'], optimizer = 'adam')
@@ -55,5 +82,4 @@ model.fit(x, y,
 y_predict = model.predict(x_predict)
 
 print(x_predict)
-
 print(y_predict)
