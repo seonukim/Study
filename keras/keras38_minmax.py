@@ -25,8 +25,11 @@ x = np.array([[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6],
               [100, 200, 300]])
 y = np.array([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 5000, 6000, 7000, 400])
 
-x_predict = np.array([[55, 65, 75]])
+x_predict = np.array([55, 65, 75])
 
+x_predict=x_predict.reshape(1, x_predict.shape[0])
+print(x_predict.shape)
+'''
 scaler.fit(x)   # 실행하다
 x = scaler.transform(x)
 x_predict = scaler.transform(x_predict)
@@ -53,6 +56,7 @@ x_predict = x_predict.reshape(1, 3, 1)
 
 # 3. 모델 구성
 '''
+'''
 # LSTM(return_sequences) _ Sequential 모델
 model = Sequential()
 model.add(LSTM(10, activation = 'relu', input_length = 3, input_dim = 1,
@@ -72,8 +76,9 @@ model.add(Dense(5))
 model.add(Dense(1))
 
 model.summary()
-'''
 
+'''
+'''
 # LSTM(return_sequences) _ 함수형 모델
 input1 = Input(shape = (3, 1))
 dense1 = LSTM(51, return_sequences = True)(input1)
@@ -106,3 +111,4 @@ y_predict = model.predict(x_predict)
 
 print(x_predict)
 print(y_predict)
+'''
