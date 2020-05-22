@@ -98,7 +98,7 @@ model = Model(inputs = input1,
 # 4. 실행
 model.compile(loss = 'mse', metrics = ['mse'], optimizer = 'adam')
 model.fit(x, y,
-          epochs = 10000, batch_size = 10,
+          epochs = 10000, batch_size = 1,
           callbacks = [early])
 
 # 5. 예측
