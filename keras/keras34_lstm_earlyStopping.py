@@ -22,6 +22,7 @@ print("x의 차원 : ", x.shape)
 print("y의 차원 : ", y.shape)
 print("x 예측값의 차원 : ", x_predict.shape)
 
+'''
 # 2-1. 입력 데이터 reshape
 x = x.reshape(13, 3, 1)
 x_predict = x_predict.reshape(1, 3, 1)
@@ -57,3 +58,4 @@ y_predict = model.predict(x_predict)
 print(x_predict)
 
 print(y_predict)
+'''

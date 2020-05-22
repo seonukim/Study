@@ -32,7 +32,12 @@ print("x_predict_reshape : ", x_predict.shape)
 
 # 3. 모델 구성
 # LSTM(return_sequences) _ Sequential 모델
-'''
+# return_sequences 파라미터를 넣지 않고 에러가 나는 이유
+# LSTM은 3차원의 배열을 넣어줘야 하는데, (batch_size, timesteps, features)
+# 우리가 입력한 차원은 2차원이다. ; Dense(row, column) -> 2차원
+# return_sequences는 이전 차원을 그대로 유지해주는 기능을 하는 parameter이다.
+# return_sequences의 값은 boolean, True of False
+# ValueError: Input 0 is incompatible with layer lstm_2: expectied ndim=3, found ndim=2
 model = Sequential()
 model.add(LSTM(30, activation = 'relu', input_length = 3, input_dim = 1,
                return_sequences = True))
@@ -49,8 +54,8 @@ model.add(Dense(18))
 model.add(Dense(1))
 
 model.summary()
-'''
 
+'''
 # LSTM(return_sequences) _ 함수형 모델
 input1 = Input(shape = (3, 1))
 dense1 = LSTM(51, return_sequences = True)(input1)
@@ -70,8 +75,8 @@ output6 = Dense(1)(output5)
 
 model = Model(inputs = input1,
               outputs = output6)
-
-
+'''
+'''
 # 4. 실행
 model.compile(loss = 'mse', metrics = ['mse'], optimizer = 'adam')
 model.fit(x, y,
@@ -83,3 +88,4 @@ y_predict = model.predict(x_predict)
 
 print(x_predict)
 print(y_predict)
+'''

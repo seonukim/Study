@@ -25,7 +25,7 @@ print("x1.shape : ", x1.shape)        # res : (13, 3)
 print("x2.shape : ", x2.shape)        # res : (13, 3)
 print("y.shape : ", y.shape)        # res : (13, )
 
-
+'''
 x1 = x1.reshape(x1.shape[0], x1.shape[1], 1)
 #                    13           3       1
 
@@ -93,7 +93,7 @@ print(x2_predict)
 y_predict = model.predict([x1_predict, x2_predict])
 
 print(y_predict)
-
+'''
 '''
 [[[55]
   [65]

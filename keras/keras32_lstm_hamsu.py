@@ -17,6 +17,7 @@ y = np.array([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 50, 60, 70])
 
 x_predict = np.array([50, 60, 70])
 
+'''
 # print("x.shape : ", x.shape)        # res : (13, 3)
 # print("y.shape : ", y.shape)        # res : (13, )
 print(x.shape)
@@ -62,6 +63,7 @@ y_predict = model.predict(x_predict)
 print(y_predict)
 
 
+'''
 '''
 from numpy import array
 from keras.models import Model
