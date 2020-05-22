@@ -19,17 +19,15 @@ x = np.array([[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6],
               [20, 30, 40], [30, 40, 50], [40, 50, 60]])
 y = np.array([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 50, 60, 70])
 
-x_predict = np.array([50, 60, 70])
+x_predict = np.array([55, 65, 75])
 
 print("x의 차원 : ", x.shape)
 print("y의 차원 : ", y.shape)
 print("x 예측값의 차원 : ", x_predict.shape)
 
-'''
 # 2-1. 입력 데이터 reshape
 x = x.reshape(13, 3, 1)
 x_predict = x_predict.reshape(1, 3, 1)
-'''
 
 # print("x_reshape : ", x.shape)
 # print("x_predict_reshape : ", x_predict.shape)
@@ -45,8 +43,8 @@ return_sequences의 값은 boolean, True of False
 ValueError: Input 0 is incompatible with layer lstm_2: expectied ndim=3, found ndim=2
 '''
 model = Sequential()
-model.add(LSTM(10, activation = 'relu', input_length = 3, input_dim = 1,
-               return_sequences = True))
+model.add(LSTM(10, activation = 'relu', return_sequences = True,
+               input_length = 3, input_dim = 1))
 model.add(LSTM(10, return_sequences = False))
 '''해당 레이어의 아웃풋 노드는 해당 아웃풋 레이어의 차원의 feature가 된다'''
 '''증폭된 feature의 갯수는 아웃풋 노드의 갯수와 같다'''
