@@ -26,9 +26,10 @@ x = np.array([[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6],
 y = np.array([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 5000, 6000, 7000, 400])
 
 x_predict = np.array([55, 65, 75])
-
+'''
 x_predict=x_predict.reshape(1, x_predict.shape[0])
 print(x_predict.shape)
+'''
 '''
 scaler.fit(x)   # 실행하다
 x = scaler.transform(x)
