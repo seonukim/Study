@@ -73,7 +73,7 @@ plt.plot(xs, [normal_cdf(x, sigma = 0.5) for x in xs], ':' ,label = 'mu = 0, sig
 plt.plot(xs, [normal_cdf(x, mu = -1) for x in xs], '-.' ,label = 'mu = -1, sigma = 1')
 plt.legend(loc = 4) # bottom right
 plt.title("Various Normal cdfs")
-# plt.show()
+plt.show()
 
 # 특정 확률을 갖는 확률변수의 값을 찾기 위해 normal_cdf의 역함수
 # 누적 분포 함수가 연속 및 증가 함수라는 점을 고려하여 이진 검색을 사용해 값을 구할 수 있음
@@ -83,7 +83,7 @@ def inverse_normal_cdf(p: float,
                        tolerance: float = 0.00001) -> float:
     """이진 검색을 사용해서 역함수를 근사"""
 
-    # if not standard, compute standard and rescale
+    # 표준정규분포가 아니라면 표준정규분포로 
     if mu != 0 or sigma != 1:
         return mu + sigma * inverse_normal_cdf(p, tolerance = tolerance)
 
