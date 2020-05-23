@@ -66,3 +66,32 @@ def dot(v: Vector, w: Vector) -> float:
     return sum(v_i * w_i for v_i, w_i in zip(v, w))
 
 assert dot([1, 2, 3], [4, 5, 6]) == 32    # 1 * 4 + 2 * 5 + 3 * 6
+
+# 내적의 개념을 사용하여 각 성분으 제곱 값의 합 구하기
+def sum_of_squares(v: Vector) - > float:
+    """v_1 * v_1 + ... + v_n * v_n"""
+    return dot(v, v)
+
+assert sum_of_squares([1, 2, 3]) == 14      # 1 * 1 + 2 * 2 + 3 * 3
+
+# 제곱 값의 합을 이용하여 벡터의 크기 구하기
+import math
+
+def magnitude(v: Vector) -> float:
+    """벡터 v의 크기를 반환"""
+    return math.sqrt(sum_of_squares(v))     # math.sqrt()는 루트 계산
+
+assert magnitude([3, 4]) == 5
+
+# 두 벡터 간의 거리
+def squared_distance(v: Vector, w: Vector) -> float:
+    """(v_1 - w_1) ** 2 + ... + (v_n - w_n) ** 2"""
+    return sum_of_squares(subtract(v, w))
+
+def distance(v: Vector, w: Vector) -> float:
+    """벡터 v와 w간의 거리 계산"""
+    return math.sqrt(squared_distance(v, w))
+
+# 더욱 깔끔한 코드
+def distance(v: Vector, w: Vector -> float:
+    return magnitude(subtract(v, w))
