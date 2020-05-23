@@ -95,3 +95,62 @@ def distance(v: Vector, w: Vector) -> float:
 # 더욱 깔끔한 코드
 def distance(v: Vector, w: Vector -> float:
     return magnitude(subtract(v, w))
+
+             
+# Chapter 04 _ 4.2 행렬
+# 행렬은 2차원으로 구성된 숫자의 집합
+# 리스트의 리스트로 표현 가능
+# 리스트 안의 리스트들은 행(row)를 나타내며 모두 같은 길이를 가짐
+
+# 타입 명시를 위한 별칭
+Matrix = List[List[float]]
+
+A = [[1, 2, 3],
+     [4, 5, 6]]     # A는 2행 3열
+
+B = [[1, 2],
+     [3, 4],
+     [5, 6]]        # B는 3행 2열
+
+from typing import Tuple
+
+def shape(A: Matrix) -> Tuple[int, int]:
+    """(열의 개수, 행의 개수)를 반환"""
+    num_rows = len(A)
+    num_cols = len(A[0]) if A else 0    # 첫 번째 행의 원소의 개수
+    return num_rows, num_cols
+assert shape([1, 2, 3], [4, 5, 6]) == (2, 3)       # 2행 3열
+
+def get_row(A: Matrix, i = int) -> Vector:
+    """A의 i번째 행을 반환"""
+    return A[i]
+
+def get_column(A: Matrix, j: int) -> Vector:
+    """A의 j번째 열을 반환"""
+    return [A_i[j],
+            for A_i in A]
+
+# 형태에 맞는 행렬 생성 후 각 원소를 채워주는 함수
+from typing import Callable
+
+def make_matrix(num_rows: int,
+                num_cols: int,
+                entry_fn: Callable[[int, int], float]) -> Matrix:
+    """
+    (i, j)번째 원소가 entry_fn(i, j)인
+    num_rows x num_cols 리스트를 반환
+    """
+    return [[entry_fn(i, j)
+            for j in range(num_cols)]
+            for i in range(num_rows)]
+
+# 단위행렬 함수
+def identify_matrix(n: int) -> Matrix:
+    """n x n 단위 행렬을 반환"""
+    return make_matrix(n, n, lambda i, j: 1 if i == j else 0)
+
+assert identify_matrix(5) == [[1, 0, 0, 0, 0],
+                              [0, 1, 0, 0, 0],
+                              [0, 0, 1, 0, 0],
+                              [0, 0, 0, 1, 0],
+                              [0, 0, 0, 0, 1]]
