@@ -172,4 +172,104 @@ upper_p_value(526.5, mu_0, sigma_0)     # 0.047
 
 
 # Chapter 07 _ 7.4 신뢰구간
-#
+# 사건에 대한 분포를 모를 때, 관측된 값에 대한 '신뢰구간'을 사용하여
+# 가설을 검정함
+math.sqrt(p * (1 - p) / 1000)
+
+# 동전을 1,000번 던져서 앞면이 525번 나온 경우
+p_hat = 525 / 1000
+mu = p_hat
+sigma = math.sqrt(p_hat * (1 - p_hat) / 1000)       # 0.0158
+normal_two_sided_bounds(0.95, mu, sigma)            # [0.4940, 0.5560]
+
+# 동전을 1,000번 던져서 앞면이 540번 나온 경우
+p_hat = 540 / 1000
+mu = p_hat
+sigma = math.sqrt(p_hat * (1 - p_hat) / 1000)       # 0.0158
+normal_two_sided_bounds(0.95, mu, sigma)            # [0.5091, 0.5709]
+
+
+# Chapter 07 _ 7.5 p 해킹
+# 귀무가설을 잘못 기각하는 경우가 5%인 가설 검정은
+# 정의에서 알 수 있듯, 모든 경우의 5%에서 귀무가설을 잘못 기각함
+from typing import List
+
+def run_experiment() -> List[bool]:
+    # 동전을 1000번 던져서 True = 앞, False = 뒷면
+    return [random.random() < 0.5 for _ in range(1000)]
+
+def reject_fairness(experiment: List[bool]) -> bool:
+    # 신뢰구간을 5%로 설정
+    num_heads = len([flip for flip in experiment if flip])
+    return num_heads < 469 or num_heads > 531
+
+random.seed(0)
+experiments = [run_experiment() for _ in range(1000)]
+num_rejections = len([experiment
+                      for experiment in experiments
+                      if reject_fairness(experiment)])
+
+assert num_rejections == 46
+
+# 즉 "의미 있는" 결과를 찾으려면 보통 의미 있는 결과를 찾을 수 있다는 것
+# 주어진 데이터에 대해 다양한 가설들을 검정하다 보면
+# 이중 하나는 반드시 의미 있는 가설로 보일 수 있다
+# 여기서 적절히 이상치를 제거하면 0.05 이하의 p-value를 구할 수 있을 것이다
+# 이렇게 p-value의 관점에서 추론을 하면 'p 해킹'이 발생할 수 있다
+# 예로, "지구는 둥글다"라는 기사는 이러한 p 해킹의 문제점을 잘 설명해줌
+"""
+데이터 과학을 잘하기 위한 세 가지
+1) 가설은 데이터를 보기 전에 세운다
+2) 데이터를 전처리 할 때는 세워둔 가설을 잠시 잊는다
+3) p-value가 전부는 아니다(대안으로 베이즈 추론을 사용할 수 있음)
+"""
+
+
+# Chapter 07 _ 7.6 예시: A/B test 해보기
+# 예로, 광고 A와 광고 B가 있을 때
+# 광고 A를 본 1000명 중 990명이 광고를 클릭했고
+# 광고 B를 본 1000명 중 10명이 광고를 클릭했따면 명백히 광고 A가 더 좋지만
+# 이러한 명확한 차이가 없다면 통계적 추론을 통해 인사이트를 얻어야 한다
+
+# NA명의 사용자가 광고 A를 보았고, 그중 nA명이 광고를 클릭함
+# 각 사용자가 광고를 보고 클릭하는 것을 베르누이 시행으로 볼 수 있고
+# 각 사용자가 광고 A를 클릭할 확률을 pA라고 정의
+# 그렇다면, nA/NA는 평균이 pA이고 표준편차가 sigmaA = sqrt(p * (1 - p) / NA)
+# 위와 같은 정규분포에 근접함
+# 광고 B의 경우도 같다
+# 만약 두 정규분포가 독립이라면, 두 정규분포의 차이 또한 평균이 pB - pA이고
+# 표준편차가 sqrt(sigmaA^2 + sigmaB^2)인 정규분포를 따르게 된다
+def estimated_parameters(N: int, n: int) -> Tuple[float, float]:
+    p = n / N
+    sigma = math.sqrt(p * (1 - p) / N)
+    return p, sigma
+
+# pA와 pB가 같다는(즉, pA - pB = 0) 귀무가설은 다음의 통계치로 검정 가능
+def a_b_test_statistics(N_A: int, n_A: int, N_B: int, n_B: int) -> float:
+    p_A, sigma_A = estimated_parameters(N_A, n_A)
+    p_B, sigma_B = estimated_parameters(N_B, n_B)
+    return (p_B - p_A) / math.sqrt(sigma_A ** 2 + sigma_B ** 2)
+
+# 위 식은 대략 표준정규분포를 따름
+
+z = a_b_test_statistics(1000, 200, 1000, 180)   # -1.14
+two_sided_p_value(z)                            # 0.254
+
+z = a_b_test_statistics(1000, 200, 1000, 150)   # -2.94
+two_sided_p_value(z)                            # 0.003
+
+
+# Chapter 07 _ 7.7 베이즈 추론
+# 알려지지 않은 파라미터를 확률변수로 보는 방법
+# 사전분포가 주어지고, 관측된 데이터와 베이즈 정리를 사용하여 사후분포를 갱신할 수 있다
+def B(alphaL: float, beta: float) -> float:
+    """모든 확률값의 합이 1이 되도록 해주는 정규화 값"""
+    return math.gamma(alpah) * math.gamma(beta) / math.gamma(alpha + beta)
+
+def beta_pdf(x: float, alpha: float, beta: float) -> float:
+    if x <= 0 or x >= 1:        # [0, 1] 구간 밖에서는 밀도가 없다
+        return 0
+    return x ** (alpha - 1) * (1 - x) ** (beta - 1) / B(alpha, beta)
+
+# 일반적으로 베타분포의 중심은 다음과 같다
+alpha / (alpha + beta)
