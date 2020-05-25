@@ -12,6 +12,7 @@ from keras.layers import LSTM, Input, Dense
 from keras.callbacks import EarlyStopping, TensorBoard
 from sklearn.model_selection import train_test_split
 import numpy as np
+import matplotlib.pyplot as plt
 
 # 1-1. 객체 생성
 es = EarlyStopping(monitor = 'loss', mode = 'min', patience = 10)
@@ -110,3 +111,11 @@ print("mse : ", mse)
 pred = model.predict(x_pred, batch_size = 1)
 print("=" * 40)
 print("pred : \n", pred) 
+
+# 6. 주요 지표 시각화
+plt.plot(hist.history['loss'])
+plt.title('loss & acc')
+plt.ylabel('loss, acc')
+plt.xlabel('epoch')
+plt.legend(['train loss', 'val loss', 'train acc', 'val acc'])
+plt.show()
