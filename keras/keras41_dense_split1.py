@@ -45,18 +45,17 @@ print(y)
 
 
 # 2. 모델 구성
-'''
+
 model = Sequential()
-model.add(LSTM(10, activation = 'relu',
-               input_length = 4, input_dim = 1))
+model.add(Dense(activation = 'relu', input_length = 4, input_dim = 1))
 model.add(Dense(13, activation = 'relu'))
 model.add(Dense(15, activation = 'relu'))
 model.add(Dense(12, activation = 'relu'))
 model.add(Dense(1))
 
 model.summary()
-'''
 
+'''
 input1 = Input(shape = (4, 1))
 dense1 = LSTM(10, activation = 'relu', return_sequences = True)(input1)
 dense2 = LSTM(10, activation = 'relu', return_sequences = True)(dense1)
@@ -70,7 +69,7 @@ output3 = Dense(1)(output2)
 model = Model(inputs = input1, outputs = output3)
 
 model.summary()
-
+'''
 
 # 3. 훈련
 model.compile(loss = 'mse', metrics = ['mse'], optimizer = 'adam')
@@ -84,7 +83,3 @@ print("mse : ", mse)
 y_predict = model.predict(x, batch_size = 1)
 print("=" * 40)
 print("y_predict : \n", y_predict)
-
-
-# loss :  0.00020573670917656273
-# mse  :  0.00020573670917656273
