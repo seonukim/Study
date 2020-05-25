@@ -45,38 +45,23 @@ print(y)
 
 
 # 2. 모델 구성
-input1 = Input(shape = (4, 1))
-dense1 = LSTM(10, activation = 'relu', return_sequences = True)(input1)
-dense2 = LSTM(10, activation = 'relu', return_sequences = True)(dense1)
-dense3 = LSTM(8, activation = 'relu')(dense2)
-dense4 = Dense(8, activation = 'relu')(dense3)
-dense5 = Dense(7, activation = 'relu')(dense4)
-dense6 = Dense(9, activation = 'relu')(dense5)
+from keras.models import load_model
+model_1 = load_model('.\model\save_keras44.h5')
 
-output1 = Dense(8)(dense6)
-output2 = Dense(9)(output1)
-output3 = Dense(10)(output2)
-output4 = Dense(15)(output3)
-output5 = Dense(3)(output4)
-output6 = Dense(2)(output5)
-output7 = Dense(1)(output6)
 
-model = Model(inputs = input1, outputs = output7)
-
-model.summary()
-
+model_1.summary()
 
 # 3. 훈련
-model.compile(loss = 'mse', metrics = ['mse'], optimizer = 'adam')
-model.fit(x, y, epochs = 1000, batch_size = 1, verbose = 1, callbacks = [es])
+model_1.compile(loss = 'mse', metrics = ['mse'], optimizer = 'adam')
+model_1.fit(x, y, epochs = 1000, batch_size = 1, verbose = 1, callbacks = [es])
 
 
 # 4. 실행
-loss, mse = model.evaluate(x, y)
+loss, mse = model_1.evaluate(x, y)
 print("loss : ", loss)
 print("mse : ", mse)
 
-y_predict = model.predict(x, batch_size = 1)
+y_predict = model_1.predict(x, batch_size = 1)
 print("=" * 40)
 print("y_predict : \n", y_predict)
 
