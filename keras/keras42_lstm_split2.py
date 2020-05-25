@@ -31,13 +31,14 @@ def split_x(seq, size):
 # 실습2. 마지막 6행을 predict로 만들고 싶다
 # 실습3. validation을 넣을 것 (train의 20%)
 data = split_x(a, size)
+print(data)
 
 # 1-2-1. predict 데이터 분할
 predict = data[90: , :4]
 print(predict)
+
 predict = predict.reshape(6, 4, 1)
 print(predict.shape)
-
 
 # 1-2-2. train, test 데이터 분할
 x = data[:90, :4]
@@ -46,7 +47,6 @@ print(x)
 print(x.shape)
 print(y)
 print(y.shape)
-
 
 x = x.reshape(90, 4, 1)
 print(x.shape)
@@ -59,7 +59,6 @@ print(x_train.shape)
 print(x_test.shape)
 print(y_train)
 print(y_test)
-
 
 
 # 2. 모델 구성
@@ -86,8 +85,10 @@ model.summary()
 
 # 3. 실행 및 훈련
 model.compile(loss = 'mse', metrics = ['mse'], optimizer = 'adam')
-model.fit(x_train, y_train, epochs = 1000, batch_size = 1, verbose = 1,
-          callbacks = [es], validation_split = 0.25)
+model.fit(x_train, y_train, epochs = 1000,
+          batch_size = 1, verbose = 1,
+          callbacks = [es], validation_split = 0.25,
+          shuffle = True)
 
 
 # 4. 평가 및 예측
@@ -110,4 +111,16 @@ mse  :  0.20829731225967407
 Result 2)
 loss :  1.17920982837677
 mse  :  1.17920982837677
+
+
+Result 3)
+loss :  0.008472939021885395
+mse  :  0.008472939021885395
+y_predict :
+ [[94.94735 ]
+  [95.95467 ]
+  [96.96222 ]
+  [97.96997 ]
+  [98.977905]
+  [99.98599 ]]
 '''

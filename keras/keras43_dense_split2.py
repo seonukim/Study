@@ -63,14 +63,14 @@ print(y_test)
 
 # 2. 모델 구성
 model = Sequential()
-model.add(Dense(10, activation = 'relu', input_dim = 4))
-model.add(Dense(13, activation = 'relu'))
-model.add(Dense(15, activation = 'relu'))
-model.add(Dense(12, activation = 'relu'))
-model.add(Dense(13, activation = 'relu'))
-model.add(Dense(11, activation = 'relu'))
-model.add(Dense(9, activation = 'relu'))
-model.add(Dense(8, activation = 'relu'))
+model.add(Dense(100, activation = 'relu', input_dim = 4))
+model.add(Dense(103, activation = 'relu'))
+model.add(Dense(150, activation = 'relu'))
+model.add(Dense(120, activation = 'relu'))
+model.add(Dense(131, activation = 'relu'))
+model.add(Dense(113, activation = 'relu'))
+model.add(Dense(90, activation = 'relu'))
+model.add(Dense(88, activation = 'relu'))
 model.add(Dense(12, activation = 'relu'))
 model.add(Dense(1))
 
@@ -79,8 +79,10 @@ model.summary()
 
 # 3. 실행 및 훈련
 model.compile(loss = 'mse', metrics = ['mse'], optimizer = 'adam')
-model.fit(x_train, y_train, epochs = 1000, batch_size = 1, verbose = 1,
-          callbacks = [es], validation_split = 0.25)
+model.fit(x_train, y_train, epochs = 1000,
+          batch_size = 10, verbose = 1,
+          callbacks = [es], validation_split = 0.25,
+          shuffle = True)
 
 
 # 4. 평가 및 예측
@@ -92,3 +94,29 @@ y_predict = model.predict(predict, batch_size = 1)
 print("=" * 40)
 print("y_predict : \n", y_predict)
 print(y_predict.shape)
+
+
+'''
+Result 1)
+loss :  0.16902431845664978
+mse  :  0.16902431845664978
+y_predict :
+ [[94.38897 ]
+  [95.38563 ]
+  [96.38222 ]
+  [97.378845]
+  [98.37548 ]
+  [99.372116]]
+
+
+Result 2)
+loss :  0.0013877046294510365
+mse  :  0.0013877046294510365
+y_predict :
+ [[94.9642  ]
+  [95.96612 ]
+  [96.96803 ]
+  [97.969955]
+  [98.97188 ]
+  [99.97378 ]]
+'''
