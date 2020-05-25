@@ -5,7 +5,7 @@ from keras.models import Sequential, Model
 from keras.layers import Dense, LSTM, Input
 from keras.callbacks import EarlyStopping
 # from sklearn.model_selection import train_test_split
-es = EarlyStopping(monitor = 'loss', mode = 'min', patience = 10)
+es = EarlyStopping(monitor = 'loss', mode = 'auto', patience = 10)
 
 # 1. 데이터
 a = np.array(range(1, 11))
@@ -43,9 +43,6 @@ print("=" * 40)
 print(y.shape)
 print(y)
 
-# x_predict = 
-
-
 
 # 2. 모델 구성
 '''
@@ -80,5 +77,10 @@ model.compile(loss = 'mse', metrics = ['mse'], optimizer = 'adam')
 model.fit(x, y, epochs = 1000, batch_size = 1, verbose = 1, callbacks = [es])
 
 # 4. 실행
+loss, mse = model.evaluate(x, y)
+print("loss : ", loss)
+print("mse : ", mse)
+
 y_predict = model.predict(x, batch_size = 1)
-print(y_predict)
+print("=" * 40)
+print("y_predict : \n", y_predict)
