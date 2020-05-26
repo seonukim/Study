@@ -10,19 +10,22 @@ import numpy as np
 
 # 1-1. 조기종료 객체 생성
 es = EarlyStopping(monitor = 'loss', mode = 'min', patience = 10)
+def sigmoid(z):
+    return 1.0 / (1.0 + np.exp(-z))
 
 # 2. 데이터
 x = np.array(range(1, 11))
 y = np.array([1, 0 ,1, 0, 1, 0, 1, 0, 1, 0])
+y = sigmoid(y)
 print(x.shape)
 print(y.shape)
 
 # 3. 모델 구성
 model = Sequential()
 model.add(Dense(100, input_shape = (1, ), activation = 'relu'))
-model.add(Dense(50, activation = 'relu'))
-model.add(Dense(20, activation = 'relu'))
-model.add(Dense(10, activation = 'relu'))
+model.add(Dense(50))
+model.add(Dense(20))
+model.add(Dense(10))
 model.add(Dense(1, activation = 'sigmoid'))
 '''
 분류모형의 활성화 함수 - 마지막 아웃풋 레이어에 추가
@@ -50,7 +53,7 @@ print("loss : ", loss)
 print("acc : ", acc)
 
 x_pred = np.array([1, 2, 3])
-pred = model.predict(x_pred)
+pred = model.predict(x_pred).reshape(3, )
 print("pred : \n", pred)
 
 
@@ -73,14 +76,24 @@ print("pred : \n", pred)
 
 '''
 pred :
- [[0.52978766]
-  [0.5066741 ]
-  [0.483532  ]
-  [0.4604602 ]
-  [0.43755686]
-  [0.41491616]
-  [0.39262962]
-  [0.3707816 ]
-  [0.34944952]
-  [0.32870376]]     # 0.5를 기준으로 0, 1로 분류
+ [[0.5392872]
+  [0.5209384]
+  [0.5024807]]     # 0.5를 기준으로 0, 1로 분류
+'''
+# tmp = []
+# a = np.round(pred[0][0])
+# b = np.round(pred[1][0])
+# c = np.round(pred[2][0])
+# print(a)
+# print(b)
+# print(c)
+# tmp.append([a, b, c])
+# print(tmp)
+'''
+for i in pred:
+    if i >= 0.5:
+        pred[i] = 1
+    else:
+        pred[i] = 0
+print(pred)
 '''
