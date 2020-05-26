@@ -28,16 +28,16 @@ y = y[:, 1:]
 
 # print(x)
 print(x.shape)
-# print(y)
+print(y)
 print(y.shape)
 
 
 # 3. 모델 구성
 input1 = Input(shape = (1, ))
 dense1 = Dense(10, activation = 'relu')(input1)
-dense2 = Dense(10, activation = 'relu')(dense1)
-dense3 = Dense(10, activation = 'relu')(dense2)
-dense4 = Dense(10, activation = 'relu')(dense3)
+dense2 = Dense(10)(dense1)
+dense3 = Dense(10)(dense2)
+dense4 = Dense(10)(dense3)
 
 output1 = Dense(10)(dense4)
 output2 = Dense(5, activation = 'softmax')(output1)
@@ -63,6 +63,6 @@ y_pred = model.predict(x_pred)
 
 # 디코딩
 y_pred = np.argmax(y_pred, axis = 1).reshape(-1, )
-print("y_pred : \n", y_pred)
+print("y_pred : \n", y_pred + 1)
 
 
