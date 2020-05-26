@@ -5,6 +5,7 @@
 from keras.models import Sequential, Model
 from keras.layers import Dense, LSTM, Input
 from keras.callbacks import EarlyStopping
+from keras.losses import binary_crossentropy
 import numpy as np
 
 # 1-1. 조기종료 객체 생성
