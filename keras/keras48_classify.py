@@ -1,7 +1,7 @@
 '''20200526 분류모델'''
 
 # 회귀모델을 먼저 구현해보자.
-# 1. 사전준비
+# 1. 모듈 임포트
 from keras.models import Sequential, Model
 from keras.layers import Dense, LSTM, Input
 from keras.callbacks import EarlyStopping
