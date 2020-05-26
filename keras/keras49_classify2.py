@@ -64,3 +64,5 @@ y_pred = model.predict(x_pred)
 # 디코딩
 y_pred = np.argmax(y_pred, axis = 1).reshape(-1, )
 print("y_pred : \n", y_pred)
+
+
