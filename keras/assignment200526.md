@@ -55,3 +55,36 @@ y_pred :
  [1 1 1 1 2]
 '''
 ```
+___
+#### 과제 3) Conv2D의 parameter 갯수 계산법
+```python
+from keras.models import Sequential
+from keras.layers import Conv2D
+from keras.layers import MaxPooling2D, Dense, Flatten
+
+model = Sequential()
+model.add(Conv2D(10, (2, 2), input_shape = (10, 10, 1)))
+model.add(Conv2D(7, (3, 3)))
+model.add(Conv2D(5, (2, 2), padding = 'same'))
+model.add(Conv2D(5, (2, 2)))
+model.add(MaxPooling2D(pool_size = 2))
+model.add(Flatten())
+model.add(Dense(1))
+
+model.summary()
+```
+![conv2d](https://github.com/seonukim/Study/blob/master/keras/Conv2D.png)
+
+
+위와 같은 model.summary() 결과가 출력되는데,
+Conv2D 파라미터의 계산법은 아래와 같다.
+
+###### (필터 크기) x 입력 채널 x 아웃풋 노트 + bias
+위의 예에서는, 첫번째 레이어의 파라미터가 50인데 이것은
+
+(2 x 2) x 1 x 10 + 10 == 50
+위와 같은 결과에 의해서 나온 것이다.
+여기서 각각 (2 x 2) = kernel_size
+	  	   1 = input_shape()의 마지막 인자인 channels
+      	   10 = 아웃풋
+      	   10 = bias 를 의미한다
