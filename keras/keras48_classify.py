@@ -39,4 +39,4 @@ print("loss : ", loss)
 print("mse : ", mse)
 
 pred = model.predict(x)
-print("pred : ", pred)
+print("pred : \n", pred)
