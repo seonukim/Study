@@ -19,10 +19,10 @@ print(y.shape)
 
 # 3. 모델 구성
 model = Sequential()
-model.add(Dense(10, input_shape = (1, )))
-model.add(Dense(10))
-model.add(Dense(13))
-model.add(Dense(12))
+model.add(Dense(100, input_shape = (1, ), activation = 'relu'))
+model.add(Dense(50, activation = 'relu'))
+model.add(Dense(20, activation = 'relu'))
+model.add(Dense(10, activation = 'relu'))
 model.add(Dense(1, activation = 'sigmoid'))
 '''
 분류모형의 활성화 함수 - 마지막 아웃풋 레이어에 추가
@@ -40,16 +40,17 @@ model.fit(x, y, epochs = 1000,
 분류모형의 손실함수
 1. Cross-Entropy Loss
 2. Categorical Cross-Entropy Loss
-3. Binary Cross-Entropy Loss
+3. Binary Cross-Entropy Loss        - 이진분류 모델은 딱 이거 하나 !!
 4. Focal loss (함수로 구현해서 사용)
 '''
 
 # 5. 평가 및 예측
-loss, acc = model.evaluate(x, y)
+loss, acc = model.evaluate(x, y, batch_size = 1)
 print("loss : ", loss)
 print("acc : ", acc)
 
-pred = model.predict(x)
+x_pred = np.array([1, 2, 3])
+pred = model.predict(x_pred)
 print("pred : \n", pred)
 
 
