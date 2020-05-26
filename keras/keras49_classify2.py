@@ -14,6 +14,7 @@ y = np.array([1, 2 ,3, 4, 5, 1, 2, 3, 4, 5])
 print(x.shape)
 print(y.shape)
 
+'''
 # 3. 모델 구성
 model = Sequential()
 model.add(Dense(100, input_shape = (1, ), activation = 'relu'))
@@ -40,3 +41,4 @@ print("acc : ", acc)
 x_pred = np.array([1, 2, 3, 4, 5])
 y_pred = model.predict(x_pred)
 print("y_pred : \n", y_pred)
+'''
