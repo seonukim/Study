@@ -4,8 +4,7 @@ from keras.models import Sequential
 from keras.layers import Conv2D         # Convolution; 합성곱
 
 model = Sequential()
-model.add(Conv2D(10, (2, 2), padding = 'same',
-                 input_shape = (10, 10, 1)))
+model.add(Conv2D(10, (2, 2), input_shape = (10, 10, 1)))
 '''
 10 : 첫 번째 레이어의 아웃풋
 (2, 2) : 가로, 세로
@@ -13,8 +12,8 @@ input_shape = (10, 10, 1) ; 가로, 세로, 흑백여부(1 or 3, 3 : color), 행
 x = (10000, 10, 10, 1)
      행    가로 세로 명암(특성)        -> CNN : 4차원, 장수는 무시!
 '''
-model.add(Conv2D(7, (2, 2), padding = 'same'))
-model.add(Conv2D(5, (2, 2), padding = 'same'))
+model.add(Conv2D(7, (2, 2)))
+model.add(Conv2D(5, (2, 2)))
 
 model.summary()
 
