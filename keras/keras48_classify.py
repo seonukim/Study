@@ -89,11 +89,10 @@ pred :
 # print(c)
 # tmp.append([a, b, c])
 # print(tmp)
-'''
-for i in pred:
+
+for i in range(len(pred)):
     if i >= 0.5:
         pred[i] = 1
     else:
         pred[i] = 0
 print(pred)
-'''

@@ -3,6 +3,7 @@ ___
 
 #### 과제 1) predict값을 0, 1이 나오도록 유도
 ```python
+# 방법 1)
 tmp = []
 a = np.round(pred[0][0])
 b = np.round(pred[1][0])
@@ -12,6 +13,14 @@ print(b)
 print(c)
 tmp.append([a, b, c])
 print(tmp)
+
+# 방법 2) : 제어문 이용
+for i in range(len(pred)):
+    if i >= 0.5:
+        pred[i] = 1
+    else:
+        pred[i] = 0
+print(pred)
 ```
 ___
 
