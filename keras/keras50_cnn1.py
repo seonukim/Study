@@ -4,7 +4,7 @@ from keras.models import Sequential
 from keras.layers import Conv2D         # Convolution; 합성곱
 
 model = Sequential()
-model.add(Conv2D(10, (2, 2), input_shape = (10, 10, 1)))
+model.add(Conv2D(10, (2, 2), input_shape = (10, 10, 1), padding = 'valid'))
 '''
 10 : 첫 번째 레이어의 아웃풋
 (2, 2) : 가로, 세로
