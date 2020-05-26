@@ -18,25 +18,43 @@ print(x.shape)
 
 # 3. 모델 구성
 model = Sequential()
-model.add(Dense(10, input_shape = (1, ), activation = 'relu'))
-model.add(Dense(10, activation = 'relu'))
-model.add(Dense(13, activation = 'relu'))
-model.add(Dense(12, activation = 'relu'))
-model.add(Dense(1, activation = 'relu'))
+model.add(Dense(10, input_shape = (1, )))
+model.add(Dense(10))
+model.add(Dense(13))
+model.add(Dense(12))
+model.add(Dense(1, activation = 'sigmoid'))
 
 # input1 = Input(shape = ())
 
 model.summary()
 
 # 4. 실행 및 훈련
-model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
+model.compile(loss = 'binary_crossentropy', optimizer = 'adam', metrics = ['acc'])
 model.fit(x, y, epochs = 1000,
-                 batch_size = 1, callbacks = [es])
+          batch_size = 1, callbacks = [es])
 
 # 5. 평가 및 예측
-loss, mse = model.evaluate(x, y)
+loss, acc = model.evaluate(x, y)
 print("loss : ", loss)
-print("mse : ", mse)
+print("acc : ", acc)
 
 pred = model.predict(x)
 print("pred : \n", pred)
+
+
+# 기본적인 분류모델
+# 결과치가 2가지로만 나오는 모델
+# 이진 분류 모델 - Binary Classification Model
+# activation 활성화 함수 - sigmoid
+# 분류모형의 손실함수
+# 1. Cross-Entropy Loss
+# 2. Categorical Cross-Entropy Loss
+# 3. Binary Cross-Entropy Loss
+# 4. Focal loss (함수로 구현해서 사용)
+# def focal_loss(gamma = 2., alpha = .25):
+#     def focal_loss_fixed(y_true, y_pred):
+#         pt_1 = tf.where(tf.equal(y_true, 1), y_pred, tf.ones_like(y_pred))
+#         pt_0 = tf.where(tf.equal(y_true, 0), y_pred, tf.zeros_like(y_pred))
+#         return -K.mean(alpha * K.pow(1. - pt_1, gamma) * K.log(pt_1))
+#                         - K.mean((1 - alpha) * K.pow(pt_0, gamma) * K.log(1. - pt_0))
+#     return focal_loss_fixed
