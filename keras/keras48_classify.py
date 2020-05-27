@@ -29,7 +29,7 @@ model.add(Dense(10))
 model.add(Dense(1, activation = 'sigmoid'))
 '''
 분류모형의 활성화 함수 - 마지막 아웃풋 레이어에 추가
-1. sigmoid
+1. sigmoid`
 2. hard_sigmoid
 3. softmax
 '''

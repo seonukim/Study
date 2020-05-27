@@ -37,5 +37,5 @@ Conv2D의 파라미터
     - 'valid' : 유효한 영역만 출력, 출력 이미지 사이즈는 입력 사이즈보다 작음(default)
     - 'same' : 출력 이미지 사이즈가 입력 이미지 사이즈와 동일함
 6) 우선순위 : strides > padding
+7) num of params = (input x kernel x kernel + bias) x output
 '''
-
