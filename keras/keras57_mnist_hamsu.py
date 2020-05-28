@@ -51,7 +51,6 @@ model = Model(inputs = input1, outputs = output6)
 
 model.summary()
 
-
 # 3. 컴파일 및 실행
 model.compile(loss = 'binary_crossentropy',
               metrics = ['accuracy'],
