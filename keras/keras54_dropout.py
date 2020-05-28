@@ -80,14 +80,3 @@ print("res : ", res)
 # 0.9922000169754028
 # 0.9912999868392944
 # 0.9943000078201294
-
-res = model.predict()
-res = np.argmax(res, axis = 1)
-
-submit = pd.read_csv("C:/Users/bitcamp/Downloads/sample_submission.csv", index_col= False)
-
-print(submit)
-
-submit["Label"] = res
-
-print(submit.shape)
