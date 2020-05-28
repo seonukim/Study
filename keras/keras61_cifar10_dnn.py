@@ -39,7 +39,7 @@ layer6 = Dropout(rate = 0.25)(layer5)
 
 layer7 = Flatten()(layer6)
 layer8 = Dense(64, activation = 'relu')(layer7)
-layer9 = Dense(128, activation = 'relu')(layer8)
+layer9 = Dense(64, activation = 'relu')(layer8)
 layer10 = Dense(10, activation = 'softmax')(layer9)
 
 model = Model(inputs = input1, outputs = layer10)
@@ -52,12 +52,12 @@ model.compile(loss = 'categorical_crossentropy',
               metrics = ['accuracy'],
               optimizer = 'adam')
 hist = model.fit(x_train, y_train, callbacks = [es],
-                 epochs = 100, batch_size = 86,
-                 validation_split = 0.1, verbose = 1)
+                 epochs = 100, batch_size = 512,
+                 validation_split = 0.05, verbose = 1)
 
 print(hist.history.keys())
 
 
 # 4. 평가 및 예측
-res = model.evaluate(x_test, y_test, batch_size = 86)
+res = model.evaluate(x_test, y_test, batch_size = 512)
 print(res)
