@@ -11,10 +11,10 @@ es = EarlyStopping(monitor = 'val_loss', mode = 'min', patience = 10)
 
 # 1. 데이터
 (x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()
-print(x_train.shape)
-print(x_test.shape)
-print(y_train.shape)
-print(y_test.shape)
+print(x_train.shape)            # (60000, 28, 28)
+print(x_test.shape)             # (10000, 28, 28)
+print(y_train.shape)            # (60000,)
+print(y_test.shape)             # (10000,)
 
 # 1-1. 정규화
 x_train = x_train.reshape(-1, 28, 28).astype('float32') / 255.0
@@ -60,6 +60,7 @@ print("Loss : ", res[0])
 print("Accuracy : ", res[1])
 
 '''
+34번째 epoch에서 종료 되었으며, 결과는 아래와 같음
 Loss :  0.34962257936000823
 Accuracy :  0.8790000081062317
 '''

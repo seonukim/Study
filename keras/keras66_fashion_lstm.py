@@ -1,0 +1,66 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from keras.models import Sequential
+from keras.layers import LSTM, Dense, Dropout
+from keras.utils import to_categorical
+from keras.callbacks import EarlyStopping
+from keras.datasets import fashion_mnist
+
+es = EarlyStopping(monitor = 'val_loss', mode = 'min', patience = 10)
+
+
+# 1. 데이터
+(x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()
+print(x_train.shape)            # (60000, 28, 28)
+print(x_test.shape)             # (10000, 28, 28)
+print(y_train.shape)            # (60000,)
+print(y_test.shape)             # (10000,)
+
+# 1-1. 정규화
+x_train = x_train.reshape(-1, 28, 28).astype('float32') / 255.0
+x_test = x_test.reshape(-1, 28, 28).astype('float32') / 255.0
+
+# 1-2. OHE
+y_train = to_categorical(y_train, num_classes = 10)
+y_test = to_categorical(y_test, num_classes = 10)
+
+
+# 2. 모델링
+model = Sequential()
+
+model.add(LSTM(32, input_shape = (28, 28), activation = 'relu',
+               return_sequences = True))
+model.add(LSTM(32, activation = 'relu'))
+model.add(Dropout(rate = 0.25))
+
+model.add(Dense(32, activation = 'relu'))
+model.add(Dense(32, activation = 'relu'))
+model.add(Dropout(rate = 0.25))
+
+model.add(Dense(10, activation = 'softmax'))
+
+model.summary()
+
+
+# 3. 컴파일 및 훈련
+model.compile(loss = 'categorical_crossentropy',
+              metrics = ['accuracy'],
+              optimizer = 'adam')
+hist = model.fit(x_train, y_train, callbacks = [es],
+                 epochs = 100, batch_size = 512,
+                 validation_split = 0.05, verbose = 1)
+
+print(hist.history.keys())
+
+
+# 4. 모델 평가
+res = model.evaluate(x_test, y_test, batch_size = 512)
+print("Result : ", res)
+print("Loss : ", res[0])
+print("Accuracy : ", res[1])
+
+'''
+55번째 epoch에서 종료 되었으며, 결과는 아래와 같음
+Loss :  0.3442032232284546
+Accuracy :  0.8787000179290771
+'''
