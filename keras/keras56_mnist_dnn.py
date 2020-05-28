@@ -38,9 +38,9 @@ model.add(Dense(32, activation = 'relu'))
 model.add(Dense(64, activation = 'relu'))
 model.add(Dropout(rate = 0.4))
 
-# model.add(Dense(32, activation = 'relu'))
-# model.add(Dense(64, activation = 'relu'))
-# model.add(Dropout(rate = 0.25))
+model.add(Dense(32, activation = 'relu'))
+model.add(Dense(64, activation = 'relu'))
+model.add(Dropout(rate = 0.25))
 
 model.add(Dense(128, activation = 'relu'))
 model.add(Dropout(rate = 0.4))
@@ -54,7 +54,7 @@ model.compile(optimizer = 'adam',
               metrics = ['accuracy'],
               loss = 'binary_crossentropy')
 hist = model.fit(x_train, y_train,
-                 epochs = 5, batch_size = 86,
+                 epochs = 30, batch_size = 86,
                  validation_split = 0.01, verbose = 1)
 print(hist.history.keys())
 
