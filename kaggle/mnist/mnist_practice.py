@@ -8,7 +8,6 @@ from keras.models import Sequential
 from keras.layers import Dense, Conv2D, MaxPooling2D, Flatten, Dropout
 from keras.datasets import mnist
 from sklearn.model_selection import train_test_split
-from keras.preprocessing.image import
 
 pd.read_csv()
 # 1. load data
