@@ -52,9 +52,9 @@ model.summary()
 # 4. 컴파일 및 실행
 model.compile(optimizer = 'adam',
               metrics = ['accuracy'],
-              loss = 'categorical_crossentropy')
+              loss = 'binary_crossentropy')
 hist = model.fit(x_train, y_train,
-                 epochs = 30, batch_size = 1024,
+                 epochs = 5, batch_size = 86,
                  validation_split = 0.01, verbose = 1)
 print(hist.history.keys())
 

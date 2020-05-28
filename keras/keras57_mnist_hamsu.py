@@ -53,17 +53,27 @@ model.summary()
 
 
 # 3. 컴파일 및 실행
-model.compile(loss = 'categorical_crossentropy',
+model.compile(loss = 'binary_crossentropy',
               metrics = ['accuracy'],
              optimizer = 'adam')
 hist = model.fit(x_train, y_train,
-                 epochs = 10, batch_size = 86,
+                 epochs = 20, batch_size = 86,
                  validation_split = 0.05, verbose = 1)
 
 print(hist.history.keys())
-
+plt.plot(['accuracy'])
+plt.plot(['loss'])
+plt.ylabel('acc & loss')
+plt.xlabel('epoch')
+plt.legend(loc = 'best')
+plt.show()
 
 # 4. 평가 및 예측
 res = model.evaluate(x_test, y_test)
 print(res)
 
+'''
+Result
+loss : 0.0039013593170731838
+accuracy : 0.9987398386001587
+'''
