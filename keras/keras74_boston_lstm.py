@@ -21,13 +21,13 @@ print(y.shape)          # (506,)
 
 # 1-1. preprocessing
 # 1-1-1. Principle Component Analysis
-pca.fit(x)
-x = pca.transform(x)
-print(x.shape)
+# pca.fit(x)
+# x = pca.transform(x)
+# print(x.shape)
 
 # 1-1-2. Scaling
-# x = scaler.fit_transform(x)
-# print(x.shape)
+x = scaler.fit_transform(x)
+print(x.shape)
 
 # 1-1-3. data split
 x_train, x_test, y_train, y_test = train_test_split(
@@ -39,8 +39,8 @@ print(y_train.shape)
 print(y_test.shape)
 
 # 1-1-4. train_data reshape
-x_train = x_train.reshape(-1, 8, 1)
-x_test = x_test.reshape(-1, 8, 1)
+x_train = x_train.reshape(-1, 13, 1)
+x_test = x_test.reshape(-1, 13, 1)
 
 print(x_train.shape)
 print(x_test.shape)
@@ -50,7 +50,7 @@ print(x_test.shape)
 model = Sequential()
 
 model.add(LSTM(16, activation = 'relu',
-               input_shape = (8, 1),
+               input_shape = (13, 1),
                return_sequences = True))
 model.add(LSTM(16, activation = 'relu',
                return_sequences = True))
@@ -86,3 +86,9 @@ print("Predict : ", pred)
 
 # 5. R2 score
 print("R2 Score : ", r2_score(y_test, pred))
+
+
+'''
+Result
+R2 Score : 0.2967664362491558
+'''
