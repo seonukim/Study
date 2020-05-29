@@ -54,7 +54,7 @@ model.summary()
 
 # 컴파일 및 훈련
 model.compile(loss = 'categorical_crossentropy', optimizer = 'adam', metrics = ['accuracy'])
-hist = model.fit(x_train, y_train, epochs = 2, batch_size = 100, validation_split = 0.01, callbacks = [es])
+hist = model.fit(x_train, y_train, epochs = 10, batch_size = 100, validation_split = 0.01, callbacks = [es])
 
 # 평가 및 예측
 loss_acc = model.evaluate(x_test, y_test)
@@ -72,26 +72,26 @@ print('loss_acc : ', loss_acc)
 
 import matplotlib.pyplot as plt
 
-plt.figure(figsize = (10, 6))
+plt.figure(figsize = (10, 6))               # 그래프의 크기를 (10, 6) 인치로
 
-plt.subplot(2, 1, 1)
+plt.subplot(2, 1, 1)                        # 2행 1열의 그래프 중 첫번째 그래프
 
 plt.plot(hist.history['loss'])
 plt.plot(hist.history['val_loss'])
 # plt.plot(hist.history['accuracy'])
 # plt.plot(hist.history['val_accuracy'])
-plt.grid()
+plt.grid()                                  # 바탕에 격자무늬 추가
 plt.title('loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['loss', 'val loss'])
 
-plt.subplot(2, 1, 2)
+plt.subplot(2, 1, 2)                        # 2행 1열의 두번째 그래프
 # plt.plot(hist.history['loss'])
 # plt.plot(hist.history['val_loss'])
 plt.plot(hist.history['accuracy'])
 plt.plot(hist.history['val_accuracy'])
-plt.grid()
+plt.grid()                                  # 바탕에 격자무늬 추가
 plt.title('accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
