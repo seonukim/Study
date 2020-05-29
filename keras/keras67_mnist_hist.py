@@ -75,20 +75,16 @@ import matplotlib.pyplot as plt
 plt.figure(figsize = (10, 6))               # 그래프의 크기를 (10, 6) 인치로
 
 plt.subplot(2, 1, 1)                        # 2행 1열의 그래프 중 첫번째 그래프
-
-plt.plot(hist.history['loss'])
-plt.plot(hist.history['val_loss'])
-# plt.plot(hist.history['accuracy'])
-# plt.plot(hist.history['val_accuracy'])
+'''x축은 epoch로 자동 인식하기 때문에 y값만 넣어준다.'''
+plt.plot(hist.history['loss'], marker = '.', c = 'red', label = 'loss')              
+plt.plot(hist.history['val_loss'], marker = '.', c = 'blue', label = 'val_loss')
 plt.grid()                                  # 바탕에 격자무늬 추가
 plt.title('loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
-plt.legend(['loss', 'val loss'])
+plt.legend(loc = 'upper right')
 
 plt.subplot(2, 1, 2)                        # 2행 1열의 두번째 그래프
-# plt.plot(hist.history['loss'])
-# plt.plot(hist.history['val_loss'])
 plt.plot(hist.history['accuracy'])
 plt.plot(hist.history['val_accuracy'])
 plt.grid()                                  # 바탕에 격자무늬 추가
