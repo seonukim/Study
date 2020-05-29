@@ -58,7 +58,7 @@ model.summary()
 
 # 컴파일 및 훈련
 model.compile(loss = 'categorical_crossentropy', optimizer = 'adam', metrics = ['accuracy'])
-hist = model.fit(x_train, y_train, epochs = 10, batch_size = 100, validation_split = 0.01, callbacks = [es, cp])
+hist = model.fit(x_train, y_train, epochs = 30, batch_size = 100, validation_split = 0.01, callbacks = [es, cp])
 
 # 평가 및 예측
 loss_acc = model.evaluate(x_test, y_test)
