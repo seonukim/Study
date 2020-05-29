@@ -96,6 +96,7 @@ plt.plot(hist.history['accuracy'], marker = '.', c = 'violet', label = 'acc')
 plt.plot(hist.history['val_accuracy'], marker = '.', c = 'green', label = 'val_acc')
 plt.title('accuracy')
 plt.grid()
+plt.ylim(0, 1.0)
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(loc = 'lower right')
@@ -104,6 +105,6 @@ plt.show()
 
 '''
 Result
-loss : 3.2346978572845457
-acc  : 0.23389999568462372
+loss : 3.5073166107177736
+acc  : 0.1703999936580658
 '''

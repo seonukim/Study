@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from keras.models import Sequential, Model
 from keras.layers import Conv2D, Dense, Flatten
 from keras.layers import MaxPooling2D, Dropout, Input
-from keras.callbacks import EarlyStopping, ModelCheckpoint
+from keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard
 from keras.utils import np_utils
 from keras.datasets import cifar100
 modelfath = './model/{epoch:02d} - {val_loss:.4f}.hdf5'
@@ -12,6 +12,8 @@ modelfath = './model/{epoch:02d} - {val_loss:.4f}.hdf5'
 es = EarlyStopping(monitor = 'loss', mode = 'min', patience = 10)
 cp = ModelCheckpoint(filepath = modelfath, monitor = 'val_loss',
                      mode = 'auto', save_best_only = True)
+# tb_hist = TensorBoard(log_dir = './graph', histogram_freq = 0,
+#                       write_graph = True, write_images = True)
 
 # 1. 데이터
 (x_train, y_train), (x_test, y_test) = cifar100.load_data()
@@ -34,24 +36,24 @@ print(y_test.shape)
 # 2. 모델링
 
 input1 = Input(shape = (32, 32, 3))
-layer1 = Conv2D(filters = 16, kernel_size = (3, 3),
+layer1 = Conv2D(filters = 128, kernel_size = (3, 3),
                 padding = 'same', activation = 'relu')(input1)
 layer2 = Dropout(rate = 0.1)(layer1)
-layer3 = Conv2D(filters = 16, kernel_size = (3, 3),
+layer3 = Conv2D(filters = 128, kernel_size = (3, 3),
                 padding = 'same', activation = 'relu')(layer2)
 layer4 = MaxPooling2D(pool_size = (2, 2))(layer3)
 layer5 = Dropout(rate = 0.1)(layer4)
 
-layer6 = Conv2D(filters = 32, kernel_size = (3, 3),
+layer6 = Conv2D(filters = 256, kernel_size = (3, 3),
                 padding = 'same', activation = 'relu')(layer5)
-layer7 = Conv2D(filters = 32, kernel_size = (3, 3),
+layer7 = Conv2D(filters = 256, kernel_size = (3, 3),
                 padding = 'same', activation = 'relu')(layer6)
 layer8 = MaxPooling2D(pool_size = (2, 2))(layer7)
-layer9 = Dropout(rate = 0.1)(layer8)
+layer9 = Dropout(rate = 0.25)(layer8)
 
 output1 = Flatten()(layer9)
-output2 = Dense(64, activation = 'relu')(output1)
-output3 = Dense(64, activation = 'relu')(output2)
+output2 = Dense(512, activation = 'relu')(output1)
+output3 = Dense(512, activation = 'relu')(output2)
 output4 = Dense(100, activation = 'softmax')(output3)
 
 model = Model(inputs = input1, outputs = output4)
@@ -86,8 +88,8 @@ model.compile(loss = 'categorical_crossentropy',
               metrics = ['accuracy'],
               optimizer = 'adam')
 hist = model.fit(x_train, y_train, callbacks = [es, cp],
-                 epochs = 50, batch_size = 1024,
-                 validation_split = 0.001, verbose = 1)
+                 epochs = 50, batch_size = 512,
+                 validation_split = 0.25, verbose = 1)
 
 print(hist.history.keys())
 
@@ -113,6 +115,7 @@ plt.plot(hist.history['accuracy'], marker = '.', c = 'violet', label = 'acc')
 plt.plot(hist.history['val_accuracy'], marker = '.', c = 'green', label = 'val_acc')
 plt.title('accuracy')
 plt.grid()
+plt.ylim(0, 1.0)
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(loc = 'lower right')
