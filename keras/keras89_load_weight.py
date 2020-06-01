@@ -49,7 +49,7 @@ model.add(MaxPooling2D(pool_size = 2))
 model.add(Flatten())
 model.add(Dense(23))
 model.add(Dense(10, activation = 'softmax'))
-model.add(Dense(10, activation = 'softmax'))
+# model.add(Dense(10, activation = 'softmax'))
 
 model.summary()
 
@@ -62,7 +62,7 @@ model.compile(loss = 'categorical_crossentropy', optimizer = 'adam', metrics = [
 
 # model.save('./model/model_test01.h5')
 # model.save_weights('./model/test_weight1.h5')
-# from keras.models import load_model
+from keras.models import load_model
 # model = load_model('./model/model_test01.h5')       # 가중치는 가져오지 않는다?
 model.load_weights('./model/test_weight1.h5')         # 순수하게 weight만 저장됨, layer가 추가되면 에러 발생
 
