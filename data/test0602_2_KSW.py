@@ -33,14 +33,14 @@ samsung_sp = pd.read_csv('./data/csv/samsung.csv',
                          index_col = 0, header = 0,
                          sep = ',', encoding = 'cp949')
 print(samsung_sp.shape)                 # (700, 1)
-# print(samsung_sp.head())            
+# print(samsung_sp.tail())            
 
 hite_sp = pd.read_csv('./data/csv/hite.csv',
                       index_col = 0, header = 0,
                       sep = ',', encoding = 'cp949')
 print("=" * 40)
 print(hite_sp.shape)                    # (720, 5)
-print(hite_sp)
+# print(hite_sp)
 
 
 ## 1-1. 데이터 전처리
@@ -48,13 +48,13 @@ print(hite_sp)
 samsung_sp = samsung_sp.dropna()
 print("=" * 40)
 print(samsung_sp.shape)                 # (509, 1)
-# print(samsung_sp.tail())
+print(samsung_sp.tail())
 
 hite_sp.iloc[0, 1:] = hite_sp.iloc[0, 1:].fillna(0)       # 첫 행의  NaN을 채워줌
 hite_sp = hite_sp.dropna()
 print("=" * 40)
 print(hite_sp.shape)                    # (509, 5)
-# print(hite_sp.tail())
+print(hite_sp.head())
 
 print("=" * 40)
 print(samsung_sp.isna())                # 확인함
@@ -221,7 +221,7 @@ print(x2_train_sc[0, :])
 print(x2_test_sc[0, :])
 
 
-
+'''
 ### 2. 함수형 앙상블 모델링
 ## 2-1. 첫번째 인풋 모델 구성
 input1 = Input(shape = (2, ))
@@ -254,7 +254,7 @@ model.summary()
 model.compile(loss = 'mse', metrics = ['mse'], optimizer = 'rmsprop')
 model.fit([x1_train_sc, x2_train_sc], y2_train, callbacks = [cp],
           validation_split = 0.05, epochs = 1000, batch_size = 2, verbose = 1)
-
+'''
 
 model = load_model('./data/Check-975 - 648347.6816.hdf5')
 
