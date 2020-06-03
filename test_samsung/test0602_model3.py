@@ -9,6 +9,7 @@ from sklearn.decomposition import PCA
 from keras.models import Sequential, Model
 
 
+
 def split_x(seq, size):
     aaa = []
     for i in range(len(seq) - size + 1):
@@ -18,6 +19,7 @@ def split_x(seq, size):
     return np.array(aaa)
 
 size = 6
+
 
 # 1. 데이터
 # npy 불러오기
@@ -45,17 +47,22 @@ print(x_hit.shape)          # (504, 5)
 x_hit = x_hit.reshape(x_hit.shape[0], 5, 1)
 print(x_hit.shape)          # (504, 5, 1)
 
+x_sam = x_sam.reshape(x_sam.shape[0], 5, 1)
+print(x_sam.shape)          # (504, 5, 1)
+
 
 #2. 모델구성 
-input1 = Input(shape = (5, ))
-x1 = Dense(10)(input1)
+input1 = Input(shape = (5, 1))
+x1 = LSTM(64)(input1)
 x1 = Dense(10)(x1)
+x1 = Dropout(rate = 0.2)(x1)
 
 input2 = Input(shape = (5, 1))
-x2 = LSTM(5)(input2)
+x2 = LSTM(64)(input2)
 x2 = Dense(5)(x2)
+x2 = Dropout(rate = 0.2)(x2)
 
-merge = concatenate([x1, x2])
+merge = Concatenate()([x1, x2])
 
 output = Dense(1)(merge)
 
