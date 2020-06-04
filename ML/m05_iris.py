@@ -1,5 +1,5 @@
 import numpy as np
-from sklearn.svm import SVC, LinearSVC
+from sklearn.svm import SVC, LinearSVC, SVR
 from sklearn.neighbors import KNeighborsRegressor, KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.model_selection import train_test_split
@@ -54,9 +54,13 @@ print(x_test[0])                # [0.46608106 0.25743542 0.32323374]
 
 
 ### 2. 모델링
-rfc = RandomForestClassifier(n_estimators = 100, max_depth = 20)
-
-model = rfc
+model = RandomForestRegressor(n_estimators = 100, max_depth = 20)
+model = RandomForestClassifier(n_estimators = 100, max_depth = 20)
+# model = SVC()
+# model = LinearSVC()
+# model = KNeighborsClassifier()
+# model = KNeighborsRegressor()
+# model = SVR()
 
 
 ### 3. 모델 훈련
@@ -120,9 +124,13 @@ print(x_test[0])                # [0.46608106 0.25743542 0.32323374]
 
 
 ### 2. 모델링
-rfc = RandomForestRegressor(n_estimators = 100, max_depth = 20)
-
-model = rfc
+model = RandomForestRegressor(n_estimators = 100, max_depth = 20)
+model = RandomForestClassifier(n_estimators = 100, max_depth = 20)
+# model = SVC()
+# model = LinearSVC()
+# model = KNeighborsClassifier()
+# model = KNeighborsRegressor()
+# model = SVR()
 
 
 ### 3. 모델 훈련
@@ -144,6 +152,6 @@ y의 예측값 :
  [0.   0.09 0.91]
  [0.   1.   0.  ]
  [1.   0.   0.  ]]
- 
+
 모델 정확도 :  0.7418418174978489
 '''

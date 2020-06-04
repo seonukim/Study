@@ -49,9 +49,13 @@ print(x_test[0])                # [0.2030123  0.29580018 0.15580581]
 
 
 ### 2. 모델링
-rfc = RandomForestRegressor(n_estimators = 100, max_depth = 20)
-
-model = rfc
+model = RandomForestRegressor(n_estimators = 100, max_depth = 20)
+model = RandomForestClassifier(n_estimators = 100, max_depth = 20)
+# model = SVC()
+# model = LinearSVC()
+# model = KNeighborsClassifier()
+# model = KNeighborsRegressor()
+# model = SVR()
 
 
 ### 3. 모델 훈련
@@ -114,9 +118,13 @@ print(x_test[0])                # [0.2030123  0.29580018 0.15580581]
 
 
 ### 2. 모델링
-rfc = RandomForestClassifier(n_estimators = 100, max_depth = 20)
-
-model = rfc
+model = RandomForestRegressor(n_estimators = 100, max_depth = 20)
+model = RandomForestClassifier(n_estimators = 100, max_depth = 20)
+# model = SVC()
+# model = LinearSVC()
+# model = KNeighborsClassifier()
+# model = KNeighborsRegressor()
+# model = SVR()
 
 
 ### 3. 모델 훈련
