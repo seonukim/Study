@@ -66,7 +66,7 @@ model.fit(x_train, y_train)
 y_pred = model.predict(x_test)
 
 r2 = r2_score(y_test, y_pred)
-score = model.score(x_train, y_train)
+score = model.score(x_test, y_test)
 mse = mean_squared_error(y_test, y_pred)
 print("y의 예측값 : \n", y_pred[:5])
 print("모델 정확도 : ", r2)
@@ -139,7 +139,7 @@ model.fit(x_train, y_train)
 # x_test = mms.inverse_transform(x_test)
 y_pred = model.predict(x_test)
 acc = accuracy_score(y_test, y_pred)
-score = model.score(x_train, y_train)
+score = model.score(x_test, y_test)
 print("y의 예측값 : \n", y_pred[:5])
 print("모델 정확도 : ", acc)
 print("모델 score : ", score)
@@ -163,7 +163,7 @@ y의 예측값 :
  [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
   0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
   0. 0. 0.]]
-  
+
 모델 정확도 :  0.0196078431372549
 모델 score :  1.0
 '''

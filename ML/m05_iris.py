@@ -71,7 +71,7 @@ model.fit(x_train, y_train)
 ### 4. 모델 평가 및 결과 예측
 y_pred = model.predict(x_test)
 acc = accuracy_score(y_test, y_pred)
-score = model.score(x_train, y_train)
+score = model.score(x_test, y_test)
 print("y의 예측값 : \n", y_pred[:5])
 print("모델 정확도 : ", acc)
 print("모델 score : ", score)
@@ -85,7 +85,7 @@ y의 예측값 :
  [0. 0. 1.]
  [0. 1. 0.]
  [1. 0. 0.]]
- 
+
 모델 정확도 :  0.8666666666666667
 모델 score :  0.9916666666666667
 '''
@@ -144,7 +144,7 @@ model.fit(x_train, y_train)
 ### 4. 모델 평가 및 결과 예측
 y_pred = model.predict(x_test)
 r2 = r2_score(y_test, y_pred)
-score = model.score(x_train, y_train)
+score = model.score(x_test, y_test)
 print("y의 예측값 : \n", y_pred[:5])
 print("모델 정확도 : ", r2)
 print("모델 score : ", score)
