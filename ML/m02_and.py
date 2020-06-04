@@ -15,7 +15,7 @@ model.fit(x_data, y_data)
 x_test = [[0, 0], [1, 0], [0, 1], [1, 1]]
 y_predict = model.predict(x_test)
 
-acc = accuracy_score([0, 0, 0, 1], y_predict)
+acc = accuracy_score([0, 0, 0, 1], y_predict)       # keras의 evaluate와 동일하다고 보면 됨; accuracy_score
 
 print(x_test, "의 예측 결과 : ", y_predict)
 print("acc : ", acc)
