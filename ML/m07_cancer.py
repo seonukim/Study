@@ -32,20 +32,19 @@ print(x_test.shape)             # (114, 30)
 print(y_train.shape)            # (455,)
 print(y_test.shape)             # (114,)
 
-## 1-2. PCA
-pca.fit(x_train)
-x_train = pca.transform(x_train)
-x_test = pca.transform(x_test)
-print(x_train.shape)            # (455, 25)
-print(x_test.shape)             # (114, 25)
-
-## 1-3. Scaler
+## 1-2. Scaler
 mms.fit(x_train)
 x_train = mms.transform(x_train)
 x_test = mms.transform(x_test)
 print(x_train[0])               # [0.10144103 0.48618328 0.13054923 0.33266537 0.47898069]
 print(x_test[0])                # [0.08751287 0.45397927 0.14563761 0.30956911 0.29970822]
 
+## 1-3. PCA
+pca.fit(x_train)
+x_train = pca.transform(x_train)
+x_test = pca.transform(x_test)
+print(x_train.shape)            # (455, 25)
+print(x_test.shape)             # (114, 25)
 
 ### 2. 모델링
 # model = RandomForestRegressor(n_estimators = 100, max_depth = 20)
@@ -64,18 +63,21 @@ model.fit(x_train, y_train)
 ### 4. 모델 평가 및 결과 예측
 y_pred = model.predict(x_test)
 acc = accuracy_score(y_test, y_pred)
+score = model.score(x_train, y_train)
 print("y의 예측값 : \n", y_pred[:5])
 print("모델 정확도 : ", acc)
+print("모델 score : ", score)
 
 ### 5. 결과
 '''
 y의 예측값 :
  [1 0 1 0 0]
-
-모델 정확도 :  0.9473684210526315
+ 
+모델 정확도 :  0.956140350877193
+모델 score :  1.0
 '''
 
-'''
+
 #### 회귀모델
 ### 1. 데이터
 x, y = load_breast_cancer(return_X_y = True)
@@ -91,24 +93,24 @@ print(x_test.shape)             # (114, 30)
 print(y_train.shape)            # (455,)
 print(y_test.shape)             # (114,)
 
-## 1-2. PCA
-# pca.fit(x_train)
-# x_train = pca.transform(x_train)
-# x_test = pca.transform(x_test)
-# print(x_train.shape)            # (455, 5)
-# print(x_test.shape)             # (114, 5)
 
-## 1-3. Scaler
+## 1-2. Scaler
 mms.fit(x_train)
 x_train = mms.transform(x_train)
 x_test = mms.transform(x_test)
 print(x_train[0])               # [0.10144103 0.48618328 0.13054923 0.33266537 0.47898069]
 print(x_test[0])                # [0.08751287 0.45397927 0.14563761 0.30956911 0.29970822]
 
+## 1-3. PCA
+# pca.fit(x_train)
+# x_train = pca.transform(x_train)
+# x_test = pca.transform(x_test)
+# print(x_train.shape)            # (455, 5)
+# print(x_test.shape)             # (114, 5)
 
 ### 2. 모델링
 model = RandomForestRegressor(n_estimators = 100, max_depth = 20)
-model = RandomForestClassifier(n_estimators = 100, max_depth = 20)
+# model = RandomForestClassifier(n_estimators = 100, max_depth = 20)
 # model = SVC()
 # model = LinearSVC()
 # model = KNeighborsClassifier()
@@ -123,14 +125,17 @@ model.fit(x_train, y_train)
 ### 4. 모델 평가 및 결과 예측
 y_pred = model.predict(x_test)
 r2 = r2_score(y_test, y_pred)
+score = model.score(x_train, y_train)
 print("y의 예측값 : \n", y_pred[:5])
 print("모델 정확도 : ", r2)
-'''
+print("score : ", score)
+
 
 ### 5. 결과
 '''
 y의 예측값 :
  [1. 0. 1. 0. 0.]
 
-모델 정확도 :  0.8192875897435897
+모델 정확도 :  0.8225419487179487
+score :  0.9827675255196163
 '''
