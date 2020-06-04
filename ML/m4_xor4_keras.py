@@ -42,3 +42,4 @@ y_predict = model.predict(x_test)
 # print("acc : ", acc)
 
 print("acc : ", res[1])
+print(y_predict)
