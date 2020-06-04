@@ -20,7 +20,8 @@ print(y_data.shape)
 # model = KNeighborsClassifier(n_neighbors = 1)
 model = Sequential()
 
-model.add(Dense(1, input_shape = (2, ) , activation = 'sigmoid'))
+model.add(Dense(1000, input_shape = (2, )))
+model.add(Dense(1, activation = 'sigmoid'))
 
 model.summary()
 
