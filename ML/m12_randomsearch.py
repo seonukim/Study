@@ -42,6 +42,7 @@ model = RandomizedSearchCV(RandomForestClassifier(), param_distributions = param
 
 model.fit(x_train, y_train)
 # model.score(x_test, y_test) = model.evaluate(x_test, y_test)
+# 속도 : RandomSearchCV > GridSearchCV
 
 y_pred = model.predict(x_test)
 print("최종 정답률 : ", accuracy_score(y_test, y_pred))     # 0.9473684210526315
