@@ -58,11 +58,11 @@ model = KerasClassifier(build_fn = build_model, verbose = 1)
 # hyperparameters 변수 정의
 hyperparameters = create_hyperparameter()
 
-search = RandomizedSearchCV(estimator = model, 
+search = RandomizedSearchCV(estimator = model,
                             param_distributions = hyperparameters, cv = 3)
 
 # 모델 훈련
 search.fit(x_train, y_train)
-score = search.score(x_test, y_test)
-print(search.best_params_)              # {'optimizer': 'adam', 'drop': 0.1, 'batch_size': 10}
-print("score : ", score)
+score = search.score(x_test, y_test, verbose = 0)
+print(search.best_params_)              # {'optimizer': 'adadelta', 'drop': 0.1, 'batch_size': 10}
+print("score : ", score)                # 0.964900016784668
