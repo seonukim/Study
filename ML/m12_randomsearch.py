@@ -41,6 +41,7 @@ print(params)
 model = RandomizedSearchCV(RandomForestClassifier(), param_distributions = params, cv = kf, n_jobs = -1)
 
 model.fit(x_train, y_train)
+# model.score(x_test, y_test) = model.evaluate(x_test, y_test)
 
 y_pred = model.predict(x_test)
 print("최종 정답률 : ", accuracy_score(y_test, y_pred))     # 0.9473684210526315
