@@ -1,3 +1,5 @@
+# CNN 모델로 랜덤서치 적용
+
 import numpy as np
 from keras.datasets import mnist
 from keras.utils import np_utils
@@ -16,10 +18,10 @@ print(x_test.shape)                 # (10000, 28, 28)
 print(y_train.shape)                # (60000,)
 print(y_test.shape)                 # (10000,)
 
-# x_train = x_train.reshape(x_train.shape[0], 28, 28, 1) / 255        # 정규화(min_max)
-# x_test = x_test.reshape(x_test.shape[0], 28, 28, 1) / 255           # 정규화(min_max)
-x_train = x_train.reshape(x_train.shape[0], 28 * 28) / 255            # 정규화(min_max)
-x_test = x_test.reshape(x_test.shape[0], 28 * 28) / 255               # 정규화(min_max)
+x_train = x_train.reshape(x_train.shape[0], 28, 28, 1) / 255            # 정규화(min_max)
+x_test = x_test.reshape(x_test.shape[0], 28, 28, 1) / 255               # 정규화(min_max)
+# x_train = x_train.reshape(x_train.shape[0], 28 * 28) / 255            # 정규화(min_max)
+# x_test = x_test.reshape(x_test.shape[0], 28 * 28) / 255               # 정규화(min_max)
 print(x_train.shape)                # (60000, 28, 28, 1)
 print(x_test.shape)                 # (10000, 28, 28, 1)
 
@@ -31,12 +33,17 @@ print(y_test.shape)                 # (10000, 10)
 
 # 2. 모델링
 def build_model(drop = 0.5, optimizer = 'adam'):
-    inputs = Input(shape = (28 * 28, ), name = 'input')
-    x = Dense(512, activation = 'relu', name = 'hidden1')(inputs)
+    inputs = Input(shape = (28, 28, 1), name = 'input')
+    x = Conv2D(filters = 32, kernel_size = (3, 3),
+               padding = 'same', activation = 'relu')(inputs)
+    x = MaxPooling2D(pool_size = (2, 2))(x)
     x = Dropout(drop)(x)
-    x = Dense(256, activation = 'relu', name = 'hidden2')(x)
+    x = Conv2D(filters = 32, kernel_size = (3, 3),
+               padding = 'same', activation = 'relu')(x)
+    x = MaxPooling2D(pool_size = (2, 2))(x)
     x = Dropout(drop)(x)
-    x = Dense(128, activation = 'relu', name = 'hidden3')(x)
+    x = Flatten()(x)
+    x = Dense(16, activation = 'relu', name = 'hidden3')(x)
     x = Dropout(drop)(x)
     outputs = Dense(10, activation = 'softmax', name = 'output')(x)
     model = Model(inputs = inputs, outputs = outputs)
@@ -65,4 +72,4 @@ search = RandomizedSearchCV(estimator = model,
 search.fit(x_train, y_train)
 score = search.score(x_test, y_test)
 print(search.best_params_)              # {'optimizer': 'adadelta', 'drop': 0.2, 'batch_size': 20}
-print("score : ", score)                # 0.9661999940872192
+print("score : ", score)                # 0.9761999940872192
