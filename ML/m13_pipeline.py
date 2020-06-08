@@ -18,6 +18,9 @@ x_train, x_test, y_train, y_test = train_test_split(
 # 2. 모델
 model = SVC()
 pipe = Pipeline([('scaler', MinMaxScaler()), ('svm', SVC())])
+'''
+Pipeline은 전처리와 모델을 한 번에 돌리는 유용한 클래스!
+'''
 
 pipe.fit(x_train, y_train)
 print('acc : ', pipe.score(x_test, y_test))
