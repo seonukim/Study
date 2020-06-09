@@ -4,13 +4,14 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from keras.models import Sequential
-from keras.layers import Dense, Dropout
+from keras.layers import Dense, Dropout, LeakyReLU
 from keras.utils import np_utils
 from keras.callbacks import EarlyStopping
 scaler = StandardScaler()
 es = EarlyStopping(monitor = 'val_loss',
                    mode = 'min',
                    patience = 10)
+lr = LeakyReLU(alpha = 0.2)
 
 ### 데이터 ###
 train = pd.read_csv('./dacon/wine/train.csv',
@@ -50,18 +51,62 @@ quality_count = train.groupby('quality')['quality'].count()
 # quality_count.plot()
 # plt.show()
 
+## type 컬럼 바꿔주기
+train['type'] = train['type'].map({'white':0, 'red':1}).astype('int64')
+test['type'] = test['type'].map({'white':0, 'red':1}).astype('int64')
+# print(train.head())
+
 ## train 데이터 나누기 ##
 x = train.iloc[:, 1:]
 y = train.iloc[:, :1]
 print(x.shape)          # (5497, 12)      
 print(y.shape)          # (5497, 1)
-
-## type 컬럼 바꿔주기
-for i in type()
+print(x.head())
+print(y.head())
 
 ## numpy 형 변환 ##
 x = x.values
 y = y.values
+pred = test.values
 print(type(x))          # <class 'numpy.ndarray'>
 print(type(y))          # <class 'numpy.ndarray'>
+print(type(pred))       # <class 'numpy.ndarray'>
+print(pred.shape)       # (1000, 12)
 
+## 데이터 나누기 ##
+x_train, x_test, y_train, y_test = train_test_split(
+       x, y, test_size = 0.2)
+print(x_train.shape)        # (4397, 12)
+print(x_test.shape)         # (1100, 12)
+print(y_train.shape)        # (4397, 1)
+print(y_test.shape)         # (1100, 1)
+
+## 원핫인코딩 ##
+y_train = np_utils.to_categorical(y_train)
+y_test = np_utils.to_categorical(y_test)
+print(y_train.shape)        # (4397, 10)
+print(y_test.shape)         # (1100, 10)
+
+### 모델링 ###
+model = Sequential()
+model.add(Dense(16, input_shape = (12, ),
+                activation = lr))
+model.add(Dropout(rate = 0.2))
+model.add(Dense(10, activation = 'softmax'))
+
+model.summary()
+
+### 컴파일 및 훈련 ###
+model.compile(loss = 'categorical_crossentropy',
+              optimizer = 'adam', metrics = ['acc'])
+model.fit(x_train, y_train, epochs = 30,
+          batch_size = 12, validation_split = 0.2)
+       
+### 평가 및 예측 ###
+res = model.evaluate(x_test, y_test)
+print("loss : ", res[0])
+print("Acc : ", res[1])
+
+y_pred = model.predict(pred)
+y_pred = np.argmax(y_pred)
+print("Predict : \n", y_pred)
