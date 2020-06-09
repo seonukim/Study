@@ -2,12 +2,14 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split, KFold
+from sklearn.model_selection import RandomizedSearchCV
 from sklearn.preprocessing import StandardScaler, RobustScaler
 from sklearn.preprocessing import MinMaxScaler
-from keras.models import Sequential
+from keras.models import Sequential, Model
 from keras.layers import LSTM, Dense, Dropout, LeakyReLU
-from keras.layers import Conv1D, Flatten, MaxPooling1D
+from keras.layers import Conv1D, Flatten, MaxPooling1D, Input
 from keras.callbacks import EarlyStopping
+from keras.wrappers.scikit_learn import KerasRegressor
 scaler = StandardScaler()
 # scaler = RobustScaler()
 # scaler = MinMaxScaler()
@@ -40,13 +42,11 @@ x_train = x_train.drop('Time', axis = 1)
 print(x_train.head())
 
 
-x_train = np.power(x_train.groupby(x_train['id']).mean(), 2)
+x_train = np.sqrt(x_train.groupby(x_train['id']).mean())
 print(x_train.shape)        # (2800, 4)
 
-# x_train.to_csv('./data/dacon/comp3/x_train2.csv')
 
-
-x_train = pd.read_csv('./data/dacon/comp3/x_train2.csv',
+x_train = pd.read_csv('./data/dacon/comp3/x_Train.csv',
                       index_col = 0, header = 0,
                       encoding = 'utf-8')
 print(x_train.head())
@@ -78,46 +78,52 @@ print(x_train.shape)        # (2240, 4, 1)
 print(x_test.shape)         # (560, 4, 1)
 
 
-### 모델
-model = Sequential()
-model.add(Conv1D(filters = 10, kernel_size = 5,
-                 input_shape = (4, 1), padding = 'same',
-                 activation = leaky))
-model.add(Conv1D(filters = 7, kernel_size = 3,
-                 padding = 'same', activation = leaky))
-model.add(MaxPooling1D())
-model.add(Dropout(rate = 0.1))
-model.add(Conv1D(filters = 16, kernel_size = 3,
-                 padding = 'same', activation = leaky))
-model.add(Conv1D(filters = 8, kernel_size = 3,
-                 padding = 'same', activation = leaky))
-model.add(MaxPooling1D())
-model.add(Dropout(rate = 0.2))
+# 2. 모델링
+def build_model(drop = 0.5, optimizer = 'adam'):
+    inputs = Input(shape = (4, 1), name = 'input')
+    x1 = Conv1D(filters = 64, kernel_size = 3,
+                padding = 'same', activation = leaky)(inputs)
+    x1 = MaxPooling1D()(x1)
+    x1 = Dropout(drop)(x1)
+    x1 = Conv1D(filters = 32, kernel_size = 3,
+                padding = 'same', activation = leaky)(x1)
+    x1 = MaxPooling1D()(x1)
+    x1 = Dropout(drop)(x1)
+    x1 = Flatten()(x1)
+    x1 = Dense(16, activation = leaky, name = 'hidden3')(x1)
+    x1 = Dropout(drop)(x1)
+    outputs = Dense(4, activation = leaky, name = 'output')(x1)
+    model = Model(inputs = inputs, outputs = outputs)
+    model.compile(optimizer = optimizer, metrics = ['mse'],
+                  loss = 'mse')
+    return model
 
-model.add(Flatten())
-model.add(Dense(4, activation = leaky))
+build_model().summary()
 
-model.summary()
+def create_hyperparameter():
+    batches = [50, 100, 150, 200, 250, 300]
+    optimizers = ['rmsprop', 'adam', 'adadelta']
+    dropout = np.linspace(0.1, 0.5, 5)
+    return {'batch_size': batches,
+            'optimizer': optimizers,
+            'drop': dropout}
 
+# KerasRegressor 모델 구성하기
+model = KerasRegressor(build_fn = build_model, verbose = 1)
 
-### 훈련
-model.compile(loss = 'mse',
-              optimizer = 'adam',
-              metrics = ['mse'])
-model.fit(x_train, y_train, epochs = 500, callbacks = [es],
-          batch_size = 10, validation_split = 0.2)
+# hyperparameters 변수 정의
+hyperparameters = create_hyperparameter()
 
+search = RandomizedSearchCV(estimator = model,
+                            param_distributions = hyperparameters, cv = 5)
 
-### 모델 평가
-res = model.evaluate(x_test, y_test)
-print("loss : ", res[0])
-print("mse : ", res[1])
-
-
+# 훈련
+search.fit(x_train, y_train)
+'''
 x_pred = x_pred.drop('Time', axis = 1)
 # print(x_pred.head())
 
-x_pred = np.power(x_pred.groupby(x_pred['id']).mean(), 2)
+x_pred = np.sqrt(x_pred.groupby(x_pred['id']).mean())
 # print(x_pred.shape)        # (700, 4)
 
 x_pred = x_pred.values
@@ -132,4 +138,5 @@ print("Predict : \n", y_predict)
 submit = pd.DataFrame(y_predict)
 print(submit.head())
 
-submit.to_csv('./data/dacon/comp3/mysubmit_3.csv')
+submit.to_csv('./data/dacon/comp3/mysubmit_2.csv')
+'''

@@ -56,32 +56,12 @@ y = train.iloc[:, :1]
 print(x.shape)          # (5497, 12)      
 print(y.shape)          # (5497, 1)
 
+## type 컬럼 바꿔주기
+for i in type()
+
 ## numpy 형 변환 ##
 x = x.values
 y = y.values
 print(type(x))          # <class 'numpy.ndarray'>
 print(type(y))          # <class 'numpy.ndarray'>
 
-## 데이터 나누기 ##
-x_train, x_test, y_train, y_test = train_test_split(
-    x, y, test_size = 0.2,
-    shuffle = 0.2, random_state = 77)
-print(x_train.shape)    # (4397, 12)
-print(x_test.shape)     # (1100, 12)
-print(y_train.shape)    # (4397, 1)
-print(y_test.shape)     # (1100, 1)
-
-## 정규화 ##
-# scaler.fit(x_train)
-# x_train = scaler.transform(x_train)
-# x_test = scaler.transform(x_test)
-# print(x_train[0])
-# print(x_test[0])
-
-## 원핫인코딩 ##
-y_train = np_utils.to_categorical(y_train)
-y_test = np_utils.to_categorical(y_test)
-print(y_train.shape)
-print(y_test.shape)
-
-### 모델링 ###
