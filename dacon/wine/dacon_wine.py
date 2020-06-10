@@ -2,12 +2,15 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.decomposition import PCA
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, LeakyReLU
 from keras.utils import np_utils
 from keras.callbacks import EarlyStopping
-scaler = StandardScaler()
+# scaler = StandardScaler()
+scaler = MinMaxScaler()
+pca = PCA(n_components = 4)
 es = EarlyStopping(monitor = 'val_loss',
                    mode = 'min',
                    patience = 10)
@@ -80,6 +83,16 @@ print(x_train.shape)        # (4397, 12)
 print(x_test.shape)         # (1100, 12)
 print(y_train.shape)        # (4397, 1)
 print(y_test.shape)         # (1100, 1)
+
+## Scaling
+scaler.fit(x_train)
+x_train = pca.transform(x_train)
+x_test = pca.transform(x_test)
+
+## PCA
+pca.fit(x_train)
+x_train = pca.transform(x_train)
+x_test = pca.transform(x_test)
 
 ## 원핫인코딩 ##
 y_train = np_utils.to_categorical(y_train)
