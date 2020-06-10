@@ -66,9 +66,10 @@ def mymodel(drop = 0.2, optimizer = 'adam'):
 def hyperParams():
     batch_size = [1, 10, 20, 32]
     epochs = [20, 40, 60, 80, 100]
-    # dropout = np.linspace(0.1, 0.5, 5)
+    dropout = [0.1, 0.5, 5]
     return {'model__batch_size': batch_size,
-            'model__epochs': epochs}
+            'model__epochs': epochs,
+            'model__drop': dropout}
 
 ## 2-1. keras 모델 구성
 model = KerasClassifier(build_fn = mymodel, verbose = 1)
@@ -77,7 +78,7 @@ model = KerasClassifier(build_fn = mymodel, verbose = 1)
 params = hyperParams()
 
 ## 2-3. 파이프라인 정의
-pipe = Pipeline([('scaler', StandardScaler()),('model', model)])
+pipe = Pipeline([('scaler', StandardScaler()), ('model', model)])
 
 ## 2-4. RandomSearchCV 정의
 search = RandomizedSearchCV(estimator = pipe,
