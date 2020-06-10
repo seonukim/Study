@@ -31,17 +31,13 @@ x_train, x_test, y_train, y_test = train_test_split(
 # ]
 
 param = [
-    # {"randomforestclassifier__n_jobs": [1, 10, 100, 1000],
-     {"randomforestclassifier__n_estimators": [5, 10, 15, 20]}
-    # {"randomforestclassifier__C": [1, 10, 100, 1000],
-    #  "randomforestclassifier__kernel": ['rbf'], "randomforestclassifier__gamma": [0.001, 0.0001]},
-    # {"randomforestclassifier__C": [1, 10, 100, 1000],
-    #  "randomforestclassifier__kernel": ['sigmoid'], "randomforestclassifier__gamma": [0.001, 0.0001]}
+    {'rf__n_estimators': [10, 100, 150], 'rf__criterion': ['gini'], 'rf__max_leaf_nodes': [5, 20, 40]},
+    {'rf__n_estimators': [10, 100, 150], 'rf__criterion': ['entropy'], 'rf__max_leaf_nodes': [5, 20, 40]}
 ]
 
 # 2. 모델
-# pipe = Pipeline([('scaler', MinMaxScaler()), ("svm", SVC())])
-pipe = make_pipeline(MinMaxScaler(), RandomForestClassifier())
+pipe = Pipeline([('scaler', MinMaxScaler()), ('rf', RandomForestClassifier())])
+# pipe = make_pipeline(MinMaxScaler(), RandomForestClassifier())
 
 model = RandomizedSearchCV(pipe, param_distributions = param, cv = 5)
 
