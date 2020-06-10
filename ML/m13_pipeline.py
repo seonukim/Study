@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
-from sklearn.pipeline import Pipeline
+from sklearn.pipeline import Pipeline, make_pipeline
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 # 1. 데이터
@@ -17,7 +17,8 @@ x_train, x_test, y_train, y_test = train_test_split(
 
 # 2. 모델
 model = SVC()
-pipe = Pipeline([('scaler', MinMaxScaler()), ('svm', SVC())])
+# pipe = Pipeline([('scaler', MinMaxScaler()), ('svm', SVC())])
+pipe = make_pipeline(MinMaxScaler(), SVC())
 '''
 Pipeline은 전처리와 모델을 한 번에 돌리는 유용한 클래스!
 '''

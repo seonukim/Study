@@ -104,8 +104,8 @@ model.summary()
 model.compile(loss = 'mse',
               optimizer = 'adam',
               metrics = ['mse'])
-model.fit(x_train, y_train, epochs = 500, callbacks = [es],
-          batch_size = 10, validation_split = 0.2)
+model.fit(x_train, y_train, epochs = 10, callbacks = [es],
+          batch_size = 2, validation_split = 0.2)
 
 
 ### 모델 평가
@@ -114,16 +114,23 @@ print("loss : ", res[0])
 print("mse : ", res[1])
 
 
-x_pred = x_pred.drop('Time', axis = 1)
+# x_pred = x_pred.drop('Time', axis = 1)
 # print(x_pred.head())
 
-x_pred = np.power(x_pred.groupby(x_pred['id']).mean(), 2)
+# x_pred = np.power(x_pred.groupby(x_pred['id']).mean(), 2)
 # print(x_pred.shape)        # (700, 4)
+
+# x_pred.to_csv('./data/dacon/comp3/x_pred.csv')
+
+x_pred = pd.read_csv('./data/dacon/comp3/x_pred.csv',
+                     index_col = 0, header = 0)
+print(x_pred.shape)         # (700, 4)
+print(x_pred.head())
 
 x_pred = x_pred.values
 x_pred = scaler.fit_transform(x_pred)
 x_pred = x_pred.reshape(-1, 4, 1)
-# print(type(x_pred))         # <class 'numpy.ndarray'>
+print(type(x_pred))         # <class 'numpy.ndarray'>
 
 y_predict = model.predict(x_pred)
 print("Predict : \n", y_predict)
@@ -132,4 +139,4 @@ print("Predict : \n", y_predict)
 submit = pd.DataFrame(y_predict)
 print(submit.head())
 
-submit.to_csv('./data/dacon/comp3/mysubmit_3.csv')
+submit.to_csv('./data/dacon/comp3/mysubmit_4.csv')

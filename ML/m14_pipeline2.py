@@ -17,15 +17,27 @@ x_train, x_test, y_train, y_test = train_test_split(
     shuffle = True, random_state = 77)
 
 # 그리드/랜덤 서치에서 사용할 매개변수
+# param = [
+#     {"svm__C": [1, 10, 100, 1000], "svm__kernel": ['linear']},
+#     {"svm__C": [1, 10, 100, 1000], "svm__kernel": ['rbf'], "svm__gamma": [0.001, 0.0001]},
+#     {"svm__C": [1, 10, 100, 1000], "svm__kernel": ['sigmoid'], "svm__gamma": [0.001, 0.0001]}
+# ]
+
+# param = [
+#     {'C' : [1, 10, 100, 1000], 'kernel' : ['linear']},
+#     {'C' : [1, 10, 100, 1000], 'kernel' : ['rbf'], 'gamma' : [0.001, 0.0001]},
+#     {'C' : [1, 10, 100, 1000], 'kernel' : ['sigmoid'], 'gamma' : [0.001, 0.0001]}
+# ]
+
 param = [
-    {"svm__C": [1, 10, 100, 1000], "svm__kernel": ['linear']},
-    {"svm__C": [1, 10, 100, 1000], "svm__kernel": ['rbf'], "svm__gamma": [0.001, 0.0001]},
-    {"svm__C": [1, 10, 100, 1000], "svm__kernel": ['sigmoid'], "svm__gamma": [0.001, 0.0001]}
+    {"svc__C": [1, 10, 100, 1000], "svc__kernel": ['linear']},
+    {"svc__C": [1, 10, 100, 1000], "svc__kernel": ['rbf'], "svc__gamma": [0.001, 0.0001]},
+    {"svc__C": [1, 10, 100, 1000], "svc__kernel": ['sigmoid'], "svc__gamma": [0.001, 0.0001]}
 ]
 
 # 2. 모델
-pipe = Pipeline([('scaler', MinMaxScaler()), ("svm", SVC())])
-# pipe = make_pipeline(MinMaxScaler(), SVC())
+# pipe = Pipeline([('scaler', MinMaxScaler()), ("svm", SVC())])
+pipe = make_pipeline(MinMaxScaler(), SVC())
 
 model = RandomizedSearchCV(pipe, param_distributions = param, cv = 5)
 
