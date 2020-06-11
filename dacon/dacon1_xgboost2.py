@@ -7,6 +7,8 @@ warnings.filterwarnings(action = 'ignore')
 from xgboost import XGBRegressor
 from sklearn.model_selection import KFold
 from sklearn.multioutput import MultiOutputRegressor
+from sklearn.preprocessing import RobustScaler
+scaler = RobustScaler()
 
 
 ## 데이터
@@ -73,6 +75,9 @@ y_train = train.iloc[:, 71:]
 print("=" * 40)
 print(x_train.shape)
 print(y_train.shape)
+
+## scaling
+x_train = scaler.fit_transform(x_train)
 
 ## Multioutput Layer
 model = MultiOutputRegressor(XGBRegressor(learning_rate = 0.1,
