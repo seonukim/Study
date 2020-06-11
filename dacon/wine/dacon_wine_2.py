@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.decomposition import PCA
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import OneHotEncoder
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, LeakyReLU
 from keras.utils import np_utils
@@ -17,6 +18,7 @@ es = EarlyStopping(monitor = 'val_loss',
                    mode = 'min',
                    patience = 10)
 lr = LeakyReLU(alpha = 0.2)
+ohe = OneHotEncoder()
 
 ### 데이터 ###
 train = pd.read_csv('./dacon/wine/train.csv',
@@ -81,12 +83,23 @@ x_train, x_test, y_train, y_test = train_test_split(
 # y_train = np_utils.to_categorical(y_train)
 # y_test = np_utils.to_categorical(y_test)
 
+x_train = x_train.values
+x_test = x_test.values
+y_train = y_train.values
+y_test = y_test.values
+
+y_train = y_train.reshape(-1, 1)
+y_test = y_test.reshape(-1, 1)
+y_train = ohe.fit_transform(y_train)
+y_test = ohe.fit_transform(y_test)
+print(y_train.shape)
+
 ### 모델링 ###
 # model = Sequential()
 # model.add(Dense(16, input_shape = (12, ),
 #                 activation = lr))
 # model.add(Dropout(rate = 0.2))
-# model.add(Dense(3, activation = 'softmax'))
+# model.add(Dense(7, activation = 'softmax'))
 
 # model.summary()
 
@@ -96,15 +109,14 @@ x_train, x_test, y_train, y_test = train_test_split(
 # model.fit(x_train, y_train, epochs = 50, callbacks = [es],
 #           batch_size = 10, validation_split = 0.2)
        
-### 평가 및 예측 ###
+# ## 평가 및 예측 ###
 # res = model.evaluate(x_test, y_test)
 # print("loss : ", res[0])
 # print("Acc : ", res[1])
 
 ### 모델
-model = XGBRFClassifier(learning_rate = 0.1,
-                        n_estimators = 300,
-                        n_jobs = -1)
+model = RandomForestClassifier(n_estimators = 300,
+                               n_jobs = -1)
 
 model.fit(x_train, y_train)
 
@@ -112,8 +124,9 @@ score = model.score(x_test, y_test)
 print(score)
 
 y_pred = model.predict(test)
-# y_pred = np.argmax(y_pred, axis = 1)
+y_pred = ohe.inverse_transform(y_pred)
+y_pred = np.argmax(y_pred, axis = 1)
 print("Predict : \n", y_pred)
 
 y_pred = pd.DataFrame(y_pred)
-y_pred.to_csv('./dacon/wine/y_pred.csv')
+y_pred.to_csv('./dacon/wine/y_pred_1.csv')
