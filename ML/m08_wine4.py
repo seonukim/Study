@@ -12,7 +12,7 @@ x = wine.drop('quality', axis = 1)      # quality 컬럼을 제외한 나머지�
 
 print(x.shape)                          # (4898, 11)
 print(y.shape)                          # (4898,)
-
+print(y.head())
 
 '''
 레이블 클래스가 너무 5와 6에 치중되어 있음
@@ -20,6 +20,7 @@ print(y.shape)                          # (4898,)
 acc가 높게 나올 수가 없음
 그래서 우리는 아래와 같이 y 레이블을 그룹화하여 다시 3개의 등급으로
 묶어주는 작업을 해줌
+'''
 '''
 # y 레이블 축소
 newlist = []
@@ -44,3 +45,4 @@ from sklearn.metrics import accuracy_score
 y_pred = model.predict(x_test)
 print("acc_score : ", accuracy_score(y_test, y_pred))       # 0.9387755102040817
 print("acc       : ", acc)                                  # 0.9387755102040817
+'''

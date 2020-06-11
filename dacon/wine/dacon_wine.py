@@ -67,6 +67,20 @@ print(y.shape)          # (5497, 1)
 print(x.head())
 print(y.head())
 
+
+# y = y.astype('int64')
+
+# # y 레이블 축소
+# newlist = []
+# for i in list(y):
+#     if i <= 4:
+#         newlist += [0]
+#     elif i <= 7:
+#         newlist += [1]
+#     else:
+#         newlist += [2]
+# y = newlist
+
 ## numpy 형 변환 ##
 x = x.values
 y = y.values
@@ -86,13 +100,13 @@ print(y_test.shape)         # (1100, 1)
 
 ## Scaling
 scaler.fit(x_train)
-x_train = pca.transform(x_train)
-x_test = pca.transform(x_test)
+x_train = scaler.transform(x_train)
+x_test = scaler.transform(x_test)
 
 ## PCA
-pca.fit(x_train)
-x_train = pca.transform(x_train)
-x_test = pca.transform(x_test)
+# pca.fit(x_train)
+# x_train = pca.transform(x_train)
+# x_test = pca.transform(x_test)
 
 ## 원핫인코딩 ##
 y_train = np_utils.to_categorical(y_train)
