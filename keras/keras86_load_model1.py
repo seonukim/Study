@@ -50,7 +50,7 @@ model.fit(x_train, y_train, epochs = 5, batch_size = 32)
 
 # 평가 및 예측
 loss_acc = model.evaluate(x_test, y_test)
-print("loss, acc : ", loss_acc)
+print("loss, acc : ", loss_acc2
 
 
 # loss = hist.history['loss']

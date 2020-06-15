@@ -53,14 +53,14 @@ print(y_train.shape)        # (10000, 4)
 ## LSTM을 위한 차원 스케일 조정
 x_train = x_train.values
 y_train = y_train.values
-# x_train = x_train.reshape(-1, 71, 1)
+x_train = x_train.reshape(-1, 71, 1)
 print(x_train.shape)
 print(type(x_train))
 
 ## 모델링
 def mymodel():
-    input1 = Input(shape = (71, ))
-    x = Dense(32, activation = leaky)(input1)
+    input1 = Input(shape = (71, 1))
+    x = LSTM(32, activation = leaky)(input1)
     x = Dense(32, activation = leaky)(x)
     x = Dropout(rate = 0.2)(x)
     x = Dense(16, activation = leaky)(x)
@@ -83,7 +83,7 @@ params = create_hyperparameter()
 ## 케라스로 RandomizedSearchCV 모델 구성
 model = KerasRegressor(build_fn = mymodel, verbose = 1)
 search = RandomizedSearchCV(model, param_distributions = params,
-                            n_jobs = -1, cv = kfold)
+                            cv = kfold)
 
 search.fit(x_train, y_train)
 
@@ -92,8 +92,8 @@ print(search.best_score_)
 
 ## 예측 및 제출 파일 생성
 pred = search.predict(test)
-pred = pd.DataFrame(pred)
+pred = pd.DataFrame(pred,
+                    index = range(10000, 20000),
+                    columns = ['hhb', 'hbo2', 'ca', 'na'])
 
-pred.to_csv('./dacon/mysubmission_200615.csv',
-            index = range(10000, 20000),
-            columns = ['hhb', 'hbo2', 'ca', 'na'])
+pred.to_csv('./dacon/mysubmission_200615_2.csv')
