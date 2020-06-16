@@ -18,18 +18,18 @@ leaky = LeakyReLU(alpha = 0.3)
 es = EarlyStopping(monitor = 'loss',
                    mode = 'min',
                    patience = 10)
-modelpath = '/Users/seonwoo/Desktop/modelpath/LSTM/LSTM_{epoch:03d} - {loss:.4f}.hdf5'
+modelpath = './my_mini_project/LSTM/LSTM_{epoch:03d} - {loss:.4f}.hdf5'
 cp = ModelCheckpoint(filepath = modelpath, monitor = 'loss',
                      save_best_only = True, mode = 'auto',
                      save_weights_only = False, verbose = 1)
 
 
 ## 데이터
-train = pd.read_csv('/Users/seonwoo/Downloads/'
+train = pd.read_csv('C:/Users/bitcamp/Downloads/'
                     '/cpi_train(1975.01 - 2002.09).csv',
                     index_col = 0, header = 0,
                     encoding = 'cp949')
-test = pd.read_csv('/Users/seonwoo/Downloads/'
+test = pd.read_csv('C:/Users/bitcamp/Downloads/'
                    '/cpi_test(2002.10 - 2020.05).csv',
                    index_col = 0, header = 0,
                    encoding = 'cp949')
@@ -152,7 +152,7 @@ x_train = x_train.reshape(166, 5, 13)
 x_test = x_test.reshape(42, 5, 13)
 
 ## 모델 로드
-model = load_model('/Users/seonwoo/Desktop/modelpath/LSTM/LSTM_model.h5')
+model = load_model('./my_mini_project/LSTM/LSTM_model.h5')
 model.summary()
 
 ## 컴파일 및 훈련
@@ -219,7 +219,3 @@ for i in range(42):
 실제값 :  [104.71] 예측값 :  [105.61607]
 실제값 :  [104.71] 예측값 :  [105.56021]        <- 2020.07월의 CPI 총 지수
 '''
-np.save('/Users/seonwoo/Desktop/modelpath/LSTM/x_train_cpi.npy', arr = x_train)
-np.save('/Users/seonwoo/Desktop/modelpath/LSTM/x_test_cpi.npy', arr = x_test)
-np.save('/Users/seonwoo/Desktop/modelpath/LSTM/y_train_cpi.npy', arr = y_train)
-np.save('/Users/seonwoo/Desktop/modelpath/LSTM/y_test_cpi.npy', arr = y_test)
