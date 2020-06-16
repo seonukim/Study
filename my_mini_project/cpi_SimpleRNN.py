@@ -20,11 +20,11 @@ es = EarlyStopping(monitor = 'loss',
 
 
 ## 데이터
-train = pd.read_csv('/Users/seonwoo/Downloads/'
+train = pd.read_csv('C:/Users/bitcamp/Downloads/'
                     '/cpi_train(1975.01 - 2002.09).csv',
                     index_col = 0, header = 0,
                     encoding = 'cp949')
-test = pd.read_csv('/Users/seonwoo/Downloads/'
+test = pd.read_csv('C:/Users/bitcamp/Downloads/'
                    '/cpi_test(2002.10 - 2020.05).csv',
                    index_col = 0, header = 0,
                    encoding = 'cp949')
@@ -57,8 +57,8 @@ print(x.shape)      # (208, 5, 13)
 print(y.shape)      # (208, 1)
 
 # Numpy 데이터 저장
-np.save('/Users/seonwoo/Desktop/modelpath/npydata/cpi_train_x.npy', arr = x)
-np.save('/Users/seonwoo/Desktop/modelpath/npydata/cpi_train_y.npy', arr = y)
+np.save('./my_mini_project/npydata/cpi_train_x.npy', arr = x)
+np.save('./my_mini_project/npydata/cpi_train_y.npy', arr = y)
 
 ## 데이터 전처리
 x_train, x_test, y_train, y_test = train_test_split(
@@ -95,7 +95,7 @@ model.add(Dense(1, activation = 'relu'))
 
 model.summary()
 
-model.save('/Users/seonwoo/Desktop/modelpath/SimpleRNN/SimpleRNN_model.h5')
+model.save('./my_mini_project/SimpleRNN/SimpleRNN_model.h5')
 
 ## 컴파일 및 훈련
 model.compile(loss = 'mse',
@@ -129,8 +129,8 @@ print(x.shape)      # (208, 5, 13)
 print(y.shape)      # (208, 1)
 
 ## NumPy 저장
-np.save('/Users/seonwoo/Desktop/modelpath/npydata/cpi_test_x.npy', arr = x)
-np.save('/Users/seonwoo/Desktop/modelpath/npydata/cpi_test_y.npy', arr = y)
+np.save('./my_mini_project/npydata/cpi_test_x.npy', arr = x)
+np.save('./my_mini_project/npydata/cpi_test_y.npy', arr = y)
 
 ## 데이터 전처리
 x_train, x_test, y_train, y_test = train_test_split(
@@ -159,7 +159,7 @@ print(x_train.shape)        # (166, 5, 13)
 print(x_test.shape)         # (42, 5, 13)
 
 ## 모델링
-model = load_model('/Users/seonwoo/Desktop/modelpath/SimpleRNN/SimpleRNN_model.h5')
+model = load_model('./my_mini_project/SimpleRNN/SimpleRNN_model.h5')
 
 model.summary()
 
