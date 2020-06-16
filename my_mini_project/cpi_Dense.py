@@ -21,11 +21,11 @@ es = EarlyStopping(monitor = 'loss',
 
 
 ## 데이터
-train = pd.read_csv('C:/Users/bitcamp\Downloads/'
+train = pd.read_csv('C:/Users/bitcamp/Downloads/'
                     '/cpi_train(1975.01 - 2002.09).csv',
                     index_col = 0, header = 0,
                     encoding = 'cp949')
-test = pd.read_csv('C:/Users/bitcamp/Downloads'
+test = pd.read_csv('C:/Users/bitcamp/Downloads/'
                    '/cpi_test(2002.10 - 2020.05).csv',
                    index_col = 0, header = 0,
                    encoding = 'cp949')
