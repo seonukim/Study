@@ -21,11 +21,11 @@ es = EarlyStopping(monitor = 'loss',
 
 
 ## 데이터
-train = pd.read_csv('/Users/seonwoo/Downloads/'
+train = pd.read_csv('C:/Users/bitcamp\Downloads/'
                     '/cpi_train(1975.01 - 2002.09).csv',
                     index_col = 0, header = 0,
                     encoding = 'cp949')
-test = pd.read_csv('/Users/seonwoo/Downloads/'
+test = pd.read_csv('C:/Users/bitcamp/Downloads'
                    '/cpi_test(2002.10 - 2020.05).csv',
                    index_col = 0, header = 0,
                    encoding = 'cp949')
@@ -87,7 +87,7 @@ model.add(Dense(1, activation = 'relu'))
 
 model.summary()
 
-model.save('/Users/seonwoo/Desktop/modelpath/Dense/Dense_model.h5')
+model.save('./my_mini_project/Dense/Dense_model.h5')
 
 ## 컴파일 및 훈련
 model.compile(loss = 'mse',
@@ -140,7 +140,7 @@ a_test = scaler.transform(a_test)
 print(a_train[0])
 
 ## 모델 불러오기
-model = load_model('/Users/seonwoo/Desktop/modelpath/Dense/Dense_model.h5')
+model = load_model('./my_mini_project/Dense/Dense_model.h5')
 
 model.summary()
 
