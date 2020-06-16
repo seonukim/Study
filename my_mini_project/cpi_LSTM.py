@@ -147,6 +147,8 @@ scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
 
+x_train.shape[0] = 166
+
 ## 3차원으로 reshape
 x_train = x_train.reshape(166, 5, 13)
 x_test = x_test.reshape(42, 5, 13)
