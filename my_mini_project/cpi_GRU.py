@@ -17,8 +17,8 @@ scaler = StandardScaler()
 
 '''
 ## Numpy 데이터 로드
-x = np.load('/Users/seonwoo/Desktop/modelpath/npydata/cpi_train_x.npy')
-y = np.load('/Users/seonwoo/Desktop/modelpath/npydata/cpi_train_y.npy')
+x = np.load('./my_mini_project/npydata/cpi_train_x.npy')
+y = np.load('./my_mini_project/npydata/cpi_train_y.npy')
 print(x.shape)      # (208, 5, 13)
 print(y.shape)      # (208, 1)
 
@@ -56,7 +56,7 @@ model.add(Dropout(rate = 0.2))
 model.add(Dense(1, activation = 'relu'))
 model.summary()
 
-model.save('/Users/seonwoo/Desktop/modelpath/GRU/GRU_model.h5')
+model.save('./my_mini_project/GRU/GRU_model.h5')
 
 ## 컴파일 및 훈련
 model.compile(loss = 'mse',
@@ -85,8 +85,8 @@ for i in range(5):
 
 ### test 데이터로 최종 예측
 ## Numpy 데이터 로드
-x = np.load('/Users/seonwoo/Desktop/modelpath/npydata/cpi_test_x.npy')
-y = np.load('/Users/seonwoo/Desktop/modelpath/npydata/cpi_test_y.npy')
+x = np.load('./my_mini_project/npydata/cpi_test_x.npy')
+y = np.load('./my_mini_project/npydata/cpi_test_y.npy')
 print(x.shape)      # (208, 5, 13)
 print(y.shape)      # (208, 1)
 
@@ -117,7 +117,7 @@ print(x_train.shape)        # (187, 5, 13)
 print(x_test.shape)         # (21, 5, 13)
 
 ## 모델링
-model = load_model('/Users/seonwoo/Desktop/modelpath/GRU/GRU_model.h5')
+model = load_model('./my_mini_project/GRU/GRU_model.h5')
 model.summary()
 
 ## 컴파일 및 훈련
