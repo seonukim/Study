@@ -85,7 +85,7 @@ model = KerasRegressor(build_fn = mymodel, verbose = 1)
 search = RandomizedSearchCV(model, param_distributions = params,
                             cv = kfold)
 
-search.fit(x_train, y_train)
+search.fit(x_train, y_tra
 
 print(search.best_params_)
 print(search.best_score_)
