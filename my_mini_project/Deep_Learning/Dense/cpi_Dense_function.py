@@ -50,6 +50,8 @@ output = Dense(1, activation = 'relu')(x)
 model = Model(inputs = input1, outputs = output)
 model.summary()
 
+model.save('./my_mini_project/Deep_Learning/Dense/Dense_function_model.h5')
+
 ## 컴파일 및 훈련
 model.compile(loss = 'mse',
               optimizer = 'adam',
