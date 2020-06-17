@@ -61,7 +61,7 @@ def split_xy(dataset, time_steps, y_column):
         x.append(tmp_x)
         y.append(tmp_y)
     return np.array(x), np.array(y)
-'''
+
 x, y = split_xy(train, 5, 1)
 print(x[0, :], "\n", y[0])
 print(x.shape)
@@ -118,7 +118,7 @@ pred = model.predict(x_test)
 
 for i in range(5):
     print('실제값 : ', y_test[i], '예측값 : ', pred[i])
-'''
+
 '''
 실제값 :  [65.164] 예측값 :  [65.04013]
 실제값 :  [65.055] 예측값 :  [65.1362]
