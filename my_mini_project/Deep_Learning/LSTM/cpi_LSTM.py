@@ -36,13 +36,16 @@ test = pd.read_csv('C:/Users/bitcamp/Downloads/'
 print(train.shape)
 print(test.shape)
 
+## 결측치 확인
+print(train.isnull().sum())
+print(test.isnull().sum())
+
 ## NumPy형 변환
 train = train.values
 test = test.values
 print(type(train))      # <class 'numpy.ndarray'>
 print(type(test))       # <class 'numpy.ndarray'>
 print(train)
-
 
 ## 데이터 분할하기
 def split_xy(dataset, time_steps, y_column):
@@ -146,8 +149,6 @@ print(x_test.shape)         # (42, 65)
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
-
-x_train.shape[0] = 166
 
 ## 3차원으로 reshape
 x_train = x_train.reshape(166, 5, 13)
