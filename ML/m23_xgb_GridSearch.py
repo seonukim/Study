@@ -5,7 +5,7 @@
 
 from xgboost import XGBClassifier, XGBRegressor, plot_importance      # plot_importance
 from sklearn.datasets import load_boston, load_breast_cancer, load_iris
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.multioutput import MultiOutputClassifier
 import matplotlib.pyplot as plt
@@ -22,10 +22,10 @@ x_train, x_test, y_train, y_test = train_test_split(
     shuffle = True, random_state = 77)
 
 ## OHE
-encoder = OneHotEncoder()
-encoder.fit(y_train)
-y_train = encoder.transform(y_train)
-y_test = encoder.transform(y_test)
+# encoder = OneHotEncoder()
+# encoder.fit(y_train)
+# y_train = encoder.transform(y_train)
+# y_test = encoder.transform(y_test)
 
 ## reshape
 # y_train = y_train.reshape(-1, 1)
@@ -45,20 +45,31 @@ colsample_bylevel = 0.8         #
 max_depth = 7                   # 개별 tree의 깊이, default == 6
 n_jobs = -1
 
-model = MultiOutputClassifier(XGBClassifier(max_depth = max_depth,
-                                            learning_rate = learning_rate,
-                                            n_estimators = n_estimators,
-                                            n_jobs = n_jobs,
-                                            colsample_bytree = colsample_bytree))
+params = [
+    {'n_estimators': [100, 200, 300], 'learning_rate': [0.1, 0.3, 0.001, 0.01],
+     'max_depth': [4, 5, 6]},
+    {'n_estimators': [90, 100, 110], 'learning_rate': [0.1, 0.001, 0.01],
+     'max_depth': [4, 5, 6], 'colsample_byree': [0.6, 0.9, 1]},
+    {'n_estimators': [90, 110], 'learning_rate': [0.1, 0.01, 0.5],
+     'max_depth': [4, 5, 6], 'colsample_byree': [0.6, 0.9, 1],
+     'colsample_bylevel': [0.6, 0.7, 0.9]}
+]
+
+xgb = XGBClassifier(max_depth = max_depth,
+                    learning_rate = learning_rate,
+                    n_estimators = n_estimators,
+                    n_jobs = n_jobs,
+                    colsample_bytree = colsample_bytree)
                     #  colsample_bylevel = colsample_bylevel)
 
+model = GridSearchCV(xgb, param_grid = params, cv = 5)
+
 model.fit(x_train, y_train)
+print("=" * 40)
+print(model.best_estimator_)
+print("=" * 40)
+print(model.best_params_)
+print("=" * 40)
 score = model.score(x_test, y_test)
-print('Score : ', score)            # Score :  0.9473684210526315
-
-# print(model.feature_importances_)
-# print(model.best_estimator_)
-# print(model.best_params_)
-
-plot_importance(model)
-# plt.show()
+print("=" * 40)
+print('점수 : ', score)
