@@ -17,7 +17,7 @@ print(y.shape)      # (506,)
 ## train_test_split
 x_train, x_test, y_train, y_test = train_test_split(
     x, y, test_size = 0.2,
-    shuffle = True, random_state = 66)
+    shuffle = True, random_state = 77)
 
 # Tree의 Ensemble == Forest
 # Forest의 Upgrade == Boosting
@@ -25,12 +25,12 @@ x_train, x_test, y_train, y_test = train_test_split(
 # 1. 딥러닝 모델에 비해 속도가 빠르다
 # 2. 결측치 제거 기능을 자체적으로 제공함
 # 3. 하지만 상황에 따라, 판단에 따라 사람이 처리해야 할 필요가 있음
-n_estimators = 100              # 앙상블 모델에서 트리의 갯수
+n_estimators = 900              # 앙상블 모델에서 트리의 갯수
 learning_rate = 0.01            # 학습률, default == 0.01, 핵심 파라미터 중 하나, 머신러닝 딥러닝 양쪽에서 모두 사용함
-colsample_bytree = 0.9          # 성능 좋은 모델들은 통상적으로 0.6 ~ 0.9 사이, tree의 컬럼 샘플 비율을 얼마나 할지 설정
-colsample_bylevel = 0.9         # 
+colsample_bytree = 0.8          # 성능 좋은 모델들은 통상적으로 0.6 ~ 0.9 사이, tree의 컬럼 샘플 비율을 얼마나 할지 설정
+colsample_bylevel = 0.8         # 
 
-max_depth = 5                   # 개별 tree의 깊이, default == 6
+max_depth = 7                   # 개별 tree의 깊이, default == 6
 n_jobs = -1
 
 model = XGBRegressor(max_depth = max_depth,
@@ -49,4 +49,4 @@ print(model.feature_importances_)
 # print(model.best_params_)
 
 plot_importance(model)
-plt.show()
+# plt.show()
