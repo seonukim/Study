@@ -3,14 +3,16 @@
 # 2. 피쳐 수를 줄인다.
 # 3. regularization     = Dropout과 결과가 비슷 또는 똑같다
 
-from xgboost import XGBRegressor, plot_importance      # plot_importance
-from sklearn.datasets import load_boston
-from sklearn.model_selection import train_test_split, RandomizedSearchCV
+from xgboost import XGBClassifier, XGBRegressor, plot_importance      # plot_importance
+from sklearn.datasets import load_boston, load_breast_cancer, load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.multioutput import MultiOutputClassifier
 import matplotlib.pyplot as plt
 
 
 ## 데이터 가져오기
-x, y = load_boston(return_X_y = True)
+x, y = load_iris(return_X_y = True)
 print(x.shape)      # (506, 13)
 print(y.shape)      # (506,)
 
@@ -18,6 +20,16 @@ print(y.shape)      # (506,)
 x_train, x_test, y_train, y_test = train_test_split(
     x, y, test_size = 0.2,
     shuffle = True, random_state = 77)
+
+## OHE
+encoder = OneHotEncoder()
+encoder.fit(y_train)
+y_train = encoder.transform(y_train)
+y_test = encoder.transform(y_test)
+
+## reshape
+# y_train = y_train.reshape(-1, 1)
+# y_test = y_test.reshape(-1, 1)
 
 # Tree의 Ensemble == Forest
 # Forest의 Upgrade == Boosting
@@ -33,25 +45,20 @@ colsample_bylevel = 0.8         #
 max_depth = 7                   # 개별 tree의 깊이, default == 6
 n_jobs = -1
 
-params = {
-    'n_estimators': [100, 150, 200, 300, 400, 700, 900, 1200, 1500],
-    'learning_rate': [0.01, 0.03, 0.07],
-    'colsample_bytree': [0.6, 0.7, 0.8, 0.9],
-    'colsample_bylevel': [0.6, 0.7, 0.8, 0.9],
-    'max_depth': [5, 6, 7, 8, 9]
-}
-
-xgb = XGBRegressor()
-
-model = RandomizedSearchCV(xgb, param_distributions = params, cv = 5)
+model = MultiOutputClassifier(XGBClassifier(max_depth = max_depth,
+                                            learning_rate = learning_rate,
+                                            n_estimators = n_estimators,
+                                            n_jobs = n_jobs,
+                                            colsample_bytree = colsample_bytree))
+                    #  colsample_bylevel = colsample_bylevel)
 
 model.fit(x_train, y_train)
 score = model.score(x_test, y_test)
-print('Score : ', score)
+print('Score : ', score)            # Score :  0.9473684210526315
 
-# print(model.feature_importances_)
+print(model.feature_importances_)
 # print(model.best_estimator_)
 # print(model.best_params_)
 
-# plot_importance(model)
+plot_importance(model)
 # plt.show()
