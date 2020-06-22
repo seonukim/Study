@@ -9,6 +9,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
 from sklearn.datasets import load_breast_cancer
+warnings.filterwarnings('ignore')
 
 ## 데이터
 x, y = load_breast_cancer(return_X_y = True)
