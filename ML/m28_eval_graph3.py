@@ -27,7 +27,6 @@ print(y_test.shape)         # (30,)
 ## 모델링
 model = XGBClassifier(n_estimators = 1000,
                       learning_rate = 0.01,
-                      objective = 'multi:softmax',
                       n_jobs = -1)
 
 model.fit(x_train, y_train,
