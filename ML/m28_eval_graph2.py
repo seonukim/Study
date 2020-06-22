@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import warnings
 
-from xgboost import XGBRegressor
+from xgboost import XGBRegressor, XGBClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
@@ -35,13 +35,13 @@ params = {
     'colsample_bylevel': [0.6, 0.7, 0.8, 0.9]
 }
 
-xgb = XGBRegressor()
-model = RandomizedSearchCV(estimator = xgb,
-                           param_distributions = params,
-                           cv = 5, n_jobs = -1)
+# xgb = XGBClassifier(n_jobs = -1)
+# model = RandomizedSearchCV(estimator = xgb,
+#                            param_distributions = params,
+#                            cv = 5, n_jobs = -1)
 
-# model = XGBRegressor(n_estimators = 300,
-#                      learning_rate = 0.01)
+model = XGBClassifier(n_estimators = 300,
+                     learning_rate = 0.01, n_jobs = -1)
 
 model.fit(x_train, y_train,
           verbose = True,
@@ -57,3 +57,22 @@ y_pred = model.predict(x_test)
 
 ## Accuracy Score
 print("Accuracy Score : ", accuracy_score(y_test, y_pred))
+
+## 그래프, 시각화
+epochs = len(results['validation_0']['logloss'])
+x_axis = range(0, epochs)
+
+fig, ax = plt.subplots()
+ax.plot(x_axis, results['validation_0']['logloss'], label = 'Train')
+ax.plot(x_axis, results['validation_1']['logloss'], label = 'Test')
+ax.legend()
+plt.ylabel('Log Loss')
+plt.title('Log Loss of Breast_Cancer')
+
+fig, ax = plt.subplots()
+ax.plot(x_axis, results['validation_0']['error'], label = 'Train')
+ax.plot(x_axis, results['validation_1']['error'], label = 'Test')
+ax.legend()
+plt.ylabel('Error')
+plt.title('Error of Breast_Cancer')
+plt.show()
