@@ -7,13 +7,13 @@ from xgboost import XGBRegressor, plot_importance
 from sklearn.multioutput import MultiOutputRegressor
 from sklearn.feature_selection import SelectFromModel
 from sklearn.model_selection import GridSearchCV, train_test_split
-from sklearn.metrics import r2_score
+from sklearn.metrics import r2_score, mean_absolute_error
 
 
 ## Data
-train = pd.read_csv('C:/Users/dnsrl/Downloads/data/train.csv',
+train = pd.read_csv('./data/dacon/comp1/train.csv',
                     index_col = 0, header = 0)
-test = pd.read_csv('C:/Users/dnsrl/Downloads/data/test.csv',
+test = pd.read_csv('./data/dacon/comp1//test.csv',
                    index_col = 0, header = 0)
 print(train.shape)              # (10000, 75)
 print(test.shape)               # (10000, 71)
@@ -64,48 +64,62 @@ print(x_test.shape)             # (2000, 71)
 print(y_train.shape)            # (8000, 4)
 print(y_test.shape)             # (2000, 4)
 
-## 모델링
+## feature importance
+xgb = XGBRegressor()
+model = MultiOutputRegressor(xgb)
+model.fit(x_train, y_train)
+print(len(model.estimators_))
+
+print(model.estimators_[0].feature_importances_)
+print(model.estimators_[1].feature_importances_)
+print(model.estimators_[2].feature_importances_)
+print(model.estimators_[3].feature_importances_)
+print("Score : ", model.score(x_test, y_test))
+
 params = {
-    'nthread': [4],
-    'objective': ['reg:linear'],
-    'learning_rate': [0.01, 0.03],
-    'max_depth': [3, 5, 7],
-    'colsample_bytree': [0.7, 0.8, 0.9],
-    'colsample_bylevel': [0.7, 0.8, 0.9],
-    'n_estimators': [100, 200, 300]
+    'nthread': [5],
+    'n_estimators': [100, 150, 300, 450],
+    'colsample_bytree': [0.6, 0.7, 0.8, 0.9],
+    'colsample_bylevel': [0.6, 0.7, 0.8, 0.9],
+    'max_depth': [10, 20, 30],
+    'learning_rate': [0.1, 0.01, 0.2, 0.02]
 }
 
-xgb = XGBRegressor(n_jobs = -1)
-grid = GridSearchCV(estimator = xgb,
-                    param_grid = params,
-                    cv = 5, n_jobs = -1)
-model = MultiOutputRegressor(estimator = grid)
+## 모델링
+for i in range(len(model.estimators_)):
+    threshold = np.sort(model.estimators_[i].feature_importances_)
 
-model.fit(x_train, y_train)
-score = model.score(x_test, y_test)
-print("Score : ", score)
-print("Best Parameters : ", model.estimators_)
-# plot_importance(xgb)
-# plt.show()
+    for j in threshold:
+        select = SelectFromModel(model.estimators_[i],
+                                 threshold = j,
+                                 prefit = True)
+        
+        search = GridSearchCV(estimator = XGBRegressor(n_jobs = 6),
+                              param_grid = params,
+                              cv = 5)
+        
+        select_x_train = select.transform(x_train)
+        select_x_test = select.transform(x_test)
 
-## SelectFromModel
-thresholds = np.sort(xgb.feature_importances_)
-print(thresholds.shape)
-for thresh in thresholds:
-    select = SelectFromModel(estimator = xgb,
-                             threshold = thresh,
-                             prefit = True)
-    select_x_train = select.transform(x_train)
-    # print(x_train.shape)
-    
-    select_xgb = XGBRegressor(n_jobs = -1)
-    select_grid = GridSearchCV(estimator = xgb,
-                               param_grid = params,
-                               cv = 5, n_jobs = -1)
-    select_model = MultiOutputRegressor(grid)
-    select_test = select.transform(test)
-    y_pred = select_model.predict(test)
-    
-    score = r2_score(y, test)
-    print("Thresh = %.3f, n = %d, R2 = %.2f%%%" %(thresh, select_x_train.shape[1],
-          score * 100.0))
+        search_model = MultiOutputRegressor(estimator = search,
+                                            n_jobs = 6)
+        
+        search_model.fit(select_x_train, y_train)
+
+        # Predict
+        y_pred = search_model.predict(select_x_test)
+        mae = mean_absolute_error(y_test, y_pred)
+        score = r2_score(y_test, y_pred)
+
+        print("Thresh = %.3f, n = %d, R2 : %.2f%%, MAE : %.3f%"(j, select_x_train[1], score * 100.0, mae))
+
+        select_x_pred = select.transform(test)
+        pred = search_model.predict(select_x_pred)
+
+        # submission
+        a = np.arange(10000, 20000)
+        submission = pd.DataFrame(pred, a)
+        submission.to_csv('./dacon/comp1/sub_XG%i_%.5f.csv' %(i, mae),
+                          index = True,
+                          header = ['hhb', 'hbo2', 'ca', 'na'],
+                          index_label = 'id')
