@@ -44,3 +44,22 @@ y_pred = model.predict(x_test)
 
 ## Accuracy Score
 print("Accuracy Score : ", accuracy_score(y_test, y_pred))
+
+## 그래프, 시각화
+epochs = len(results['validation_0']['mlogloss'])
+x_axis = range(0, epochs)
+
+fig, ax = plt.subplots()
+ax.plot(x_axis, results['validation_0']['mlogloss'], label = 'Train')
+ax.plot(x_axis, results['validation_1']['mlogloss'], label = 'Test')
+ax.legend()
+plt.ylabel('Log Loss')
+plt.title('Log Loss of Iris')
+
+fig, ax = plt.subplots()
+ax.plot(x_axis, results['validation_0']['merror'], label = 'Train')
+ax.plot(x_axis, results['validation_1']['merror'], label = 'Test')
+ax.legend()
+plt.ylabel('Error')
+plt.title('Error of Iris')
+plt.show()
