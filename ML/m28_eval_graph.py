@@ -1,6 +1,7 @@
 # xgboost evaluate
 
 import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.feature_selection import SelectFromModel
 from xgboost import XGBRegressor
 from sklearn.model_selection import train_test_split
@@ -36,3 +37,15 @@ y_pred = model.predict(x_test)
 r2 = r2_score(y_test, y_pred)
 # print("r2 Score : %.2f%%" %(r2 * 100))
 print("R2 : ", r2)
+
+## 그래프, 시각화
+epochs = len(results['validation_0']['logloss'])
+x_axis = range(0, epochs)
+
+fig, ax = plt.subplots()
+ax.plot(x_axis, results['validation_0']['logloss'], label = 'Train')
+ax.plot(x_axis, results['validation_1']['logloss'], label = 'Test')
+ax.legend()
+plt.ylabel('Log Loss')
+plt.title('XGBoost Log Loss')
+plt.show()
