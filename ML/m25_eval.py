@@ -28,3 +28,7 @@ model.fit(x_train, y_train,
 
 results = model.evals_result()
 print("eval's result : ", results)
+
+y_pred = model.predict(x_test)
+r2 = r2_score(y_test, y_pred)
+print("R2 : ", r2)

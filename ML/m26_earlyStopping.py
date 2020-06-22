@@ -23,8 +23,13 @@ model = XGBRegressor(n_estimators = 1000,        # verbose의 갯수, epochs와 
 
 model.fit(x_train, y_train,
           verbose = True, eval_metric = 'rmse',
-          eval_set = [(x_train, y_train), (x_test, y_test)])
+          eval_set = [(x_train, y_train), (x_test, y_test)],
+          early_stopping_rounds = 20)
 # eval_metic의 종류 : rmse, mae, logloss, error(error가 0.2면 accuracy는 0.8), auc(정확도, 정밀도; accuracy의 친구다)
 
 results = model.evals_result()
-print("eval's result : ", results)
+# print("eval's result : ", results)
+
+y_pred = model.predict(x_test)
+r2 = r2_score(y_test, y_pred)
+print("R2 : ", r2)
