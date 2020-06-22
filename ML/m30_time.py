@@ -29,7 +29,6 @@ print(thresholds)
 
 import time
 start = time.time()
-print(start)
 for thresh in thresholds:               # 컬럼 수만큼 돈다, 빙글빙글
     selection = SelectFromModel(model, threshold = thresh, prefit = True)
 
@@ -48,8 +47,6 @@ for thresh in thresholds:               # 컬럼 수만큼 돈다, 빙글빙글
     print("Thresh = %.3f, n = %d, R2: %.2f%%" %(thresh, select_x_train.shape[1],
           score * 100.0))
 
-end = time.time() - start
-print("그냥 걸린 시간 : ", end)
 
 import time
 start2 = time.time()
@@ -60,7 +57,7 @@ for thresh in thresholds:               # 컬럼 수만큼 돈다, 빙글빙글
     select_x_train = selection.transform(x_train)
     # print(select_x_train.shape)
 
-    selection_model = XGBRegressor(n_jobs = -1)
+    selection_model = XGBRegressor(n_jobs = 1)
     selection_model.fit(select_x_train, y_train)
 
     select_x_test = selection.transform(x_test)
@@ -72,8 +69,11 @@ for thresh in thresholds:               # 컬럼 수만큼 돈다, 빙글빙글
     print("Thresh = %.3f, n = %d, R2: %.2f%%" %(thresh, select_x_train.shape[1],
           score * 100.0))
 
+end = time.time() - start
+print("그냥 걸린 시간 : ", end)
 end2 = time.time() - start2
 print("n_jobs 총 걸린 시간 : ", end2)
+
 '''
 Thresh = 0.001, n = 13, R2: 92.21%
 Thresh = 0.004, n = 12, R2: 92.16%
