@@ -77,8 +77,7 @@ for i in thresholds:
                      eval_set = [(select_x_train, y_train),
                                  (select_x_test, y_test)],
                      early_stopping_rounds = 100)
-    y_pred = model.predict(select_x_test)
-
+    y_pred = select_model.predict(select_x_test)
     score = r2_score(y_test, y_pred)
 
     print("Thresh = %.3f, n = %d, R2: %.2f%%"
