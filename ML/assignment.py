@@ -37,21 +37,25 @@ test = test.fillna(test.mean())
 print("=" * 40)
 print(train.isnull().sum()[train.isnull().sum().values > 0])        # Series([], dtype: int64)
 print(test.isnull().sum()[test.isnull().sum().values > 0])          # Series([], dtype: int64)
-'''
+
 ## x, y 데이터로 나누기
-x1 = train.loc[:, '850_src':'990_src']
-x2 = train.loc[:, '850_dst':'990_dst']
+x = train.loc[:, '650_dst':'990_dst']
+y = train.iloc[:, 71:]
+test = test.loc[:, '650_dst':'990_dst']
 print("=" * 40)
-print(x1.shape)            # (10000, 15)
-print(x2.shape)            # (10000, 15)
+print(x.shape)            # (10000, 35)
+print(y.shape)            # (10000, 4)
+print(test.shape)
 
 ## Numpy형 변환
-x1 = x1.values
-x2 = x2.values
+x = x.values
+y = y.values
+test = test.values
 print("=" * 40)
-print(type(x1))             # <class 'numpy.ndarray'>
-print(type(x2))             # <class 'numpy.ndarray'>
-
+print(type(x))             # <class 'numpy.ndarray'>
+print(type(y))             # <class 'numpy.ndarray'>
+print(type(test))          # <class 'numpy.ndarray'>
+'''
 x = np.hstack((x1, x2))
 y = train.iloc[:, 71:]
 print("=" * 40)
@@ -79,6 +83,7 @@ test = np.hstack((x3, x4))
 print("=" * 40)
 print(type(test))
 '''
+'''
 ## x, y 데이터로 나누기
 x = train.iloc[:, :71]
 y = train.iloc[:, 71:]
@@ -94,6 +99,7 @@ print("=" * 40)
 print(type(x))
 print(type(y))
 print(type(test))
+'''
 
 ## train_test_split
 x_train, x_test, y_train, y_test = train_test_split(
