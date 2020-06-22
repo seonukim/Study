@@ -19,14 +19,14 @@ x_train, x_test, y_train, y_test = train_test_split(
     shuffle = True, random_state = 66)
 
 ## 모델링
-model = XGBRegressor(n_estimators = 100,        # verbose의 갯수, epochs와 동일
+model = XGBRegressor(n_estimators = 300,        # verbose의 갯수, epochs와 동일
                      learning_rate = 0.1)
 
 model.fit(x_train, y_train,
           verbose = True, eval_metric = ['logloss', 'rmse'],
           eval_set = [(x_train, y_train),
-                      (x_test, y_test)],
-          early_stopping_rounds = 100)
+                      (x_test, y_test)])
+        #   early_stopping_rounds = 100)
 # eval_metic의 종류 : rmse, mae, logloss, error(error가 0.2면 accuracy는 0.8), auc(정확도, 정밀도; accuracy의 친구다)
 
 results = model.evals_result()
@@ -48,7 +48,6 @@ ax.plot(x_axis, results['validation_1']['logloss'], label = 'Test')
 ax.legend()
 plt.ylabel('Log Loss')
 plt.title('XGBoost Log Loss')
-plt.show()
 
 fig, ax = plt.subplots()
 ax.plot(x_axis, results['validation_0']['rmse'], label = 'Train')
