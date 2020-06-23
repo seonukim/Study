@@ -9,7 +9,11 @@ def outliers(data_out):
     upper_bound = quartile_3 + (iqr * 1.5)
     return np.where((data_out > upper_bound) | (data_out < lower_bound))
 
-a = np.array([1, 2, 3, 4, 10000, 6, 7, 5000, 90, 100])
+# a = np.array([1, 2, 3, 4, 10000, 6, 7, 5000, 90, 100])
 
-b = outliers(a)
-print("이상치의 위치 : ", b)
+# b = outliers(a)
+# print("이상치의 위치 : ", b)
+
+
+# 실습 : 행렬을 입력해서 컬럼별로 이상치 발견하는 함수를 구현하시오
+# 파일명 : m36_outliers2.py
