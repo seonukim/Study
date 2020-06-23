@@ -27,8 +27,8 @@ print(train.isnull().sum()[train.isnull().sum().values > 0])
 print(test.isnull().sum()[test.isnull().sum().values > 0])
 
 ## 나머지 결측치 처리하기
-train = train.fillna(-1)
-test = test.fillna(-1)
+train = train.fillna(train.mean())
+test = test.fillna(test.mean())
 print(train.isnull().sum()[train.isnull().sum().values > 0])
 print(test.isnull().sum()[test.isnull().sum().values > 0])
 
@@ -61,3 +61,4 @@ model.fit(x_train, y_train)
 y_pred = model.predict(x_test)
 mae = mean_absolute_error(y_test, y_pred)
 print(mae)
+
