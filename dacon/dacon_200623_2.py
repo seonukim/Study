@@ -64,6 +64,9 @@ def model_scoring_cv(model, x, y, cv = 10):
     stop = time.time()
     print(f'validation Time : {round(stop - start, 3)} sec')
     return score
+'''
+10겹 교차검증을 하는 함수
+'''
 
 src_list = ['650_src', '660_src', '670_src', '680_src', '690_src', '700_src', '710_src', '720_src', '730_src', 
             '740_src', '750_src', '760_src', '770_src', '780_src', '790_src', '800_src', '810_src', '820_src', 
@@ -111,7 +114,13 @@ x_test[dst_list] = np.array(beta)
 for col in dst_list:
     x_train[col] *= (x_train['rho'] ** 2)
     x_test[col] *= (x_test['rho'] ** 2)
+'''
+측정거리가 있다(rho)
+측정된 빛의 세기는 거리 제곱에 반비례하므로,
+측정 거리를 제곱해서 곱해준다
+'''
 
+# src - dst gap
 gap_feature_names = []
 for i in range(650, 1000, 10):
     gap_feature_names.append(str(i) + '_gap')
@@ -125,4 +134,92 @@ x_train = pd.concat((x_train, alpha), axis = 1)
 x_test = pd.concat((x_test, beta), axis = 1)
 
 print(x_train.shape, y_train.shape, x_test.shape)
+# model_scoring_cv(multi_model, x_train, y_train)
+'''
+적외선 분광분석법에는 적외선 흡수를 통한 분광분석법이 이루어지므로,
+원래 빛과 측정 빛의 강도 차이를 파장별로 계산해서 변수로 추가
+'''
+
+epsilon = 1e-10
+
+for dst_col, src_col in zip(dst_list, src_list):
+    dst_val = x_train[dst_col]
+    src_val = x_train[src_col] + epsilon
+    delta_ratio = dst_val / src_val
+    x_train[dst_col + '_' + src_col + '_ratio'] = delta_ratio
+
+    dst_val = x_test[dst_col]
+    src_val = x_test[src_col] + epsilon
+
+    delta_ratio = dst_val / src_val
+    x_test[dst_col + '_' + src_col + '_ratio'] = delta_ratio
+
+print(x_train.shape, x_test.shape)
+# model_scoring_cv(multi_model, x_train, y_train)
+'''
+원래 빛과 측정 빛의 차이 비율도 계산해서 변수로 추가
+'''
+
+# DFT with numpy
+alpha_real = x_train[dst_list]
+alpha_imag = x_train[dst_list]
+
+beta_real = x_test[dst_list]
+beta_imag = x_test[dst_list]
+
+for i in tqdm(alpha_real.index):
+    alpha_real.loc[i] = alpha_real.loc[i] - alpha_real.loc[i].mean()
+    alpha_imag.loc[i] = alpha_imag.loc[i] - alpha_imag.loc[i].mean()
+
+    alpha_real.loc[i] = np.fft.fft(alpha_real.loc[i], norm = 'ortho').real
+    alpha_imag.loc[i] = np.fft.fft(alpha_imag.loc[i], norm = 'ortho').imag
+
+for i in tqdm(beta_real.index):
+    beta_real.loc[i] = beta_real.loc[i] - beta_real.loc[i].mean()
+    beta_imag.loc[i] = beta_imag.loc[i] - beta_imag.loc[i].mean()
+
+    beta_real.loc[i] = np.fft.fft(beta_real.loc[i], norm = 'ortho').real
+    beta_imag.loc[i] = np.fft.fft(beta_imag.loc[i], norm = 'ortho').imag
+
+real_part = []
+imag_part = []
+
+for col in dst_list:
+    real_part.append(col + '_fft_real')
+    imag_part.append(col + '_fft_imag')
+
+alpha_real.columns = real_part
+alpha_imag.columns = imag_part
+alpha = pd.concat((alpha_real, alpha_imag), axis = 1)
+
+beta_real.columns = real_part
+beta_imag.columns = imag_part
+beta = pd.concat((beta_real, beta_imag), axis = 1)
+
+x_train = pd.concat((x_train, alpha), axis = 1)
+x_test = pd.concat((x_test, beta), axis = 1)
+
+print(x_train.shape, y_train.shape, x_test.shape)
 model_scoring_cv(multi_model, x_train, y_train)
+'''
+측정 빛에 '이산 푸리에 변환'을 적용
+np.fft는 고속 푸리에 변환을 이용한 이산 푸리에 변환을 계산해준다
+실수부(real_part)와 허수부(imag_part)로 나오는 결과물을 각각 변수로 추가한다
+'''
+
+# Remove src columns
+x_train = x_train.drop(columns = src_list)
+x_test = x_test.drop(columns = src_list)
+
+print(x_train.shape, y_train.shape, x_test.shape)
+model_scoring_cv(multi_model, x_train, y_train)
+
+multi_model.fit(x_train, y_train)
+pred = multi_model.predict(x_test)
+
+pred = pd.DataFrame(data = pred,
+                    columns = submission.columns,
+                    index = submission.index)
+pred.head()
+
+pred.to_csv(path + '/comp1/my_submission_200624.csv')
