@@ -92,19 +92,19 @@ for i in tqdm(x_test.index):
 
 print(alpha.isnull().sum(), '\n', beta.isnull().sum())
 
-alpha.loc[alpha['700_dst'].isnull(),'700_dst']=alpha.loc[alpha['700_dst'].isnull(),'710_dst']
-alpha.loc[alpha['690_dst'].isnull(),'690_dst']=alpha.loc[alpha['690_dst'].isnull(),'700_dst']
-alpha.loc[alpha['680_dst'].isnull(),'680_dst']=alpha.loc[alpha['680_dst'].isnull(),'690_dst']
-alpha.loc[alpha['670_dst'].isnull(),'670_dst']=alpha.loc[alpha['670_dst'].isnull(),'680_dst']
-alpha.loc[alpha['660_dst'].isnull(),'660_dst']=alpha.loc[alpha['660_dst'].isnull(),'670_dst']
-alpha.loc[alpha['650_dst'].isnull(),'650_dst']=alpha.loc[alpha['650_dst'].isnull(),'660_dst']
+alpha.loc[alpha['700_dst'].isnull(),'700_dst'] = alpha.loc[alpha['700_dst'].isnull(),'710_dst']
+alpha.loc[alpha['690_dst'].isnull(),'690_dst'] = alpha.loc[alpha['690_dst'].isnull(),'700_dst']
+alpha.loc[alpha['680_dst'].isnull(),'680_dst'] = alpha.loc[alpha['680_dst'].isnull(),'690_dst']
+alpha.loc[alpha['670_dst'].isnull(),'670_dst'] = alpha.loc[alpha['670_dst'].isnull(),'680_dst']
+alpha.loc[alpha['660_dst'].isnull(),'660_dst'] = alpha.loc[alpha['660_dst'].isnull(),'670_dst']
+alpha.loc[alpha['650_dst'].isnull(),'650_dst'] = alpha.loc[alpha['650_dst'].isnull(),'660_dst']
 
-beta.loc[beta['700_dst'].isnull(),'700_dst']=beta.loc[beta['700_dst'].isnull(),'710_dst']
-beta.loc[beta['690_dst'].isnull(),'690_dst']=beta.loc[beta['690_dst'].isnull(),'700_dst']
-beta.loc[beta['680_dst'].isnull(),'680_dst']=beta.loc[beta['680_dst'].isnull(),'690_dst']
-beta.loc[beta['670_dst'].isnull(),'670_dst']=beta.loc[beta['670_dst'].isnull(),'680_dst']
-beta.loc[beta['660_dst'].isnull(),'660_dst']=beta.loc[beta['660_dst'].isnull(),'670_dst']
-beta.loc[beta['650_dst'].isnull(),'650_dst']=beta.loc[beta['650_dst'].isnull(),'660_dst']
+beta.loc[beta['700_dst'].isnull(),'700_dst'] = beta.loc[beta['700_dst'].isnull(),'710_dst']
+beta.loc[beta['690_dst'].isnull(),'690_dst'] = beta.loc[beta['690_dst'].isnull(),'700_dst']
+beta.loc[beta['680_dst'].isnull(),'680_dst'] = beta.loc[beta['680_dst'].isnull(),'690_dst']
+beta.loc[beta['670_dst'].isnull(),'670_dst'] = beta.loc[beta['670_dst'].isnull(),'680_dst']
+beta.loc[beta['660_dst'].isnull(),'660_dst'] = beta.loc[beta['660_dst'].isnull(),'670_dst']
+beta.loc[beta['650_dst'].isnull(),'650_dst'] = beta.loc[beta['650_dst'].isnull(),'660_dst']
 
 x_train[dst_list] = np.array(alpha)
 x_test[dst_list] = np.array(beta)
