@@ -41,10 +41,10 @@ print(y_train.shape)        # (10000, 4)
 
 # base model 구성
 params = {
-    'n_estimators': 1500,
+    'n_estimators': 900,
     'num_leaves': 100,
-    'learning_rate': 0.01,
-    'colsample_bytree': 0.7,
+    'learning_rate': 0.1,
+    'colsample_bytree': 0.8,
     'subsample': 0.9,
     'reg_alpha': 5,
     'reg_lambda': 7
