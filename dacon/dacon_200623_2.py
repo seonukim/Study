@@ -9,6 +9,7 @@ import time
 import warnings ; warnings.filterwarnings('ignore')
 
 from lightgbm import LGBMRegressor
+from xgboost import XGBRegressor
 from sklearn.multioutput import MultiOutputRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score, cross_val_predict
@@ -40,10 +41,10 @@ print(y_train.shape)        # (10000, 4)
 
 # base model 구성
 params = {
-    'n_estimators': 1200,
+    'n_estimators': 1500,
     'num_leaves': 100,
-    'learning_rate': 0.05,
-    'colsample_bytree': 0.8,
+    'learning_rate': 0.01,
+    'colsample_bytree': 0.7,
     'subsample': 0.9,
     'reg_alpha': 5,
     'reg_lambda': 7
@@ -142,7 +143,7 @@ print(x_train.shape, y_train.shape, x_test.shape)
 
 epsilon = 1e-10
 
-for dst_col, src_col in zip(dst_list, src_list):
+for dst_col, src_col in zip(dst_list, src_list):            # zip() : 동일한 개수로 이루어진 자료형을 묶어줌
     dst_val = x_train[dst_col]
     src_val = x_train[src_col] + epsilon
     delta_ratio = dst_val / src_val
@@ -222,4 +223,4 @@ pred = pd.DataFrame(data = pred,
                     index = submission.index)
 pred.head()
 
-pred.to_csv(path + '/comp1/my_submission_200624.csv')
+pred.to_csv(path + '/comp1/my_submission_200624(2).csv')
