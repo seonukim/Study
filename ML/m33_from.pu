@@ -1,0 +1,5 @@
+import 31_sampleI()
+
+x = 222
+
+from machine.test import tv
