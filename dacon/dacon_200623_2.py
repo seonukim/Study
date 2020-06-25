@@ -172,15 +172,15 @@ for i in tqdm(alpha_real.index):
     alpha_real.loc[i] = alpha_real.loc[i] - alpha_real.loc[i].mean()
     alpha_imag.loc[i] = alpha_imag.loc[i] - alpha_imag.loc[i].mean()
 
-    alpha_real.loc[i] = np.fft.fft(alpha_real.loc[i], norm = 'ortho').real
-    alpha_imag.loc[i] = np.fft.fft(alpha_imag.loc[i], norm = 'ortho').imag
+    alpha_real.loc[i] = np.fft.fft(alpha_real.loc[i], norm = 'ortho', n = 60).real
+    alpha_imag.loc[i] = np.fft.fft(alpha_imag.loc[i], norm = 'ortho', n = 60).imag
 
 for i in tqdm(beta_real.index):
     beta_real.loc[i] = beta_real.loc[i] - beta_real.loc[i].mean()
     beta_imag.loc[i] = beta_imag.loc[i] - beta_imag.loc[i].mean()
 
-    beta_real.loc[i] = np.fft.fft(beta_real.loc[i], norm = 'ortho').real
-    beta_imag.loc[i] = np.fft.fft(beta_imag.loc[i], norm = 'ortho').imag
+    beta_real.loc[i] = np.fft.fft(beta_real.loc[i], norm = 'ortho', n = 60).real
+    beta_imag.loc[i] = np.fft.fft(beta_imag.loc[i], norm = 'ortho', n = 60).imag
 
 real_part = []
 imag_part = []
