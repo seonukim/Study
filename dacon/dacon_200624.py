@@ -5,7 +5,7 @@ import time
 import tqdm
 import os
 
-path = 'D:\Study\data\dacon'
+path = 'D:\\Study\data\dacon'
 os.chdir(path)
 
 from lightgbm import LGBMRegressor
@@ -128,3 +128,4 @@ x_test[dst_list] = np.array(beta)
 print(model_scoring_cv(estimator = multi_lgb,
                        x_data = x_train,
                        y_data = y_train))
+
