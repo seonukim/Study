@@ -99,8 +99,8 @@ for size in np.arange(0.90, 0.93, 0.01):
 
     small = 1e-30
 
-    x_train = np.concatenate([train.values[:, 0:1] ** 2,train_dst, train_src - train_dst, train_src / (train_dst + small), train_fu_real, train_fu_imag] , axis = 1)
-    x_pred = np.concatenate([test.values[:, 0:1] ** 2,test_dst, test_src - test_dst, test_src / (test_dst + small), test_fu_real, test_fu_imag], axis = 1)
+    x_train = np.concatenate([train.values[:, 0:1] ** 2, train_dst, train_src - train_dst, train_src / (train_dst + small), train_fu_real, train_fu_imag] , axis = 1)
+    x_pred = np.concatenate([test.values[:, 0:1] ** 2, test_dst, test_src - test_dst, test_src / (test_dst + small), test_fu_real, test_fu_imag], axis = 1)
 
     print(x_train.shape) #(10000,176)
     print(y_train.shape) #(10000,4)
@@ -125,11 +125,11 @@ for size in np.arange(0.90, 0.93, 0.01):
 
     x_train,x_test,y_train,y_test = train_test_split(
         x, y, train_size = size, random_state = 66)
-    learning_rate = 0.05
+    learning_rate = 0.1
 
-    model = MultiOutputRegressor(LGBMRegressor(n_estimators = 1500, learning_rate = learning_rate,
-                                               max_depth = -1, colsample_bytree = 0.8, num_leaves = 99,
-                                               importance_type = 'gain', silent = False,
+    model = MultiOutputRegressor(LGBMRegressor(n_estimators = 900, learning_rate = learning_rate,
+                                               max_depth = -1, colsample_bytree = 0.9, num_leaves = 80,
+                                               importance_type = 'gain', objective = 'l1',
                                                subsample_freq = 1, random_state = 66, n_jobs = -1))
 
     model.fit(x_train, y_train)
@@ -149,5 +149,5 @@ for size in np.arange(0.90, 0.93, 0.01):
     #np.arange--수열 만들때
     submission = result
     submission = pd.DataFrame(submission, a)
-    submission.to_csv(path + '/comp1/submission_200626(2).csv',
+    submission.to_csv(path + '/comp1/submission_200626(3).csv',
                       header = ["hhb", "hbo2", "ca", "na"], index = True, index_label = "id" )
