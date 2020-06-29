@@ -125,7 +125,7 @@ def set_model(train_target):  # 0:x,y, 1:m, 2:v
     activation = 'elu'
     padding = 'valid'
     model = Sequential()
-    nf = 20
+    nf = 21
     fs = (3,1)
 
     model.add(Conv2D(nf,fs, padding = padding, activation = activation, input_shape = (375, 5, 1)))
@@ -190,8 +190,8 @@ def train(model, X, Y):
 
 
     history = model.fit(X, Y,
-                  epochs = 80,
-                  batch_size = 128,
+                  epochs = 200,
+                  batch_size = 256,
                   shuffle = True,
                   validation_split = 0.2,
                   verbose = 2,
@@ -307,4 +307,4 @@ for train_target in range(3):
     elif train_target == 2: # v 학습
         submit.iloc[:, 4] = pred_data_test[:, 3]
 
-submit.to_csv(path + 'submission_200629.csv', index = False)
+submit.to_csv(path + 'submission_200629(2).csv', index = False)
