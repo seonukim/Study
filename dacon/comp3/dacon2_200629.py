@@ -125,7 +125,7 @@ def set_model(train_target):  # 0:x,y, 1:m, 2:v
     activation = 'elu'
     padding = 'valid'
     model = Sequential()
-    nf = 21
+    nf = 8
     fs = (3,1)
 
     model.add(Conv2D(nf,fs, padding = padding, activation = activation, input_shape = (375, 5, 1)))
@@ -153,10 +153,10 @@ def set_model(train_target):  # 0:x,y, 1:m, 2:v
     model.add(MaxPooling2D(pool_size = (2, 1)))
 
     model.add(Flatten())
-    model.add(Dense(128, activation = 'elu'))
     model.add(Dense(64, activation = 'elu'))
     model.add(Dense(32, activation = 'elu'))
     model.add(Dense(16, activation = 'elu'))
+    model.add(Dense(8, activation = 'elu'))
     model.add(Dense(4))
 
     optimizer = keras.optimizers.Adam()
@@ -307,4 +307,4 @@ for train_target in range(3):
     elif train_target == 2: # v 학습
         submit.iloc[:, 4] = pred_data_test[:, 3]
 
-submit.to_csv(path + 'submission_200629(2).csv', index = False)
+submit.to_csv(path + 'submission_200629(3).csv', index = False)
