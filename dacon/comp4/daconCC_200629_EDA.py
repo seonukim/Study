@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import warnings ; warnings.filterwarnings('ignore')
-path = 'C:\Users\bitcamp\Desktop\dacon'
+path = 'C:/Users/bitcamp/Desktop/dacon/'
 os.chdir(path)
 
 ## data
