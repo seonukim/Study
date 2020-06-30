@@ -10,14 +10,24 @@ os.chdir(path)
 
 ## data
 train = pd.read_csv(path + '201901-202003.csv')
+# print(train.isnull().sum())
 train = train.fillna('')
+# print(train.isnull().sum())
 train = train[['REG_YYMM', 'CARD_SIDO_NM', 'STD_CLSS_NM', 'AMT']]
 train = train.groupby(['REG_YYMM', 'CARD_SIDO_NM', 'STD_CLSS_NM']).sum().reset_index(drop = False)
+print("=" * 40)
+print(train.head())
 
 submit = pd.read_csv(path + 'submission.csv', index_col = 0)
-submit = submit.loc[submit['REG_YYMM'] == 202004]
-submit = submit[['CARD_SIDO_NM', 'STD_CLSS_NM']]
-REG_YYMMs = np.sort(train['REG_YYMM'].unique())             # unique() : 유일한 값 찾기
+submit = submit.loc[submit['REG_YYMM'] == 202004]           # 2020년 4월 데이터만 submit에 저장
+submit = submit[['CARD_SIDO_NM', 'STD_CLSS_NM']]            # 2020년 4월의 카드이용지역, 업종명만 가져옴
+print("=" * 40)
+print(submit.head())
+print(submit.shape)     # (697, 2)
+
+REG_YYMMs = np.sort(train['REG_YYMM'].unique())             # unique() : 유일한 값 찾기, 같은 값 제거
+print("=" * 40)
+print(REG_YYMMs.shape)          # (15,) ; train데이터는 201901 ~ 202003까지의 데이터, REG_YYMM의 동일연월을 제거함
 
 AMTs = []
 for REG_YYMM in REG_YYMMs:
@@ -29,6 +39,8 @@ for REG_YYMM in REG_YYMMs:
     AMT = list(tmp['AMT'])
     AMTs.append(AMT)
 AMTs = np.array(AMTs)
+print("=" * 40)
+print(AMTs.shape)       # (15, 697)
 
 def plot_graph(dt, AMTs):
     for i in range(dt, len(AMTs)):
@@ -43,6 +55,6 @@ def plot_graph(dt, AMTs):
         plt.ylim(tmp1.min(), tmp2.max())
         plt.show()
 
-# plot_graph(1, AMTs)
-plot_graph(3, AMTs)
-plot_graph(6, AMTs)
+plot_graph(1, AMTs)
+# plot_graph(3, AMTs)
+# plot_graph(6, AMTs)
