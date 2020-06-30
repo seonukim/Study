@@ -45,3 +45,4 @@ def plot_graph(dt, AMTs):
 
 # plot_graph(1, AMTs)
 plot_graph(3, AMTs)
+plot_graph(6, AMTs)
