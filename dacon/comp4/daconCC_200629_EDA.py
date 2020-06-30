@@ -17,7 +17,7 @@ train = train.groupby(['REG_YYMM', 'CARD_SIDO_NM', 'STD_CLSS_NM']).sum().reset_i
 submit = pd.read_csv(path + 'submission.csv', index_col = 0)
 submit = submit.loc[submit['REG_YYMM'] == 202004]
 submit = submit[['CARD_SIDO_NM', 'STD_CLSS_NM']]
-REG_YYMMs = np.sort(train['REG_YYMM'].unique())
+REG_YYMMs = np.sort(train['REG_YYMM'].unique())             # unique() : 유일한 값 찾기
 
 AMTs = []
 for REG_YYMM in REG_YYMMs:
