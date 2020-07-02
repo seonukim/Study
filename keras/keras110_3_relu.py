@@ -1,3 +1,5 @@
+# 활성화 함수_relu
+
 import numpy as np
 import matplotlib.pyplot as plt
 
