@@ -29,7 +29,7 @@ model.add(Dense(10))
 model.add(Dense(1, activation = 'sigmoid'))
 '''
 분류모형의 활성화 함수 - 마지막 아웃풋 레이어에 추가
-1. sigmoid`
+1. sigmoid
 2. hard_sigmoid
 3. softmax
 '''
@@ -38,7 +38,7 @@ model.summary()
 # 4. 실행 및 훈련
 model.compile(loss = 'binary_crossentropy', optimizer = 'adam', metrics = ['acc'])
 model.fit(x, y, epochs = 1000,
-          batch_size = 1, callbacks = [es])
+          batch_size = 1)
 '''
 분류모형의 손실함수
 1. Cross-Entropy Loss
