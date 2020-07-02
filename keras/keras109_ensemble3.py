@@ -1,3 +1,4 @@
+'''
 # 1. 데이터
 import numpy as np
 x1_train = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
@@ -47,3 +48,7 @@ x2_pred = np.array([11, 12, 13, 14])
 
 y_pred = model.predict([x1_pred, x2_pred])
 print(y_pred)
+'''
+
+
+print(0.0017999885603785515 * 0.1 + 0.6811643242835999 * 0.9)
