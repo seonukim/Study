@@ -12,6 +12,7 @@ from keras.optimizers import Adam, Adadelta, Adagrad
 from keras.optimizers import RMSprop, Nadam, SGD, Adamax
 from keras.wrappers.scikit_learn import KerasClassifier     # 케라스를 사이킷런으로 감싼다. (사이킷런에서 쓸 수 있게)
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
+from keras.activations import relu, elu, softmax
 
 # 1. 데이터
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
@@ -34,19 +35,19 @@ print(y_test.shape)                 # (10000, 10)
 
 
 # 2. 모델링
-def build_model(drop = 0.1, optimizer = Adam, learning_rate = 0.1): 
+def build_model(drop, optimizer, learning_rate, activation): 
     inputs = Input(shape = (784,), name = 'input')
-    x = Dense(512, activation = 'relu', name = 'hidden1')(inputs)
+    x = Dense(512, activation = activation, name = 'hidden1')(inputs)
     x = Dropout(drop)(x)
-    x = Dense(256, activation = 'relu', name = 'hidden2')(x)
+    x = Dense(256, activation = activation, name = 'hidden2')(x)
     x = Dropout(drop)(x)
-    x = Dense(128, activation = 'relu', name = 'hidden3')(x)
+    x = Dense(128, activation = activation, name = 'hidden3')(x)
     x = Dropout(drop)(x)
     outputs = Dense(10, activation = 'softmax', name = 'output')(x)
 
     opt = optimizer(lr = learning_rate)     # optimizer와 learning_rate 엮어주기
     model = Model(inputs = inputs, outputs = outputs)
-    
+
     model.compile(optimizer = opt, metrics = ['accuracy'],
                   loss = 'categorical_crossentropy')
     return model
@@ -54,11 +55,13 @@ def build_model(drop = 0.1, optimizer = Adam, learning_rate = 0.1):
 def create_hyperparameter():
     batches = [256, 128]
     optimizers = [Adam, Adadelta, Adamax, Nadam, RMSprop, Adagrad, SGD]
+    activations = [relu, elu, softmax]
     dropout = np.linspace(0.1, 0.5, 5)  # 0.1 ~ 0.5까지 5단위로
     learning_rate = [0.1, 0.05, 0.25, 0.001]
     return {'batch_size': batches,
             'optimizer': optimizers,
             'drop': dropout,
+            'activation': activations,
             'learning_rate': learning_rate}
 
 # KerasClassifier 모델 구성하기
