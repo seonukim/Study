@@ -12,9 +12,9 @@ from keras.layers import Dense, Input
 
 model = Sequential()
 model.add(Dense(100, input_shape = (1,)))
-model.add(Dense(100))
-model.add(Dense(100))
-model.add(Dense(100))
+model.add(Dense(100, activation = 'sigmoid'))
+model.add(Dense(100, activation = 'sigmoid'))
+model.add(Dense(100, activation = 'sigmoid'))
 model.add(Dense(1, activation = 'sigmoid'))
 
 model.summary()
