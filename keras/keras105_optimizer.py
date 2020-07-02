@@ -58,4 +58,22 @@ optimizer(최적화)의 종류와 파라미터
                                         rho = 0.95,         # 0보다 크거나 같은 float, 학습률 감소에 쓰이는 인자, 각 시점에 유지되는 경사하강의 비율
                                         epsilon = None,     # 0보다 크거나 같은 float형 fuzz factor, None인 경우 K.epsilon()이 사용됨
                                         decay = 0.0)        # 0보다 크거나 같은 float, 초기 학습률의 감소율
-          
+
+5) Adagrad : keras.optimizers.Adagrad(lr = 0.01,            # 0보다 크거나 같은 float, 학습률
+                                      epsilon = None,       # 0보다 크거나 같은 float, None인 경우 K.epsilon()이 사용됨
+                                      decay = 0.0)          # 0보다 크거나 같은 float, 업데이트마다 적용되는 학습률의 감소율
+
+6) Adamax : keras.optimizers.Adamax(lr = 0.002,             # 0보다 크거나 같은 float, 학습률
+                                    beta_1 = 0.9,           # 0보다 크고 1보다 작은 float, 일반적으로 1에 가깝게 설정됨
+                                    beta_2 = 0.999,         # 0보다 크고 1보다 작은 float, 일반적으로 1에 가깝게 설정됨
+                                    epsilon = None,         # 0보다 크거나 같은 float, None인 경우 K.epsilon()이 사용됨
+                                    decay = 0.0)            # 0보다 크거나 같은 float, 업데이트마다 적용되는 학습률의 감소율
+
+7) Nadam : keras.optimizers.Nadam(lr = 0.002,               # 0보다 크거나 같은 float, 학습률
+                                  beta_1 = 0.9,             # 0보다 크고 1보다 작은 float, 일반적으로 1에 가깝게 설정됨
+                                  beta_2 = 0.999,           # 0보다 크고 1보다 작은 float, 일반적으로 1에 가깝게 설정됨
+                                  epsilon = None,           # 0보다 크거나 같은 float, None인 경우 K.epsilon()이 사용됨
+                                  schedule_decay = 0.004)   # 0보다 크거나 같은 float, 업데이트마다 적용되는 학습률의 감소율
+# 네스테로프 Adam 옵티마이저
+# Adam이 본질적으로는 모멘텀이 적용된 RMSprop인 것처럼, Nadam은 네스테로프 모멘텀이 적용된 RMSprop이다
+# Nadam을 사용할 때는 모든 인자의 기본값을 사용하는 것이 권장됨
