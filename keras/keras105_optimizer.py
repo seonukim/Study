@@ -36,26 +36,26 @@ pred1 = model.predict([3.5])
 print(pred1)
 '''
 optimizer(최적화)의 종류와 파라미터
-1) Adam : keras.optimizers.Adam(lr = 0.001,             # 0보다 크거나 같은 float, 학습률
-                                beta_1 = 0.9,           # 0보다 크고 1보다 작은 float, 일반적으로 1에 가깝게 설정됨
-                                beta_2 = 0.999,         # 0보다 크고 1보다 작은 float, 일반적으로 1에 가깝게 설정됨
-                                epsilon = None,         # 0보다 크거나 같은 float형 fuzz factor, None인 경우 K.epsilon()이 사용됨
-                                decay = 0.0,            # 0보다 크거나 같은 float, 업데이트마다 적용되는 학습률의 감소율
-                                amsgrad = False)        # boolean, Adam의 변형인 AMSGrad의 적용 여부 설정
+1) Adam : keras.optimizers.Adam(lr = 0.001,                 # 0보다 크거나 같은 float, 학습률
+                                beta_1 = 0.9,               # 0보다 크고 1보다 작은 float, 일반적으로 1에 가깝게 설정됨
+                                beta_2 = 0.999,             # 0보다 크고 1보다 작은 float, 일반적으로 1에 가깝게 설정됨
+                                epsilon = None,             # 0보다 크거나 같은 float형 fuzz factor, None인 경우 K.epsilon()이 사용됨
+                                decay = 0.0,                # 0보다 크거나 같은 float, 업데이트마다 적용되는 학습률의 감소율
+                                amsgrad = False)            # boolean, Adam의 변형인 AMSGrad의 적용 여부 설정
 
-2) RMSprop : keras.optimizers.RMSprop(lr = 0.001,       # 0보다 크거나 같은 float, 학습률
-                                      rho = 0.9,        # 0보다 크거나 같은 float
-                                      epsilon = None,   # 0보다 크거나 같은 float형 fuzz factor, None인 경우 K.epsilon()이 사용됨
-                                      decay = 0.0)      # 0보다 크거나 같은 float, 업데이트마다 적용되는 학습률의 감소율
+2) RMSprop : keras.optimizers.RMSprop(lr = 0.001,           # 0보다 크거나 같은 float, 학습률
+                                      rho = 0.9,            # 0보다 크거나 같은 float
+                                      epsilon = None,       # 0보다 크거나 같은 float형 fuzz factor, None인 경우 K.epsilon()이 사용됨
+                                      decay = 0.0)          # 0보다 크거나 같은 float, 업데이트마다 적용되는 학습률의 감소율
 
-3) SGD : keras.optimizers.SGD(lr = 0.01,                # 0보다 크거나 같은 float, 학습률
-                              momentum = 0.0,           # 0보다 크거나 같은 float, SGD를 적절한 방향으로 가속화하며, 진동을 줄여줌
-                              decay = 0.0,              # 0보다 크거나 같은 float, 업데이트마다 적용되는 학습률의 감소율
-                              nesterov = False)         # boolean, 네스테로프 모멘텀의 적용 여부 설정
+3) SGD : keras.optimizers.SGD(lr = 0.01,                    # 0보다 크거나 같은 float, 학습률
+                              momentum = 0.0,               # 0보다 크거나 같은 float, SGD를 적절한 방향으로 가속화하며, 진동을 줄여줌
+                              decay = 0.0,                  # 0보다 크거나 같은 float, 업데이트마다 적용되는 학습률의 감소율
+                              nesterov = False)             # boolean, 네스테로프 모멘텀의 적용 여부 설정
 # SGD는 Stochastic Gradient Descent, 확률적 경사하강법
 
-4) Adadelta : keras.optimizers.Adadelta(lr = 0.01,
-                                        momentum = 0.0,
-                                        decay = 0.0,
-                                        nestrov = False)
+4) Adadelta : keras.optimizers.Adadelta(lr = 1.0,           # 0보다 크거나 같은 float, 초기 학습률, default = 1, default 사용이 권장됨 
+                                        rho = 0.95,         # 0보다 크거나 같은 float, 학습률 감소에 쓰이는 인자, 각 시점에 유지되는 경사하강의 비율
+                                        epsilon = None,     # 0보다 크거나 같은 float형 fuzz factor, None인 경우 K.epsilon()이 사용됨
+                                        decay = 0.0)        # 0보다 크거나 같은 float, 초기 학습률의 감소율
           
