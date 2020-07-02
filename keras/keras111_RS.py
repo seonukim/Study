@@ -56,7 +56,7 @@ def create_hyperparameter():
     batches = [256, 128]
     optimizers = [Adam, Adadelta, Adamax, Nadam, RMSprop, Adagrad, SGD]
     activations = [relu, elu, softmax]
-    dropout = np.linspace(0.1, 0.5, 5)  # 0.1 ~ 0.5까지 5단위로
+    dropout = np.linspace(0.1, 0.5, 5).tolist()  # 0.1 ~ 0.5까지 5단위로
     learning_rate = [0.1, 0.05, 0.25, 0.001]
     return {'batch_size': batches,
             'optimizer': optimizers,

@@ -60,7 +60,7 @@ def build_model(drop, optimizer, lr):
 def create_hyperparameter():
     batches = [10, 20, 30, 40, 50]
     optimizers = [Adam, Adadelta, Adamax, Nadam, RMSprop, Adagrad, SGD]
-    dropout = np.linspace(0.1, 0.5, 5)
+    dropout = np.linspace(0.1, 0.5, 5).tolist()
     lr = np.linspace(0.001, 0.01, 10).tolist()
     return {'batch_size': batches,
             'optimizer': optimizers,
