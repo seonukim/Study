@@ -1,5 +1,5 @@
 '''20200526 분류모델'''
-
+'''
 # 회귀모델을 먼저 구현해보자.
 # 1. 모듈 임포트
 from keras.models import Sequential, Model
@@ -28,10 +28,12 @@ model.add(Dense(20))
 model.add(Dense(10))
 model.add(Dense(1, activation = 'sigmoid'))
 '''
+'''
 분류모형의 활성화 함수 - 마지막 아웃풋 레이어에 추가
 1. sigmoid
 2. hard_sigmoid
 3. softmax
+'''
 '''
 model.summary()
 
@@ -40,13 +42,14 @@ model.compile(loss = 'binary_crossentropy', optimizer = 'adam', metrics = ['acc'
 model.fit(x, y, epochs = 1000,
           batch_size = 1)
 '''
+'''
 분류모형의 손실함수
 1. Cross-Entropy Loss
 2. Categorical Cross-Entropy Loss
 3. Binary Cross-Entropy Loss        - 이진분류 모델은 딱 이거 하나 !!
 4. Focal loss (함수로 구현해서 사용)
 '''
-
+'''
 # 5. 평가 및 예측
 loss, acc = model.evaluate(x, y, batch_size = 1)
 print("loss : ", loss)
@@ -73,7 +76,7 @@ print("pred : \n", pred)
 #         return -K.mean(alpha * K.pow(1. - pt_1, gamma) * K.log(pt_1))
 #                         - K.mean((1 - alpha) * K.pow(pt_0, gamma) * K.log(1. - pt_0))
 #     return focal_loss_fixed
-
+'''
 '''
 pred :
  [[0.5392872]
@@ -89,10 +92,46 @@ pred :
 # print(c)
 # tmp.append([a, b, c])
 # print(tmp)
-
+'''
 for i in range(len(pred)):
     if i >= 0.5:
         pred[i] = 1
     else:
         pred[i] = 0
 print(pred)
+'''
+
+import numpy as np
+from keras.models import Sequential
+from keras.layers import Dense
+
+x = np.array(range(1,11))
+y = np.array([1,0,1,0,1,0,1,0,1,0])
+
+model = Sequential()
+model.add(Dense(200,input_dim = 1, activation='elu'))
+model.add(Dense(200, activation='elu'))
+model.add(Dense(200, activation='elu'))
+model.add(Dense(200, activation='elu'))
+model.add(Dense(200, activation='elu'))
+model.add(Dense(200, activation='elu'))
+model.add(Dense(200, activation='elu'))
+model.add(Dense(1, activation='sigmoid'))
+## 마지막 activation을 sigmoid같은 0~1사이가 나오는 것을 주어야 한다.
+
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics = ['acc'])
+## binary_crossentropy == 이진분류의 loss값은 이것 하나밖에 없음
+
+model.fit(x,y, epochs = 1000, batch_size= 32)
+
+loss, acc = model.evaluate(x,y, batch_size=1)
+print('loss :',loss)
+print('acc :',acc)
+
+y_pred = model.predict(x)
+print('y_pred :', y_pred)
+print('y_pred :', np.round(y_pred))
+
+
+##과제 1
+## 최종 출력값 0 or 1 만들기
