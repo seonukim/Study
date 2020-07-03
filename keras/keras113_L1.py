@@ -10,7 +10,7 @@ loss = L1 * reduce_sum(abs(x))
 loss = L2 * reduce_sum(square(x))
 
 다음 레이어로 전달되는 loss 값을 축소함
-가중치를 
+가중치를 규제하며, 모델 복잡도에 penalty를 준다
 '''
 
 import numpy as np
