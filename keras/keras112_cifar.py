@@ -74,19 +74,16 @@ model.compile(loss = 'sparse_categorical_crossentropy',         # 원핫인코�
               metrics = ['accuracy'],                           # sparse는 개인 취향이다!
               optimizer = Adam(1e-4))                           # 0.0001
 hist = model.fit(x_train, y_train,
-                 epochs = 30, batch_size = 32,
+                 epochs = 20, batch_size = 32,
                  validation_split = 0.3, verbose = 1)
 
 print(hist.history.keys())
+
 
 # 4. 모델 평가
 res = model.evaluate(x_test, y_test, batch_size = 32)
 print("loss : ", res[0])
 print("acc : ", res[1])
-
-
-
-
 
 
 # 5. 시각화
