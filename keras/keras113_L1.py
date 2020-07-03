@@ -1,5 +1,5 @@
-# keras70을 카피해서 Sequential로 바꾸고, cifar10으로,
-# sparse_categorical_crossentropy
+# regularizer
+
 
 import numpy as np
 import matplotlib.pyplot as plt
