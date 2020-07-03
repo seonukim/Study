@@ -1,4 +1,4 @@
-# 100번을 카피해서 lr을 넣고 튠하시오
+# 107번을 카피해서 Activation을 넣고 튠하시오
 # LSTM -> Dense로 바꿀 것
 
 import numpy as np
