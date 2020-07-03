@@ -1,5 +1,17 @@
 # regularizer
+'''
+L1 규제 : 가중치의 절대값 합
+regularizer.l1(1 = 0.01)
 
+L2 규제 : 가중치의 제곱 합
+regularizer.l2(1 = 0.01)
+
+loss = L1 * reduce_sum(abs(x))
+loss = L2 * reduce_sum(square(x))
+
+다음 레이어로 전달되는 loss 값을 축소함
+가중치를 
+'''
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -10,6 +22,8 @@ from keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard
 from keras.utils import np_utils
 from keras.datasets import cifar10
 from keras.optimizers import Adam
+from keras.regularizers import l1, l2, l1_l2                          # l1, l2
+                                                                    # l1_l2 : 두 개 같이 쓸 수 있음
 modelfath = './model/cifar100_{epoch:02d} - {val_loss:.4f}.hdf5'
 
 # 클래스 객체 생성
@@ -44,21 +58,26 @@ model.add(Conv2D(filters = 32, kernel_size = (3, 3),
                  input_shape = (32, 32, 3), padding = 'same',
                  activation = 'relu'))
 model.add(Conv2D(filters = 32, kernel_size = (3, 3), 
-                 padding = 'same', activation = 'relu'))
+                 padding = 'same', activation = 'relu',
+                 kernel_regularizer = l2(0.001)))
 model.add(MaxPooling2D(pool_size = (2, 2)))
 model.add(Dropout(rate = 0.2))
 
 model.add(Conv2D(filters = 64, kernel_size = (3, 3),
-                 padding = 'same', activation = 'relu'))
+                 padding = 'same', activation = 'relu',
+                 kernel_regularizer = l2(0.001)))
 model.add(Conv2D(filters = 64, kernel_size = (3, 3),
-                 padding = 'same', activation = 'relu'))
+                 padding = 'same', activation = 'relu',
+                 kernel_regularizer = l2(0.001)))
 model.add(MaxPooling2D(pool_size = (2, 2)))
 model.add(Dropout(rate = 0.2))
 
 model.add(Conv2D(filters = 128, kernel_size = (3, 3),
-                 padding = 'same', activation = 'relu'))
+                 padding = 'same', activation = 'relu',
+                 kernel_regularizer = l2(0.001)))
 model.add(Conv2D(filters = 128, kernel_size = (3, 3),
-                 padding = 'same', activation = 'relu'))
+                 padding = 'same', activation = 'relu',
+                 kernel_regularizer = l2(0.001)))               # hidden layer의 넣고 싶은 곳에 넣어준다.
 model.add(MaxPooling2D(pool_size = (2, 2)))
 model.add(Dropout(rate = 0.2))
 
