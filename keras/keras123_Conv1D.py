@@ -58,3 +58,9 @@ model.fit(pad_x, labels, epochs = EPOCH)
 
 acc = model.evaluate(pad_x, labels)[1]
 print(f'Accuracy : {acc}')          # Accuracy : 0.6666666865348816
+
+
+'''
+인풋 레이어부터 Conv1D로 구성하면
+입력 데이터의 reshape 과정이 필요함
+'''

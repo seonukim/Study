@@ -59,3 +59,14 @@ model.fit(pad_x, labels, epochs = EPOCH)
 
 acc = model.evaluate(pad_x, labels)[1]
 print(f'Accuracy : {acc}')          # Accuracy : 0.9166666865348816
+
+
+'''
+Input layer : Embedding
+First hidden layer : Conv1D
+로 구성할 때..
+즉, 인풋 레이어가 Embedding 레이어라면
+그 다음 레이어가 LSTM이든 Conv1D든 reshape를 안해줘도 된다
+
+이를 통해, Embedding 레이어는 자체적으로 3차원으로 변환하는 기능을 가진다...? -> 나의 생각
+'''
