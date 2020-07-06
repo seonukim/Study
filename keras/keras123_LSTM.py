@@ -55,7 +55,7 @@ model.summary()
 EPOCH = 30
 model.compile(optimizer = keras.optimizers.Adam(lr = 1e-3),
               loss = keras.losses.binary_crossentropy,
-              metrics = ['accuracy'])
+              metrics = [keras.metrics.binary_accuracy])
 model.fit(pad_x, labels, epochs = EPOCH)
 
 acc = model.evaluate(pad_x, labels)[1]
