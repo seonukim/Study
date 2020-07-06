@@ -73,9 +73,10 @@ model = keras.models.Sequential()
 # model.add(keras.layers.Embedding(word_size, 10, input_length = 5))      # word_size = 전체 단어의 갯수
                                                                         # 10 : 다음 레이어의 output nodes, 두 번째 파라미터로 지정
                                                                         # input_length : 인풋 데이터의 columns
-model.add(keras.layers.Embedding(20, 10, input_length = 5))             # word_size를 틀리게 입력한다고 해서 문제는 안되지만, 맞춰넣는게 가장 좋은 Accuracy
-# model.add(keras.layers.Embedding(25, 10))
-model.add(keras.layers.Flatten())                                       # Flatten으로 펼쳐준 후, Dense모델로 연결
+# model.add(keras.layers.Embedding(20, 10, input_length = 5))             # word_size를 틀리게 입력한다고 해서 문제는 안되지만, 맞춰넣는게 가장 좋은 Accuracy
+model.add(keras.layers.Embedding(25, 10))
+model.add(keras.layers.LSTM(3))                                        # Embedding 레이어 다음에 LSTM 레이어를 넣으면 input_length를 지정하지 않아도 된다
+# model.add(keras.layers.Flatten())                                       # Flatten으로 펼쳐준 후, Dense모델로 연결
 model.add(keras.layers.Dense(1, activation = keras.activations.sigmoid))
 
 model.summary()
@@ -109,3 +110,29 @@ model.fit(pad_x, labels, epochs = EPOCH)
 
 acc = model.evaluate(pad_x, labels)[1]
 print(f'Accuracy : {acc}')
+
+'''
+## Embedding Layer 다음에 LSTM 레이어를 입력한 model의 요약표
+
+Model: "sequential_1"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+
+=================================================================
+embedding_1 (Embedding)      (None, None, 10)          250       
+
+_________________________________________________________________
+lstm_1 (LSTM)                (None, 3)                 168       
+
+_________________________________________________________________
+dense_1 (Dense)              (None, 1)                 4
+
+=================================================================
+Total params: 422
+Trainable params: 422
+Non-trainable params: 0
+_________________________________________________________________
+'''
+# Embedding layer 다음에 LSTM layer가 오면 Embedding의 input_length 파라미터를 지정하지 않아도 된다
+# 입력 문장의 길이에 따라 input_length가 자동으로 정해지고, 이것이 LSTM 레이어의 timesteps로 표현된다
+# Embedding은 3차원을 입력하기 때문에, 다음에 LSTM과 Conv1D를 받을 수 있다
