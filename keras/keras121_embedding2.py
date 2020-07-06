@@ -57,3 +57,4 @@ return :
 # pad_x = keras.preprocessing.sequence.pad_sequences(x, padding = 'pre')
 pad_x = keras.preprocessing.sequence.pad_sequences(x, padding = 'post', value = 1.0)    # value = 1.0
 print(pad_x)
+'''여기까지 하면 데이터가 준비됨'''
