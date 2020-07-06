@@ -8,15 +8,15 @@ import matplotlib.pyplot as plt
 
 ## data load
 (x_train, y_train), (x_test, y_test) = keras.datasets.reuters.load_data(
-    num_words = 1000, test_split = 0.2)
-print(x_train.shape, x_test.shape)         # (8982,) (2246,)
-print(y_train.shape, y_test.shape)         # (8982,) (2246,)
+    num_words = 10000, test_split = 0.2)
+print(x_train.shape, x_test.shape)          # (8982,) (2246,)
+print(y_train.shape, y_test.shape)          # (8982,) (2246,)
 
 print(x_train[0])
 print(y_train[0])
 
 # print(x_train[0].shape)
-print(len(x_train[0]))          # 87
+print(len(x_train[0]))                      # 87
 
 # 레이블의 범주 확인
 category = np.max(y_train) + 1
@@ -55,7 +55,7 @@ print(y_train.shape, y_test.shape)        # (8982, 46) (2246, 46)
 model = keras.models.Sequential()
 # model.add(keras.layers.Embedding(input_dim = 1000, output_dim = 128,
 #                                  input_length = 100))
-model.add(keras.layers.Embedding(input_dim = 1000, output_dim = 128))
+model.add(keras.layers.Embedding(input_dim = 10000, output_dim = 128))
 model.add(keras.layers.LSTM(units = 64))
 model.add(keras.layers.Dense(46, activation = keras.activations.softmax))
 
