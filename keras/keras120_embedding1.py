@@ -19,7 +19,7 @@ print(x)                                # [[1, 2, 3, 4]]
 # 따라서, 범주화를 시켜줘야 한다
 # 방법은? 원핫인코딩
 word_size = len(token.word_index) + 1       # to_categorical의 문제점: 첫 열의 인덱스가 0부터 시작, 따라서 + 1
-x = keras.np_utils.to_categorical(x, num_classes = word_size)
+x = keras.np_utils.to_categorical(x, num_classes = word_size)   # 단어의 수치화
 print(x)
 
 # 문제점: 열이 많아진다 -> 데이터가 많아진다.
