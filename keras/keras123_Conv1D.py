@@ -1,5 +1,5 @@
 # 122를 copy해서 123에 paste
-# embedding 없이 LSTM으로 모델 완성
+# embedding 없이 Conv1D로 모델 완성
 
 import keras
 import numpy as np
@@ -28,7 +28,6 @@ print(token.word_index)
 x = token.texts_to_sequences(docs)
 print(x)
 
-
 # 원핫인코딩
 pad_x = keras.preprocessing.sequence.pad_sequences(x, padding = 'pre')
 print(pad_x)            # (12, 5)
@@ -42,10 +41,9 @@ print(f'전체 토큰 사이즈 : {word_size}')                                #
 
 ## 모델링
 model = keras.models.Sequential()
-model.add(keras.layers.LSTM(10, input_shape = (5, 1),
-                            return_sequences = True))
-model.add(keras.layers.LSTM(3))
-# model.add(keras.layers.Flatten())
+model.add(keras.layers.Conv1D(filters = 10, kernel_size = 3,
+                              input_shape = (5, 1), padding = 'same'))
+model.add(keras.layers.Flatten())
 model.add(keras.layers.Dense(1, activation = keras.activations.sigmoid))
 
 model.summary()
@@ -59,4 +57,4 @@ model.compile(optimizer = keras.optimizers.Adam(lr = 1e-3),
 model.fit(pad_x, labels, epochs = EPOCH)
 
 acc = model.evaluate(pad_x, labels)[1]
-print(f'Accuracy : {acc}')          # Accuracy : 0.75
+print(f'Accuracy : {acc}')          # Accuracy : 0.6666666865348816

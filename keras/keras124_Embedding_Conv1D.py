@@ -1,5 +1,5 @@
-# 122를 copy해서 123에 paste
-# embedding 없이 LSTM으로 모델 완성
+# keras122_embedding3를 가져다가
+# Conv1D로 구성하기
 
 import keras
 import numpy as np
@@ -33,19 +33,18 @@ print(x)
 pad_x = keras.preprocessing.sequence.pad_sequences(x, padding = 'pre')
 print(pad_x)            # (12, 5)
 
-pad_x = pad_x.reshape(12, 5, 1)
-print(pad_x)            # (12, 5, 1)
+# pad_x = pad_x.reshape(12, 5, 1)
+# print(pad_x)            # (12, 5, 1)
 
 word_size = len(token.word_index) + 1
-print(f'전체 토큰 사이즈 : {word_size}')                                # 전체 토큰 사이즈 : 25
+print(f'전체 토큰 사이즈 : {word_size}')          # 전체 토큰 사이즈 : 25
 
 
 ## 모델링
 model = keras.models.Sequential()
-model.add(keras.layers.LSTM(10, input_shape = (5, 1),
-                            return_sequences = True))
-model.add(keras.layers.LSTM(3))
-# model.add(keras.layers.Flatten())
+model.add(keras.layers.Embedding(word_size, 10, input_length = 5))
+model.add(keras.layers.Conv1D(filters = 10, kernel_size = 3, padding = 'same'))
+model.add(keras.layers.Flatten())
 model.add(keras.layers.Dense(1, activation = keras.activations.sigmoid))
 
 model.summary()
@@ -59,4 +58,4 @@ model.compile(optimizer = keras.optimizers.Adam(lr = 1e-3),
 model.fit(pad_x, labels, epochs = EPOCH)
 
 acc = model.evaluate(pad_x, labels)[1]
-print(f'Accuracy : {acc}')          # Accuracy : 0.75
+print(f'Accuracy : {acc}')          # Accuracy : 0.9166666865348816
