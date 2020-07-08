@@ -1,9 +1,16 @@
+# x_train, y_train을 placeholder로 바꾸고 완성
+
 import warnings ; warnings.filterwarnings('ignore')
 import tensorflow as tf
 tf.set_random_seed(777)
 
-x_train = [1, 2, 3]
-y_train = [3, 5, 7]
+# x_train = [1, 2, 3]
+# y_train = [3, 5, 7]
+
+x_train = tf.compat.v1.placeholder(tf.float32, shape = [None])
+y_train = tf.compat.v1.placeholder(tf.float32, shape = [None])
+
+fedict = {x_train: [1, 2, 3], y_train: [3, 5, 7]}
 
 W = tf.Variable(tf.random_normal([1]), name = 'weight')     # 랜덤 정규분포
 b = tf.Variable(tf.random_normal([1], name = 'bias'))       # [] 안의 숫자는 shape를 의미한다
@@ -23,7 +30,7 @@ with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())         # with문 안에 나오는 모든 변수들을 초기화
 
     for step in range(2001):
-        _, cost_val, W_val, b_val = sess.run([train, cost, W, b])       # keras의 compile ; optimizer 부분이다
+        _, cost_val, W_val, b_val = sess.run([train, cost, W, b], feed_dict = fedict)       # keras의 compile ; optimizer 부분이다
 
         if step % 20 == 0:
             print(step, cost_val, W_val, b_val)
