@@ -1,6 +1,9 @@
 # mv : Multi Variables
 
+import os
 import tensorflow as tf
+path = 'D:/Study/data/csv/'
+os.chdir(path)
 tf.compat.v1.set_random_seed(777)
 
 x_data = [[73., 51., 65.],
