@@ -24,7 +24,7 @@ hypothesis = x1 * w1 + x2 * w2 + x3 * w3 + b
 
 cost = tf.compat.v1.reduce_mean(tf.compat.v1.square(hypothesis - y_data))
 
-optimizer = tf.compat.v1.train.GradientDescentOptimizer(learning_rate = 5e-3)
+optimizer = tf.compat.v1.train.GradientDescentOptimizer(learning_rate = 45e-6)
 train = optimizer.minimize(cost)
 
 
@@ -37,5 +37,5 @@ with tf.compat.v1.Session() as sess:
     for step in range(2000 + 1):
         cost_val, hy_val, _ = sess.run([cost, hypothesis, train], feed_dict = fedict)
 
-        if step % 10 == 0:
-            print(step, "Cost: ", cost_val, '\n', hy_val)
+        if step % 50 == 0:
+            print(f'{step}, cost : {cost_val}, \n{step} H : {hy_val}\n')
