@@ -25,7 +25,12 @@ cost = tf.reduce_mean(tf.square(hypothesis - y_train))      # 비용함수(loss)
 
 train = tf.compat.v1.train.GradientDescentOptimizer(learning_rate = 0.01).minimize(cost)
 # GradientDescentOptimizer = 경사하강 최적화    minimize(cost) ; cost를 최소화하는 지점을 찾아라
+
+## 훈련 및 예측
 init = tf.compat.v1.global_variables_initializer()
+pred_feed_1 = {x_train: [4]}            # 예측(1)
+pred_feed_2 = {x_train: [5, 6]}         # 예측(2)
+pred_feed_3 = {x_train: [6, 7, 8]}      # 예측(3)
 
 with tf.compat.v1.Session() as sess:
     sess.run(init)         # with문 안에 나오는 모든 변수들을 초기화
@@ -36,6 +41,11 @@ with tf.compat.v1.Session() as sess:
         if step % 20 == 0:
             print(step, cost_val, W_val, b_val)
 
+    # predict 해보자
+    print(f'예측(1) : {sess.run(hypothesis, feed_dict = pred_feed_1)}')
+    print(f'예측(2) : {sess.run(hypothesis, feed_dict = pred_feed_2)}')
+    print(f'예측(3) : {sess.run(hypothesis, feed_dict = pred_feed_3)}')
+    
 '''
 Session()을 열어주면, 작업이 끝난 후 무조건 Session을 close해야 한다
 '''
