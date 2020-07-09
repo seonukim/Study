@@ -83,19 +83,25 @@ sess = tf.compat.v1.Session()
 sess.run(tf.compat.v1.global_variables_initializer())
 
 for epoch in range(training_epochs):            # 15
-    ave_cost = 0                                # average cost : 평균 비용
+    avg_cost = 0                                # average cost : 평균 비용
 
     for i in range(total_batch):                # 600
+        start = i * batch_size
+        end = start + batch_size
 #################### 이 부분 구현할 것 #######################
-        batch_xs, batch_ys = x_train.shuffle
+        batch_xs, batch_ys = x_train[start:end, :], y_train[start:end, :]
 ##############################################################
         feed_dict = {x: batch_xs, y: batch_ys, keep_prob: 0.7}      # keep_prob : 0.7 -> 0.7만큼 남긴다
         c, _ = sess.run([cost, optimizer], feed_dict = feed_dict)
         avg_cost += c / total_batch
     
-    print(f'Epoch : {epoch+1:%04d} \nCost : {avg_cost:.9f}')
+    print(f'Epoch : {epoch+1:04d} \nCost : {avg_cost:.9f}')
 print('훈련 끝')
 
 prediction = tf.compat.v1.equal(tf.math.argmax(hypothesis, 1), tf.math.argmax(y, 1))
 accuracy = tf.compat.v1.reduce_mean(tf.compat.v1.cast(prediction, tf.float32))
-print(f'Accuracy : {accuracy}')     ### acc 출력할 것
+sess = tf.compat.v1.Session()
+acc = sess.run(accuracy)
+
+print(f'Accuracy : {acc}')     ### acc 출력할 것
+sess.close() 

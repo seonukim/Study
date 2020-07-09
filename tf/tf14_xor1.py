@@ -31,6 +31,7 @@ hypothesis = tf.compat.v1.sigmoid(tf.compat.v1.matmul(layer2, w3) + b3)
 
 cost = -tf.compat.v1.reduce_mean(
     y * tf.compat.v1.log(hypothesis) + (1 - y) * tf.compat.v1.log(1 - hypothesis))
+    
 optimizer = tf.compat.v1.train.GradientDescentOptimizer(learning_rate = 1e-6).minimize(cost)
 
 predicted = tf.compat.v1.cast(hypothesis > 0.5, tf.float32)     # tf.cast : if문과 비슷한 역할
