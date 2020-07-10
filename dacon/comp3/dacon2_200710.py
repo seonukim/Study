@@ -294,7 +294,7 @@ submit = pd.read_csv(path + 'sample_submission.csv')
 
 for train_target in range(3):
     model = set_model(train_target)
-    train(model,X_train, Y_train)    
+    train(model, X_train, Y_train)    
     best_model = load_best_model(train_target)
 
    
