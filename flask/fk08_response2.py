@@ -1,4 +1,5 @@
-from flask import Flask, Response, make_response
+from flask import Flask, Response, make_response, render_template
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -36,6 +37,14 @@ if __name__ == '__main__':
 
 '''
 과제 1: tf21 완성
-과제 2: sesson, cookie
+과제 2: session, cookie
 과제 3: response, request 
+'''
+
+'''
+## Response ##
+Request에서 보낸 요청에 대한 응답 변수
+
+## Request Module ##
+클라이언트에서 서버로 어떤 요청(GET, POST 등)을 보낼지 정해준다.
 '''
