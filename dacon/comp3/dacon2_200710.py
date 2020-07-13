@@ -271,7 +271,7 @@ def load_best_model(train_target):
 
     pred = model.predict(X_data)
 
-    i=0
+    i = 0
 
     print('정답(original):', Y_data[i])
     print('예측값(original):', pred[i])
@@ -311,7 +311,7 @@ for train_target in range(3):
     elif train_target == 2: # v 학습
         submit.iloc[:,4] = pred_data_test[:,3]
 
-submit.to_csv('./dacon/comp3/comp3_0630.csv', index = False)
+submit.to_csv(path + 'mysubmit_200710.csv', index = False)
 
 '''
 loss: 218485491091.74857
