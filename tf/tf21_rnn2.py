@@ -62,3 +62,4 @@ with tf.compat.v1.Session() as sess:
         loss, _ = sess.run([cost, train], feed_dict = {X: x_data, Y: y_data})
         result = sess.run(prediction, feed_dict = {X: x_data})
         print(f'\nEpoch : {i}, Prediction : {result}, true Y : {y_data}')
+        print(f'\nLoss : {loss}')
