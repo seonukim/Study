@@ -1,3 +1,5 @@
+# DB에서 테이블 가져와서 넘파이로 저장하기
+
 import pymssql as ms
 import numpy as np
 
