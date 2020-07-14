@@ -62,3 +62,12 @@ def make_session_permanent():
 
 if __name__ == '__main__':
     app.run(host = '127.0.0.1')
+
+
+'''
+## Response ##
+Request에서 보낸 요청에 대한 응답 변수
+
+## Request Module ##
+클라이언트에서 서버로 어떤 요청(GET, POST 등)을 보낼지 정해준다.
+'''
