@@ -6,8 +6,8 @@ cursor = conn.cursor()
 cursor.execute("""CREATE TABLE IF NOT EXISTS supermarket(Itemno INTEGER, Category TEXT,
                FoodName TEXT, Company TEXT, Price INTEGER)""")
 
-# sql = "DELETE FROM supermarket"
-# cursor.execute(sql)
+sql = "DELETE FROM supermarket"
+cursor.execute(sql)
 
 # 데이터를 넣자
 sql = "INSERT into supermarket(Itemno, Category, FoodName, Company, Price) \
@@ -22,7 +22,7 @@ cursor.execute(sql, (2, '음료수', '망고주스', '편의점', 1000))
 
 sql = "INSERT into supermarket(Itemno, Category, FoodName, Company, Price) \
        values (?,?,?,?,?)"
-cursor.execute(sql, (33, '고기', '소고기', '하나로마트', 10000))
+cursor.execute(sql, (3, '고기', '소고기', '하나로마트', 10000))
 
 
 sql = "INSERT into supermarket(Itemno, Category, FoodName, Company, Price) \
