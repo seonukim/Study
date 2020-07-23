@@ -1,17 +1,17 @@
 import numpy as np
-from keras.models import Sequential
-from keras.layers import Dense, Flatten
-from keras.applications import InceptionV3, MobileNet
-from keras.optimizers import Adam
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Flatten
+from tensorflow.keras.applications import InceptionV3, MobileNet, Xception
+from tensorflow.keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
-from keras.callbacks import EarlyStopping, ModelCheckpoint
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 import time
 
 start = time.time()
 
 # load data
-x = np.load('./project/project02/data/dog_image.npy')
-y = np.load('./project/project02/data/dog_label.npy')
+x = np.load('C:/Users/bitcamp/Downloads/data/face_image_total.npy')
+y = np.load('C:/Users/bitcamp/Downloads/data/face_label_total.npy')
 
 print(x.shape) # (1414, 112, 112, 3)
 print(y.shape) # (1414, 14)
@@ -19,10 +19,10 @@ print('data_load 걸린 시간 :', time.time() - start)
 print('======== data load ========')
 
 
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state = 66)
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2, random_state = 66)
 
 # model
-takemodel = MobileNet(include_top=False, input_shape = (112, 112, 3))
+takemodel = Xception(include_top = False, input_shape = (128, 128, 3))
 
 model = Sequential()
 model.add(takemodel)
@@ -31,14 +31,14 @@ model.add(Dense(120, activation = 'softmax'))
 
 model.summary()
 
-cp = ModelCheckpoint('./project/project02/model_save/best.hdf5', monitor = 'val_loss',
-                    save_best_only = True, save_weights_only = False)
+cp = ModelCheckpoint('D:/Study/1.Project/(3)_Saved_model/Xception_batch128.hdf5',
+                     monitor = 'val_loss', save_best_only = True, save_weights_only = False)
 es = EarlyStopping(monitor= 'val_loss', patience = 50, verbose =1)
 
 #3. compile, fit
-model.compile(optimizer = Adam(1e-4), loss = 'categorical_crossentropy', metrics = ['acc'])                             
-hist = model.fit(x_train, y_train, epochs = 100, batch_size = 256, verbose = 1, 
-                 validation_split =0.3 ,shuffle = True, callbacks = [es, cp])
+model.compile(optimizer = Adam(1e-4), loss = 'sparse_categorical_crossentropy', metrics = ['acc'])                             
+hist = model.fit(x_train, y_train, epochs = 100, batch_size = 128, verbose = 1, 
+                 validation_split = 0.2, shuffle = True, callbacks = [es, cp])
 
 
 #4. evaluate
@@ -46,7 +46,7 @@ loss_acc = model.evaluate(x_test, y_test, batch_size = 32)
 print('loss_acc: ' ,loss_acc)
 
 end = time.time()
-print('총 걸린 시간 :', end-start)
+print('총 걸린 시간 :', end - start)
 
 import matplotlib.pyplot as plt
 plt.figure(figsize = (10, 6))

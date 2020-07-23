@@ -10,7 +10,7 @@ class Project:                                              # 해당 경로의 �
         self.img_face = img.copy()
 
         detector = dlib.cnn_face_detection_model_v1(detector_path)
-        self.dets = detector(self.img_face, upsample_num_times=1)
+        self.dets = detector(self.img_face, upsample_num_times = 1)
         
         return self.dets
 
@@ -24,10 +24,10 @@ class Project:                                              # 해당 경로의 �
 
         #-------- bbox 키우기-----------
         pad = (x2 - x1)
-        x1 = x1 - (pad/4)
-        y1 = y1 - (pad*3/8) 
-        x2 = x2 + (pad/4)
-        y2 = y2 + (pad/8)
+        x1 = x1 - (pad / 4)
+        y1 = y1 - (pad * 3/8) 
+        x2 = x2 + (pad / 4)
+        y2 = y2 + (pad / 8)
 
         if x1 < 0:
             x1 = 0
@@ -38,7 +38,7 @@ class Project:                                              # 해당 경로의 �
         self.bbox = [x1, x2, y1, y2]
             
         img_bbox = self.img_face.copy()
-        cv2.rectangle(img_bbox, (x1, y1), (x2, y2), thickness=1, color=(255, 122, 122), lineType=cv2.LINE_AA)
+        cv2.rectangle(img_bbox, (x1, y1), (x2, y2), thickness = 1, color = (255, 122, 122), lineType = cv2.LINE_AA)
                 
         self.img_bbox = img_bbox                        # image
         # cv2.imshow('BBox',self.img_bbox)
