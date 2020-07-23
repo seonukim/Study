@@ -36,7 +36,7 @@ cp = ModelCheckpoint('D:/Study/1.Project/(3)_Saved_model/Xception_batch128.hdf5'
 es = EarlyStopping(monitor= 'val_loss', patience = 50, verbose =1)
 
 #3. compile, fit
-model.compile(optimizer = Adam(1e-4), loss = 'sparse_categorical_crossentropy', metrics = ['acc'])                             
+model.compile(optimizer = Adam(1e-5), loss = 'sparse_categorical_crossentropy', metrics = ['acc'])                             
 hist = model.fit(x_train, y_train, epochs = 100, batch_size = 128, verbose = 1, 
                  validation_split = 0.2, shuffle = True, callbacks = [es, cp])
 
