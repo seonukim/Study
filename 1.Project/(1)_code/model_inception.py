@@ -72,3 +72,8 @@ plt.ylabel('loss')
 plt.legend()
 
 plt.show()
+
+
+
+
+
