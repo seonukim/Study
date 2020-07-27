@@ -1,7 +1,3 @@
-import numpy as np
-from skimage.io import imread
-import matplotlib.pyplot as plt
+import tensorflow as tf
 
-import efficientnet.keras as efn
-
-model = efn.EfficientNetB0(weights='imagenet')
+tf.compat.v1.keras.applications.EfficientNetB0()

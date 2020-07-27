@@ -2,6 +2,7 @@ import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Flatten
 from tensorflow.keras.applications import InceptionV3, MobileNet, Xception
+from tensorflow.keras.applications import EfficientNetB4
 from tensorflow.keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
@@ -22,7 +23,8 @@ print('======== data load ========')
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2, random_state = 66)
 
 # model
-takemodel = Xception(include_top = False, input_shape = (128, 128, 3))
+# takemodel = Xception(include_top = False, input_shape = (128, 128, 3))
+takemodel = EfficientNetB4(include_top = False, input_shape = (128, 128, 3))
 
 model = Sequential()
 model.add(takemodel)
