@@ -28,8 +28,10 @@ number = np.argmax(prediction, axis = 1)
 print(len(number))
 
 # 카테고리 불러오기
-categories = ['Bichon_frise', 'Border_collie', 'Bulldog', 'Chihuahua', 'Corgi', 'Dachshund', 'Golden_retriever', 
-                'Huskey', 'Jindo_dog', 'Maltese', 'Pug', 'Yorkshire_terrier']
+categories = ['Bichon_frise', 'Border_collie', 'Bulldog',
+              'Chihuahua', 'Corgi', 'Dachshund',
+              'Golden_retriever', 'Huskey', 'Jindo_dog',
+              'Maltese', 'Pug', 'Yorkshire_terrier']
 
 
 f = open('./project/project02/data/pred_image_name.txt', 'r')
