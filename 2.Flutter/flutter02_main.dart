@@ -1,71 +1,165 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_basic/animation/animation_menu.dart';
+import 'package:flutter_basic/basic/basic_menu.dart';
+import 'package:flutter_basic/button/button_menu.dart';
+import 'package:flutter_basic/cupertino/cupertino_menu.dart';
+import 'package:flutter_basic/dialog/dialog_menu_page.dart';
+import 'package:flutter_basic/event/event_menu_page.dart';
+import 'package:flutter_basic/input/input_menu.dart';
+import 'package:flutter_basic/layout/layout_menu.dart';
+import 'package:flutter_basic/multi/multi_menu_page.dart';
+import 'package:flutter_basic/navigation/navigation_menu_page.dart';
+import 'package:flutter_basic/navigation/stateful_page.dart';
+import 'package:flutter_basic/navigation/stateless_page.dart';
+import 'package:flutter_basic/realworldui/real_world_menu_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-// 앱 시작 부분
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
-// 시작 클래스, 머티리얼 디자인 앱 생성
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        '/first': (context) => FirstPage(),
+        '/second': (context) => SecondStatefulPage(),
+      },
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        // visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),  // 표시할 화면의 인스턴스
+      home: MenuPage(),
     );
   }
 }
 
-// 시작 클래스가 실제로 표시하는 클래스. 카운터 앱 화면
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-// 위 MyHomePageState 클래스의 상태를 나타내는 State 클래스
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;     // 화면에 표시할 상태값인 카운터 숫자
-
-  // counter 변수를 1 증가시키고 화면을 다시 그리는 메서드
-  void _incrementCounter() {
-    setState(() {       // 화면을 다시 그리도록 하는 함수. StatefullWidget만 가능
-      _counter++;
-    });
-  }
-
-  // 화면에 UI를 그리는 메서드. 그려질 위젯을 반환
+class MenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(      // 머티리얼 디자인 기본 뼈대 위젯
-      appBar: AppBar(     // 상단 앱바
-        title: Text(widget.title),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('플러터 생존코딩 4~6장 예제'),
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {
+              launchURL(
+                  'https://github.com/junsuk5/flutter_basic/blob/3d00fee10e1c353df822cce0db6fa027958c251d/chapter04/lib/main.dart');
+            },
+            icon: Image.asset('assets/github_icon.png'),
+          ),
+        ],
       ),
-      body: Center(       // 표시할 내용
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',    // _counter 변수를 표시
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+      body: ListView(
+        children: <Widget>[
+          ListTile(
+            title: Text('4.2 화면 배치를 위한 위젯'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MultiMenu()),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('4.3 위치, 정렬, 크기를 위한 위젯'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LayoutMenu()),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('4.4 버튼 계열 위젯'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ButtonMenu()),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('4.5 화면 표시용 위젯'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BasicMenu()),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('4.6 입력용 위젯'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => InputMenu()),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('4.7 다이얼로그'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DialogMenuPage()),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('4.8 이벤트'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => EventMenuPage()),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('4.9 애니메이션'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AnimationMenuPage()),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('4.10 쿠퍼티노 디자인'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CupertinoPage()),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('5. 복잡한 UI 작성 <추가 내용>'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RealWorldMenuPage()),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('6. 네비게이션'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NavigationMenuPage()),
+              );
+            },
+          ),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,     // 클릭 시 _incrementCounter() 메서드 실행
-        tooltip: 'Increment',
-        child: Icon(Icons.add),           // 상단 앱바
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+}
+
+launchURL(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }
