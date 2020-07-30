@@ -22,10 +22,14 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Progress'),
       ),
-      body: Align(
-        alignment: Alignment.center,
-        child: CircularProgressIndicator(),
-      ),
+      body: Stack(
+        children: <Widget>[
+          Align(
+            alignment: Alignment.center,
+            child: CircularProgressIndicator(),
+          ),
+        ],
+      )
     );
   }
 }
