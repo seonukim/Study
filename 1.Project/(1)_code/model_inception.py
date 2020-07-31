@@ -2,7 +2,7 @@ import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Flatten
 from tensorflow.keras.applications import InceptionV3, MobileNet, Xception
-from tensorflow.keras.applications import EfficientNetB4
+from tensorflow.keras.applications import EfficientNetB1
 from tensorflow.keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
@@ -24,7 +24,7 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2, rando
 
 # model
 # takemodel = Xception(include_top = False, input_shape = (128, 128, 3))
-takemodel = EfficientNetB4(include_top = False, input_shape = (128, 128, 3))
+takemodel = EfficientNetB1(include_top = False, input_shape = (128, 128, 3))
 
 model = Sequential()
 model.add(takemodel)
@@ -39,7 +39,7 @@ es = EarlyStopping(monitor= 'val_loss', patience = 50, verbose =1)
 
 #3. compile, fit
 model.compile(optimizer = Adam(1e-5), loss = 'sparse_categorical_crossentropy', metrics = ['acc'])                             
-hist = model.fit(x_train, y_train, epochs = 100, batch_size = 128, verbose = 1, 
+hist = model.fit(x_train, y_train, epochs = 100, batch_size = 256, verbose = 1, 
                  validation_split = 0.2, shuffle = True, callbacks = [es, cp])
 
 
