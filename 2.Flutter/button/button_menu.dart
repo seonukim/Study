@@ -3,7 +3,7 @@ import 'package:flutter_basic/button/fab_button_page.dart';
 import 'package:flutter_basic/button/flat_button_page.dart';
 import 'package:flutter_basic/button/icon_button_page.dart';
 import 'package:flutter_basic/button/raised_button_page.dart';
-import 'package:flutter_basic/main.dart';
+import 'package:flutter_basic/flutter02_main.dart';
 
 class ButtonMenu extends StatelessWidget {
   @override

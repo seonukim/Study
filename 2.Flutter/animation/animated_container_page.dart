@@ -1,7 +1,6 @@
-import 'dart:math';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_basic/main.dart';
+import 'dart:math';
 
 class AnimatedContainerPage extends StatefulWidget {
   @override
@@ -45,4 +44,11 @@ class _AnimatedContainerPageState extends State<AnimatedContainerPage> {
       ),
     );
   }
-}
+
+  launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }}

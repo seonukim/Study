@@ -6,7 +6,7 @@ import 'package:flutter_basic/layout/expanded_page.dart';
 import 'package:flutter_basic/layout/padding_page.dart';
 import 'package:flutter_basic/layout/safearea_page.dart';
 import 'package:flutter_basic/layout/sizedbox_page.dart';
-import 'package:flutter_basic/main.dart';
+import 'package:flutter_basic/flutter02_main.dart';
 
 class LayoutMenu extends StatelessWidget {
   @override

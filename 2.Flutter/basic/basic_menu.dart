@@ -4,7 +4,7 @@ import 'package:flutter_basic/basic/icon_page.dart';
 import 'package:flutter_basic/basic/image_page.dart';
 import 'package:flutter_basic/basic/progress_page.dart';
 import 'package:flutter_basic/basic/text_page.dart';
-import 'package:flutter_basic/main.dart';
+import 'package:flutter_basic/flutter02_main.dart';
 
 class BasicMenu extends StatelessWidget {
   @override

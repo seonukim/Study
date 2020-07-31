@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_basic/main.dart';
+import 'package:flutter_basic/flutter02_main.dart';
 
 class Banner {
   String text1;

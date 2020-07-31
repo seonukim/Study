@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_basic/main.dart';
+import 'package:flutter_basic/flutter02_main.dart';
 import 'package:flutter_basic/multi/bottom_navigation_page.dart';
 import 'package:flutter_basic/multi/column_page.dart';
 import 'package:flutter_basic/multi/container_page.dart';
