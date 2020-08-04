@@ -13,7 +13,7 @@ conn = sqlite3.connect('./data/wanggun.db')
 
 cursor = conn.cursor()
 
-sql = 'SELECT * from general'
+sql = 'SELECT * from general' 
 cursor.execute(sql)
 
 print(cursor.fetchall())
