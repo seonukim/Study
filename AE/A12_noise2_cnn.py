@@ -53,7 +53,7 @@ print(x_train_noised.shape)         # (60000, 28, 28, 1)
 print(x_test_noised.shape)          # (10000, 28, 28, 1)
 
 # model.compile(optimizer='adam', loss='mse', metrics=['acc'])  # loss = 0.01
-model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['acc'])    # loss = 0.09
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['acc'])    # loss = 0.0836
 
 model.fit(x_train_noised, x_train, epochs=10, batch_size=128)
 
