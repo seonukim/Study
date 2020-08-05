@@ -33,40 +33,51 @@ x_test_noised = np.clip(x_test_noised, a_min=0, a_max=1)
 # max값보다 큰 값들을 max값으로 바꿔주는 함수
 # 배열의 범위를 제한한다
 
-model = autoencoder(hidden_layer_size=32)
+model = autoencoder(hidden_layer_size=16)
 
 # model.compile(optimizer='adam', loss='mse', metrics=['acc'])  # loss = 0.01
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['acc'])    # loss = 0.09
 
-model.fit(x_train_noised, x_train_noised, epochs=10)
+model.fit(x_train_noised, x_train, epochs=10, batch_size=128)
 
 output = model.predict(x_test_noised)
 
 from matplotlib import pyplot as plt
 import random
-fig, ((ax1, ax2, ax3, ax4, ax5), (ax6, ax7, ax8, ax9, ax10)) = \
-    plt.subplots(2, 5, figsize=(20, 7))
+fig, ((ax1, ax2, ax3, ax4, ax5),
+      (ax6, ax7, ax8, ax9, ax10),
+      (ax11, ax12, ax13, ax14, ax15)) = \
+          plt.subplots(3, 5, figsize=(20, 7))
 
 # 이미지 다섯 개를 무작위로 고른다
 random_images = random.sample(range(output.shape[0]), 5)
 
-# 원본(입력) 이미지를 맨 위에 그린다
+# 원본(입력) 이미지를 맨 위에 그린다            ; subplot의 첫 번째 행
 for i, ax in enumerate([ax1, ax2, ax3, ax4, ax5]):
+    ax.imshow(x_test[random_images[i]].reshape(28, 28), cmap='gray')
+    if i == 0:
+        ax.set_ylabel("INPUT", size=20)
+    ax.grid(False)
+    ax.set_xticks([])
+    ax.set_yticks([])
+
+# 노이즈 이미지를 두 번째 줄에 그린다           ; subplot의 두 번째 행
+for i, ax in enumerate([ax6, ax7, ax8, ax9, ax10]):
     ax.imshow(x_test_noised[random_images[i]].reshape(28, 28), cmap='gray')
     if i == 0:
-        ax.set_ylabel("INPUT", size=40)
+        ax.set_ylabel("NOISE", size=20)
     ax.grid(False)
     ax.set_xticks([])
     ax.set_yticks([])
 
-# 오토인코더가 출력한 이미지를 아래에 그린다
-for i, ax in enumerate([ax6, ax7, ax8, ax9, ax10]):
+# 오토인코더가 출력한 이미지를 아래에 그린다    ; subplot의 세 번째 행
+for i, ax in enumerate([ax11, ax12, ax13, ax14, ax15]):
     ax.imshow(output[random_images[i]].reshape(28, 28), cmap='gray')
     if i == 0:
-        ax.set_ylabel("OUTPUT", size=40)
+        ax.set_ylabel("OUTPUT", size=20)
     ax.grid(False)
     ax.set_xticks([])
     ax.set_yticks([])
 
-plt.tight_layout()
+# plt.tight_layout()
 plt.show()
