@@ -14,6 +14,8 @@ def autoencoder():
         tf.keras.layers.MaxPooling2D(pool_size=(2,2)),
         tf.keras.layers.UpSampling2D(size=(2,2)),
         tf.keras.layers.Conv2DTranspose(filters=1, kernel_size=(3,3), padding='valid'),
+        tf.keras.layers.BatchNormalization(),
+        tf.keras.layers.Activation(activation='sigmoid')
     ])
     return model
 
