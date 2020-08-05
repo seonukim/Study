@@ -20,8 +20,8 @@ x_test = x_test / 255.
 # 입력 데이터에 노이즈 생성 ; 픽셀에 랜덤하게 0을 뿌려준다
 # 문제가 있다 ; / 255.를 해줌으로써 현재 데이터의 분포는 0 ~ 1 사이에 있음
 # 평균이 0, 표준편차가 0.5면 0 ~ 1 사이의 범위를 벗어날 수 있음
-x_train_noised = x_train + np.random.normal(0, 0.5, size=x_train.shape)
-x_test_noised = x_test + np.random.normal(0, 0.5, size=x_test.shape)
+x_train_noised = x_train + np.random.normal(0, 0.01, size=x_train.shape)
+x_test_noised = x_test + np.random.normal(0, 0.01, size=x_test.shape)
                                 # random.normal : 정규분포에 의한 난수 생성
                                 # 0   : 평균
                                 # 0.5 : 표준편차
