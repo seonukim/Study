@@ -33,7 +33,8 @@ model = autoencoder()
 model.summary()
 
 ## 컴파일 훈련
-model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['acc'])
+# model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['acc'])      # loss = 0.5657
+model.compile(optimizer='adam', loss='mse', metrics=['acc'])                        # loss = 0.0059
 model.fit(x_train, x_train, epochs=3, batch_size=128)
 
 output = model.predict(x_test)
