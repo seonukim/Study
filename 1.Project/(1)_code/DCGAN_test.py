@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import os
+from DCGAN_image_load import load_image
 path = 'D:/Study/1.Project/(5)_Result'
 os.chdir(path)
 
@@ -99,11 +100,13 @@ class DCGAN():
     def train(self, epochs, batch_size=256, save_interval=50):
 
         # Load the dataset
-        (x_train, _), (_, _) = tf.keras.datasets.mnist.load_data()
+        x_train = load_image()
+        noise = load_image()
 
         # Rescale -1 to 1
         x_train = x_train / 127.5 - 1.
-        x_train = np.expand_dims(x_train, axis=3)
+        # x_train = np.expand_dims(x_train, axis=3)
+        noise = noise / 127.5 - 1.
 
         # Adversarial ground truths
         valid = np.ones((batch_size, 1))
@@ -118,8 +121,9 @@ class DCGAN():
             imgs = x_train[idx]
 
             # Sample noise and generate a batch of new images
-            noise = np.random.normal(0, 1, (batch_size, self.latent_dim))
-            gen_imgs = self.generator.predict(noise)
+            # noise = np.random.normal(0, 1, (batch_size, self.latent_dim))
+            imgs_n = noise[idx]
+            gen_imgs = self.generator.predict(imgs_n)
 
             # Train the discriminator (real classified as ones and generated as zeros)
             d_loss_real = self.discriminator.train_on_batch(imgs, valid)
@@ -131,7 +135,7 @@ class DCGAN():
             '''
 
             # Train the generator (wants discriminator to mistake images as real)
-            g_loss = self.combined.train_on_batch(noise, valid)
+            g_loss = self.combined.train_on_batch(imgs_n, valid)
 
             # Plot the progress
             print ("%d [D loss: %f, acc.: %.2f%%] [G loss: %f]" % (epoch, d_loss[0], 100*d_loss[1], g_loss))
@@ -141,22 +145,44 @@ class DCGAN():
                 self.save_imgs(epoch)
     
     def save_imgs(self, epoch):
-        r, c = 5, 5
-        noise = np.random.normal(0, 1, (r * c, self.latent_dim))
-        gen_imgs = self.generator.predict(noise)
+        r, c = 3, 5
+
+        human = load_image()
+        dog = load_image
+
+        human = human / 127.5 - 1.
+        dog = dog / 127.5 - 1.
+
+        print(human.shape)
+
+        gen_imgs = self.generator.predict(human)
 
         # Rescale images 0 - 1
+        human = 0.5 * human + 0.5
         gen_imgs = 0.5 * gen_imgs + 0.5
 
         fig, axs = plt.subplots(r, c)
         cnt = 0
-        for i in range(r):
-            for j in range(c):
-                axs[i,j].imshow(gen_imgs[cnt, :, :, 0], cmap='gray')
-                axs[i,j].axis('off')
-                cnt += 1
-        fig.savefig(path + 'dcgan_mnist_%d.png' % epoch)
+        for i in range(c):
+            axs[0,i].imshow(human[i, :, :, :])
+            axs[0,i].axis('off')
+            if i == 0:
+                axs[0, i].set_ylabel("HUMAN", size = 20)
+        
+        for j in range(c):
+            axs[1,j].imshow(dog[j, :, :, :])
+            axs[1,j].axis('off')
+            if j == 0:
+                axs[1, j].set_ylabel("DOG", size = 20)
+
+        for k in range(c):
+            axs[2,k].imshow(gen_imgs[k, :, :, :])
+            axs[2,k].axis('off')
+            if k == 0:
+                axs[2, k].set_ylabel("OUTPUT", size = 20)
+        
+        fig.savefig("./project/GAN/result/gan02_dcgan_human_dog_%d.png" % epoch)
         plt.close()
 
-dcgan = DCGAN(28, 28, 1)
-dcgan.train(epochs=5000, batch_size=256, save_interval=50)
+dcgan = DCGAN(128, 128, 3)
+dcgan.train(epochs=5000, batch_size=64, save_interval=200)

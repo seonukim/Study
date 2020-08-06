@@ -19,6 +19,3 @@ def load_image(path):
         x(img_result)
 
     return np.array(X)
-×
-Drag and Drop
-The image will be downloaded
