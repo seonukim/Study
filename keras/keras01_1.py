@@ -4,8 +4,8 @@ x = np.array([1, 2, 3])
 y = np.array([1, 2, 3])
 
 #2. 모델 구성
-from keras.models import Sequential
-from keras.layers import Dense  # 1차함수라고 생각
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense  # 1차함수라고 생각
 
 #2_1. 레이어 및 노드 구성
 model = Sequential()
