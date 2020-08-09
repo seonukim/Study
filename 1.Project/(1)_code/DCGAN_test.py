@@ -64,7 +64,7 @@ class DCGAN():
         noise = tf.keras.layers.Input(shape=(self.latent_dim,))
         img = model(noise)
 
-        return Model(noise, img)
+        return tf.keras.models.Model(noise, img)
     
     def build_discriminator(self):
         model = tf.keras.models.Sequential([
@@ -95,7 +95,7 @@ class DCGAN():
         img = tf.keras.layers.Input(shape=self.img_shape)
         validity = model(img)
 
-        return Model(img, validity)
+        return tf.keras.models.Model(img, validity)
     
     def train(self, epochs, batch_size=256, save_interval=50):
 
