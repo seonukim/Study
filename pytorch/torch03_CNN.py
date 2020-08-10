@@ -55,7 +55,16 @@ Net(
   (fc3): Linear(in_features=84, out_features=10, bias=True)
 )
 '''
+# 사용자는 직접 forward 함수만 정의해주면 된다
+# 그라디언트가 계산되는 backward 함수는 autograd를 사용함으로써
+# 자동으로 정의된다
+# 모델의 학습 가능한 파라미터는 net.parameters()에 의해 리턴된다
+net.parameters()
 
+# 32 x 32 크기의 랜덤 값을 입력으로 사용하면 다음과 같다
+# 참고로 이 네트워크(LeNet, 현대의 CNN 네트워크의 시초라고 할 수 있음)에 대한 예상 입력 크기는 32x32이다
+# 이 네트워크를 MNIST 데이터셋을 대상으로 사용하기 위해서는
+# 데이터셋의 이미지를 32x32 크기로 변경할 필요가 있다
 input = torch.randn(1, 1, 32, 32)
 out = net(input)
 print(out)
@@ -81,3 +90,17 @@ out.backward(torch.randn(1, 10))
 # autograd.Function - autograd 연산의 forward와 backward에 대한 정의를 구현한다
 # 모든 Tensor 연산은 최소한 하나의 Function 노드를 생성하는데, 이 노드는 Tensor를 생성하고
 # 기록을 인코딩하는 여러 함수들에 연결된다
+
+
+## 손실함수(Loss Function)
+# 오차 함수는 (출력, 정답) 형태의 입력을 받아
+# 출력이 정답에서 얼마나 멀리 떨어져 있는지 추정하는 값을 계산한다
+# nn 패키지에는 여러가지 손실함수들이 존재하는데 가장 간단한 loss는
+# nn.MSELoss로 입력과 정답 사이의 평균 제곱 오차(Mean-Squared-Error)를 계산한다
+output = net(input)
+target = torch.arange(1, 11)
+target = target.view(1, -1)
+criterion = nn.MSELoss()
+
+loss = criterion(output, target)
+print(loss)
