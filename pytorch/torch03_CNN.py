@@ -98,8 +98,8 @@ out.backward(torch.randn(1, 10))
 # nn 패키지에는 여러가지 손실함수들이 존재하는데 가장 간단한 loss는
 # nn.MSELoss로 입력과 정답 사이의 평균 제곱 오차(Mean-Squared-Error)를 계산한다
 output = net(input)
-target = torch.arange(1, 11)
-target = target.view(1, -1)
+target = torch.arange(1, 11)        # a dummy target, for example
+target = target.view(1, -1)         # make it the same shape as output
 criterion = nn.MSELoss()
 loss = criterion(output, target)
 print(loss)
