@@ -101,6 +101,5 @@ output = net(input)
 target = torch.arange(1, 11)
 target = target.view(1, -1)
 criterion = nn.MSELoss()
-
 loss = criterion(output, target)
 print(loss)
