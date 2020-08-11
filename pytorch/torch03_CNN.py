@@ -103,3 +103,40 @@ target = target.view(1, -1)         # make it the same shape as output
 criterion = nn.MSELoss()
 loss = criterion(output, target)
 print(loss)
+
+# 이제, 만약 사용자가 .grad_fn 속성을 이용하여 역방향으로 loss를 따라가려면 다음과 같은 계산 그래프를 볼 수 있다
+# 따라서 loss.backward()를 호출하면 전체 그래프는 손실에 대하여 미분 계산이 수행되며,
+# requires_grad = True인 그래프 내의 모든 텐서들은 그라디언트로 누적된 .grad 텐서를 갖게 된다
+print(loss.grad_fn)     # MSELoss
+print(loss.grad_fn.next_functions[0][0])    # Linear
+print(loss.grad_fn.next_functions[0][0].next_functions[0][0])   # ReLU
+
+## 역전파(Backprop)
+net.zero_grad()         # zeroes the gradient buffers of all parameters
+
+print('conv1.bias.grad before backward')
+print(net.conv1.bias.grad)
+
+loss.backward()
+print('conv1.bias.grad after backward')
+print(net.conv1.bias.grad)
+
+## 가중치 갱신(optimizer)
+# 기본적으로 가장 간단한 갱신 룰은 Stochastic Gradient Descent(SGD)이다
+# weight = weight - learning_rate * gradient
+learning_rate = 0.01
+for f in net.parameters():
+    f.data.sub_(f.grad.data * learning_rate)
+
+# PyTorch에서는 다양한 갱신 룰을 포함하는 torch.optim 패키지를 제공한다
+import torch.optim as optim
+
+# create your optimizer
+optimizer = optim.SGD(net.parameters(), lr = 0.01)
+
+# in your training loop:
+optimizer.zero_grad()       # zero the gradient buffers
+output = net(input)
+loss = criterion(output, target)
+loss.backward()
+optimizer.step()        # Does the update
