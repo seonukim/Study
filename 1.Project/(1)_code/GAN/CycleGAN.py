@@ -14,8 +14,8 @@ class CycleGAN():
 
         # data loader 설정
         self.dataset_name = 'apple2orange'  # 데이터셋 디렉토리 이름
-        self.data_loader = torch.utils.data.DataLoader(dataset_name = self.dataset_name,
-                                                       img_res = (self.img_rows, self.img_cols))
+        self.data_loader = torch.utils.data.DataLoader(dataset_name=self.dataset_name,
+                                                       img_res=(self.img_rows, self.img_cols))
         
         # Discriminator output 사이즈 계산(PatchGAN 사용)
         patch = int(self.img_rows / 2**4)
