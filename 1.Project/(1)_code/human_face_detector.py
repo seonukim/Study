@@ -36,4 +36,4 @@ for i, d in enumerate(filename):
             y1 = 0
     
         img = img[y1:y2, x1:x2]
-        img = cv2.imwrite('D:/Study/1.Project/(7)_Image/kface/' + str(70000 + i) + '.jpg', img)
+        img = cv2.imwrite('D:/Study/1.Project/(7)_Image/kface/' + str(kface_cropped70000 + i) + '.jpg', img)
